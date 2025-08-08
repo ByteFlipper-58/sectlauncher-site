@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout title="Политика конфиденциальности — SectLauncher" description="Как мы обрабатываем данные пользователей.">
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="mx-auto max-w-3xl px-4 py-12 prose prose-invert">
+    <h1>Политика конфиденциальности</h1>
+    <p>Мы минимизируем сбор данных. Сайт может собирать анонимную статистику посещений (например, через Plausible/Umami). Лаунчер не отправляет личные данные без явного согласия.</p>
+    <h2>Собираемые данные</h2>
+    <ul>
+      <li>Анонимные метрики посещений сайта</li>
+      <li>Данные об ошибках при согласии пользователя</li>
+    </ul>
+    <h2>Контакты</h2>
+    <p>По вопросам приватности: <a href="mailto:support@sectlauncher.app">support@sectlauncher.app</a></p>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+
+

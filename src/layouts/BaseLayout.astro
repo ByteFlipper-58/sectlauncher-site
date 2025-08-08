@@ -1,0 +1,25 @@
+---
+import "../styles/global.css";
+const { title = "SectLauncher", description = "Кроссплатформенный лаунчер Minecraft" } = Astro.props;
+---
+<html lang="ru" class="bg-neutral-950 text-neutral-100">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.svg" />
+    <style>
+      .hero-bg{background:radial-gradient(1200px 600px at 20% 0%, rgba(46,204,113,.25), transparent 60%),radial-gradient(900px 500px at 80% 10%, rgba(241,196,15,.18), transparent 60%)}
+    </style>
+  </head>
+  <body class="antialiased min-h-screen flex flex-col">
+    <slot name="header" />
+    <main class="flex-1"><slot /></main>
+    <slot name="footer" />
+  </body>
+</html>
+
+

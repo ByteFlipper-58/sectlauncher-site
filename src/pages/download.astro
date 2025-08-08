@@ -1,0 +1,37 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout title="Скачать — SectLauncher" description="Скачайте SectLauncher для Windows, macOS и Linux.">
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="mx-auto max-w-3xl px-4 py-12">
+    <h1 class="text-3xl font-extrabold">Скачать</h1>
+    <p class="text-neutral-300 mt-2">Выберите вашу платформу.</p>
+
+    <div class="mt-6 grid md:grid-cols-3 gap-4">
+      <a href="#" class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900">
+        <h3 class="font-bold">Windows</h3>
+        <p class="text-neutral-400 text-sm mt-1">.exe / .msi</p>
+      </a>
+      <a href="#" class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900">
+        <h3 class="font-bold">macOS</h3>
+        <p class="text-neutral-400 text-sm mt-1">.dmg</p>
+      </a>
+      <a href="#" class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900">
+        <h3 class="font-bold">Linux</h3>
+        <p class="text-neutral-400 text-sm mt-1">.AppImage / .deb</p>
+      </a>
+    </div>
+
+    <div class="mt-6 text-xs text-neutral-500">
+      Публикуйте контрольные суммы SHA‑256 и ссылку на релиз GitHub для доверия.
+    </div>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+
+

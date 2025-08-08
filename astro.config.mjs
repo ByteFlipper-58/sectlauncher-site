@@ -9,6 +9,8 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
+  // TODO: замените на реальный домен проекта
+  site: 'https://sectlauncher.app',
   vite: {
     plugins: [tailwindcss()]
   },

@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout title="О проекте — SectLauncher" description="Кроссплатформенный лаунчер Minecraft с модульной архитектурой.">
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="mx-auto max-w-3xl px-4 py-12 prose prose-invert">
+    <h1>О проекте</h1>
+    <p>
+      SectLauncher — кроссплатформенный лаунчер для Minecraft, построенный на Kotlin Multiplatform и
+      принципах Clean Architecture. Цель — стабильная работа с версиями, модами и серверами,
+      простая настройка профилей и безопасные обновления.
+    </p>
+    <h2>Технологии</h2>
+    <ul>
+      <li>Kotlin, Kotlin Multiplatform</li>
+      <li>Jetpack Compose Desktop</li>
+      <li>Gradle</li>
+      <li>Unit‑тесты для use cases</li>
+    </ul>
+    <h2>Модульность</h2>
+    <p>Каждый источник (Mojang API, CurseForge, Modrinth) реализован отдельным модулем.</p>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+
+

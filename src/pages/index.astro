@@ -1,16 +1,84 @@
 ---
-
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="SectLauncher — лаунчер Minecraft" description="Моды, профили и авто‑обновления в один клик.">
+  <Fragment slot="header">
+    <Header />
+  </Fragment>
+
+  <section class="hero-bg">
+    <div class="mx-auto max-w-6xl px-4 pt-16 pb-14 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+          SectLauncher — лёгкий лаунчер Minecraft
+        </h1>
+        <p class="mt-4 text-neutral-300 text-lg">
+          Моды, профили и авто‑обновления в один клик. Больше игры — меньше настройки.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="/download" class="px-5 py-3 rounded-md font-semibold text-neutral-900 bg-emerald-500">
+            Скачать для Windows
+          </a>
+          <a href="https://github.com/your-org/SectLauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">GitHub</a>
+          <a href="https://discord.gg/" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">Discord</a>
+        </div>
+        <div class="mt-3 text-xs text-neutral-400">
+          Версия v0.1.0 · SHA‑256: —
+        </div>
+      </div>
+      <div class="relative">
+        <div class="aspect-video rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden">
+          <div class="w-full h-full grid place-items-center text-neutral-500">Скриншот лаунчера</div>
+        </div>
+        <div class="absolute -bottom-4 -left-4 px-3 py-1 rounded-md text-xs border border-neutral-700 bg-neutral-900">
+          Безопасные обновления
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="mx-auto max-w-6xl px-4 py-10">
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40">
+        <h3 class="font-bold">Моды без боли</h3>
+        <p class="text-neutral-400 mt-1">Подборки, авто‑установка и совместимость версий.</p>
+      </div>
+      <div class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40">
+        <h3 class="font-bold">Профили</h3>
+        <p class="text-neutral-400 mt-1">Разные версии, параметры JVM и пути ресурсов.</p>
+      </div>
+      <div class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40">
+        <h3 class="font-bold">Авто‑обновления</h3>
+        <p class="text-neutral-400 mt-1">Дифф‑патчи и контроль хешей для скорости и безопасности.</p>
+      </div>
+      <div class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40">
+        <h3 class="font-bold">Производительность</h3>
+        <p class="text-neutral-400 mt-1">Оптимальные пресеты и авто‑настройка памяти.</p>
+      </div>
+      <div class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40">
+        <h3 class="font-bold">Кроссплатформенность</h3>
+        <p class="text-neutral-400 mt-1">Windows/Linux/macOS (по мере релизов).</p>
+      </div>
+      <div class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40">
+        <h3 class="font-bold">Прозрачность</h3>
+        <p class="text-neutral-400 mt-1">Открытый код, релизы с хешами, changelog.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="mx-auto max-w-6xl px-4 py-6">
+    <h2 class="text-2xl font-bold mb-4">Как это работает</h2>
+    <ol class="grid md:grid-cols-3 gap-4 list-decimal list-inside">
+      <li class="rounded-lg border border-neutral-800 p-4 bg-neutral-900/40">Скачай и установи SectLauncher</li>
+      <li class="rounded-lg border border-neutral-800 p-4 bg-neutral-900/40">Выбери версию и мод‑профиль</li>
+      <li class="rounded-lg border border-neutral-800 p-4 bg-neutral-900/40">Жми “Играть” — наслаждайся</li>
+    </ol>
+  </section>
+
+  <Fragment slot="footer">
+    <Footer />
+  </Fragment>
+</BaseLayout>
