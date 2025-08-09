@@ -1,0 +1,216 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+const GITHUB_RELEASES = 'https://github.com/byteflipper-58/sectlauncher/releases/latest';
+const DOWNLOADS = {
+  windows: { label: 'Windows', exts: '.exe / .msi', href: GITHUB_RELEASES },
+  mac: { label: 'macOS', exts: '.dmg', href: GITHUB_RELEASES },
+  linux: { label: 'Linux', exts: '.AppImage / .deb', href: GITHUB_RELEASES },
+};
+---
+
+<BaseLayout title="Скачать — SectLauncher" description="Скачайте SectLauncher для Windows, macOS и Linux.">
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <h1 class="text-3xl font-extrabold">Скачать</h1>
+    <p class="text-neutral-300 mt-2">Мы определили вашу платформу автоматически. Версия: <span id="version" class="text-neutral-200">—</span></p>
+
+    <div id="cta" class="mt-6 p-4 rounded-lg border border-neutral-800 bg-neutral-900/60">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <div class="text-sm text-neutral-400">Рекомендуемая загрузка</div>
+          <div id="cta-label" class="text-lg font-bold">Windows</div>
+          <div id="cta-exts" class="text-xs text-neutral-500">.exe / .msi</div>
+        </div>
+        <a id="cta-link" href={GITHUB_RELEASES} class="px-5 py-3 rounded-md font-semibold text-neutral-900 bg-emerald-500 w-full md:w-auto text-center">Скачать</a>
+      </div>
+    </div>
+
+    <h2 class="text-xl font-bold mt-8">Все платформы</h2>
+    <div class="mt-3 grid md:grid-cols-3 gap-4">
+      <a id="card-win" href={DOWNLOADS.windows.href} class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900">
+        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-emerald-500/20"></span><h3 class="font-bold">{DOWNLOADS.windows.label}</h3></div>
+        <p class="text-neutral-400 text-sm mt-1">{DOWNLOADS.windows.exts}</p>
+      </a>
+      <a id="card-mac" href={DOWNLOADS.mac.href} class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900">
+        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-yellow-500/20"></span><h3 class="font-bold">{DOWNLOADS.mac.label}</h3></div>
+        <p class="text-neutral-400 text-sm mt-1">{DOWNLOADS.mac.exts}</p>
+      </a>
+      <a id="card-linux" href={DOWNLOADS.linux.href} class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900">
+        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-blue-500/20"></span><h3 class="font-bold">{DOWNLOADS.linux.label}</h3></div>
+        <p class="text-neutral-400 text-sm mt-1">{DOWNLOADS.linux.exts}</p>
+      </a>
+    </div>
+
+    <div class="mt-10">
+      <div id="os-tabs" class="flex flex-wrap gap-2 text-sm">
+        <button data-os="windows" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60">Windows</button>
+        <button data-os="mac" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60">macOS</button>
+        <button data-os="linux" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60">Linux</button>
+      </div>
+      <div id="os-content" class="mt-4 rounded-lg border border-neutral-800 bg-neutral-900/40 p-5">
+        <div data-pane="windows">
+          <h3 class="font-bold">Установка на Windows</h3>
+          <ol class="list-decimal list-inside text-neutral-300 space-y-1 mt-2">
+            <li>Скачайте .msi (рекомендуется) или .exe</li>
+            <li>Запустите установщик и следуйте инструкциям</li>
+            <li>Первый запуск может занять время из‑за загрузки компонентов</li>
+          </ol>
+        </div>
+        <div data-pane="mac" hidden>
+          <h3 class="font-bold">Установка на macOS</h3>
+          <ol class="list-decimal list-inside text-neutral-300 space-y-1 mt-2">
+            <li>Скачайте .dmg</li>
+            <li>Перетащите приложение в Applications</li>
+            <li>Если появится предупреждение Gatekeeper — разрешите запуск в Settings → Privacy</li>
+          </ol>
+        </div>
+        <div data-pane="linux" hidden>
+          <h3 class="font-bold">Установка на Linux</h3>
+          <ol class="list-decimal list-inside text-neutral-300 space-y-1 mt-2">
+            <li>Скачайте .AppImage (или .deb для Debian/Ubuntu)</li>
+            <li>Сделайте файл исполняемым: <code class="px-1 py-0.5 rounded bg-neutral-800">chmod +x SectLauncher.AppImage</code></li>
+            <li>Запустите файл</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="text-xl font-bold mt-8">Системные требования</h2>
+    <ul class="mt-2 text-neutral-300 list-disc list-inside space-y-1">
+      <li>Java: JDK 17+</li>
+      <li>RAM: 4 ГБ (рекомендуется 8 ГБ+)</li>
+      <li>Диск: 1 ГБ для лаунчера, 5–20 ГБ для игры/модов</li>
+      <li>Интернет для загрузок и обновлений</li>
+    </ul>
+
+    <div class="mt-8 grid md:grid-cols-2 gap-4">
+      <div class="rounded-lg border border-neutral-800 bg-neutral-900/40 p-4">
+        <h3 class="font-bold">Проверка целостности</h3>
+        <p class="text-neutral-400 text-sm mt-1">Если доступно, сверяйте SHA‑256:</p>
+        <div class="mt-2 flex items-center gap-2">
+          <code id="sha256" class="flex-1 px-2 py-1 rounded bg-neutral-800 text-xs overflow-x-auto">—</code>
+          <button id="copy-hash" class="px-2 py-1 rounded border border-neutral-700 text-xs hover:bg-neutral-800">Копировать</button>
+        </div>
+        <p class="text-neutral-500 text-xs mt-2">Полный список файлов и хешей: <a href={GITHUB_RELEASES} class="underline">релизы GitHub</a>.</p>
+      </div>
+      <div class="rounded-lg border border-neutral-800 bg-neutral-900/40 p-4">
+        <h3 class="font-bold">FAQ</h3>
+        <details class="mt-2"><summary class="cursor-pointer">Windows SmartScreen блокирует установщик</summary><p class="text-neutral-400 text-sm mt-1">Нажмите “More info” → “Run anyway”. Мы работаем над подписью.</p></details>
+        <details class="mt-2"><summary class="cursor-pointer">Нужна ли Java?</summary><p class="text-neutral-400 text-sm mt-1">Рекомендуемая Java будет установлена автоматически.</p></details>
+        <details class="mt-2"><summary class="cursor-pointer">Где старые версии?</summary><p class="text-neutral-400 text-sm mt-1">Смотрите на странице <a href={GITHUB_RELEASES} class="underline">релизов</a>.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+
+<script is:inline>
+  // Скопировано из исходной страницы download.astro
+  const byOS = () => {
+    const ua = navigator.userAgent;
+    if (/Windows/i.test(ua)) return 'windows';
+    if (/Macintosh|Mac OS X/i.test(ua)) return 'mac';
+    if (/Linux|X11|Ubuntu|Arch|Fedora|Debian/i.test(ua)) return 'linux';
+    return 'windows';
+  };
+  const GITHUB_API = 'https://api.github.com/repos/byteflipper-58/sectlauncher/releases/latest';
+  const FALLBACK = 'https://github.com/byteflipper-58/sectlauncher/releases/latest';
+  const map = {
+    windows: { label: 'Windows', exts: '.exe / .msi', href: FALLBACK},
+    mac: { label: 'macOS', exts: '.dmg', href: FALLBACK},
+    linux: { label: 'Linux', exts: '.AppImage / .deb', href: FALLBACK},
+  };
+  const os = byOS();
+  const ctaLabel = document.getElementById('cta-label');
+  const ctaExts = document.getElementById('cta-exts');
+  const ctaLink = document.getElementById('cta-link');
+  const versionEl = document.getElementById('version');
+  const data = map[os];
+  if (data) {
+    ctaLabel.textContent = data.label;
+    ctaExts.textContent = data.exts;
+    ctaLink.href = data.href;
+  }
+
+  function activatePane(nextOs){
+    document.querySelectorAll('#os-content [data-pane]').forEach(el => {
+      el.hidden = el.getAttribute('data-pane') !== nextOs;
+    });
+  }
+  document.getElementById('os-tabs')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    const next = btn.dataset.os;
+    if (!next) return;
+    ctaLabel.textContent = map[next].label;
+    ctaExts.textContent = map[next].exts;
+    ctaLink.href = map[next].href;
+    activatePane(next);
+  });
+
+  async function pickAsset(assets, targetOs){
+    const byExt = (name, exts) => exts.some(ext => name.toLowerCase().endsWith(ext));
+    if (targetOs === 'windows'){
+      let a = assets.find(a => byExt(a.name, ['.msi'])) || assets.find(a => byExt(a.name, ['.exe']));
+      return a;
+    }
+    if (targetOs === 'mac'){
+      return assets.find(a => byExt(a.name, ['.dmg']));
+    }
+    if (targetOs === 'linux'){
+      return assets.find(a => byExt(a.name, ['.AppImage'.toLowerCase()])) || assets.find(a => byExt(a.name, ['.deb']));
+    }
+    return null;
+  }
+
+  async function tryFetchLatest(){
+    try {
+      const res = await fetch(GITHUB_API, { headers: { 'Accept': 'application/vnd.github+json' } });
+      if (!res.ok) return;
+      const json = await res.json();
+      if (json.tag_name) versionEl.textContent = json.tag_name;
+      const assets = Array.isArray(json.assets) ? json.assets : [];
+      // Update cards and CTA links per OS
+      for (const key of ['windows','mac','linux']){
+        const sel = await pickAsset(assets, key);
+        if (sel && sel.browser_download_url){
+          map[key].href = sel.browser_download_url;
+          const cardId = key === 'windows' ? 'card-win' : key === 'mac' ? 'card-mac' : 'card-linux';
+          const card = document.getElementById(cardId);
+          if (card) card.setAttribute('href', sel.browser_download_url);
+          if (key === os) ctaLink.href = sel.browser_download_url;
+        }
+      }
+      // Try to get checksum file
+      const hashAsset = assets.find(a => /sha256/i.test(a.name));
+      if (hashAsset){
+        const hr = await fetch(hashAsset.browser_download_url);
+        if (hr.ok){
+          const text = await hr.text();
+          // try to find hash for selected OS asset
+          const selectedUrl = map[os].href;
+          const parts = selectedUrl.split('/');
+          const fname = parts[parts.length - 1];
+          let line = text.split(/\r?\n/).find(l => l.includes(fname));
+          if (!line) line = text.split(/\r?\n/)[0];
+          const hash = (line || '').trim().split(/\s+/)[0] || '—';
+          const shaEl = document.getElementById('sha256');
+          if (shaEl) shaEl.textContent = hash;
+        }
+      }
+    } catch (e) {
+      // ignore network errors
+    }
+  }
+  tryFetchLatest();
+
+  document.getElementById('copy-hash')?.addEventListener('click', async () => {
+    const v = document.getElementById('sha256')?.textContent || '';
+    try { await navigator.clipboard.writeText(v); } catch {}
+  });
+</script>
+

@@ -1,0 +1,131 @@
+---
+interface NavItem { href?: string; title?: string }
+interface Props { locale: 'ru' | 'en'; prev?: NavItem; next?: NavItem; translate?: NavItem }
+const { locale, prev, next, translate }: Props = Astro.props;
+const t = (key: string) => {
+  const ru = { prev: 'Предыдущий', next: 'Следующий', noPrev: 'Нет предыдущего', noNext: 'Нет следующего', translate: 'English version', noTranslate: 'Нет перевода', firstPost: 'Это первая запись', lastPost: 'Это последняя запись', noTransDesc: 'Перевод отсутствует' } as const;
+  const en = { prev: 'Previous', next: 'Next', noPrev: 'No previous', noNext: 'No next', translate: 'Russian version', noTranslate: 'No translation', firstPost: 'This is the first post', lastPost: 'This is the last post', noTransDesc: 'No translation available' } as const;
+  return (locale === 'ru' ? ru : en)[key as keyof typeof ru];
+};
+---
+
+<section class="mx-auto w-full lg:max-w-[70%] px-4 pb-12">
+  <div class="hidden md:grid grid-cols-3 gap-4 items-stretch">
+    <div>
+      {prev ? (
+        <a href={prev.href} class="group block h-full rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 hover:border-emerald-500/40 transition-colors">
+          <div class="flex items-center gap-2 text-xs text-neutral-500">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            <span>{t('prev')}</span>
+          </div>
+          <div class="mt-2 font-semibold line-clamp-2 group-hover:text-white">{prev.title}</div>
+        </a>
+      ) : (
+        <div class="block h-full rounded-xl border border-neutral-900 bg-neutral-900/20 p-4 opacity-80 select-none">
+          <div class="flex items-center gap-2 text-xs text-neutral-400">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            <span>{t('noPrev')}</span>
+          </div>
+          <div class="mt-2 font-semibold text-neutral-300">{t('firstPost')}</div>
+        </div>
+      )}
+    </div>
+    <div>
+      {translate ? (
+        <a href={translate.href} class="group block h-full rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 hover:border-emerald-500/40 transition-colors">
+          <div class="flex items-center gap-2 text-xs text-neutral-500">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 17.93V20h-2v-.07A8.001 8.001 0 014.07 13H4v-2h.07A8.001 8.001 0 0111 4.07V4h2v.07A8.001 8.001 0 0119.93 11H20v2h-.07A8.001 8.001 0 0113 19.93z"/></svg>
+            <span>{t('translate')}</span>
+          </div>
+          <div class="mt-2 font-semibold line-clamp-2 group-hover:text-white">{translate.title}</div>
+        </a>
+      ) : (
+        <div class="block h-full rounded-xl border border-neutral-900 bg-neutral-900/20 p-4 opacity-80 select-none">
+          <div class="flex items-center gap-2 text-xs text-neutral-400">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 17.93V20h-2v-.07A8.001 8.001 0 014.07 13H4v-2h.07A8.001 8.001 0 0111 4.07V4h2v.07A8.001 8.001 0 0119.93 11H20v2h-.07A8.001 8.001 0 0113 19.93z"/></svg>
+            <span>{t('noTranslate')}</span>
+          </div>
+          <div class="mt-2 font-semibold text-neutral-300">{t('noTransDesc')}</div>
+        </div>
+      )}
+    </div>
+    <div>
+      {next ? (
+        <a href={next.href} class="group block h-full rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 hover:border-emerald-500/40 transition-colors">
+          <div class="flex items-center gap-2 text-xs text-neutral-500">
+            <span>{t('next')}</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+          </div>
+          <div class="mt-2 font-semibold line-clamp-2 group-hover:text-white">{next.title}</div>
+        </a>
+      ) : (
+        <div class="block h-full rounded-xl border border-neutral-900 bg-neutral-900/20 p-4 opacity-80 select-none">
+          <div class="flex items-center gap-2 text-xs text-neutral-400">
+            <span>{t('noNext')}</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+          </div>
+          <div class="mt-2 font-semibold text-neutral-300">{t('lastPost')}</div>
+        </div>
+      )}
+    </div>
+  </div>
+
+  <div class="grid md:hidden gap-4">
+    {translate ? (
+      <a href={translate.href} class="group block rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 hover:border-emerald-500/40 transition-colors">
+        <div class="flex items-center gap-2 text-xs text-neutral-500">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 17.93V20h-2v-.07A8.001 8.001 0 014.07 13H4v-2h.07A8.001 8.001 0 0111 4.07V4h2v.07A8.001 8.001 0 0119.93 11H20v2h-.07A8.001 8.001 0 0113 19.93z"/></svg>
+          <span>{t('translate')}</span>
+        </div>
+        <div class="mt-2 font-semibold line-clamp-2 group-hover:text-white">{translate.title}</div>
+      </a>
+    ) : (
+      <div class="block rounded-xl border border-neutral-900 bg-neutral-900/20 p-4 opacity-80 select-none">
+        <div class="flex items-center gap-2 text-xs text-neutral-400">
+          <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 17.93V20h-2v-.07A8.001 8.001 0 014.07 13H4v-2h.07A8.001 8.001 0 0111 4.07V4h2v.07A8.001 8.001 0 0119.93 11H20v2h-.07A8.001 8.001 0 0113 19.93z"/></svg>
+          <span>{t('noTranslate')}</span>
+        </div>
+        <div class="mt-2 font-semibold text-neutral-300">{t('noTransDesc')}</div>
+      </div>
+    )}
+
+    <div class="grid grid-cols-2 gap-4">
+      {prev ? (
+        <a href={prev.href} class="group block rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 hover:border-emerald-500/40 transition-colors">
+          <div class="flex items-center gap-2 text-xs text-neutral-500">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            <span>{t('prev')}</span>
+          </div>
+          <div class="mt-2 font-semibold line-clamp-2 group-hover:text-white">{prev.title}</div>
+        </a>
+      ) : (
+        <div class="block rounded-xl border border-neutral-900 bg-neutral-900/20 p-4 opacity-80 select-none">
+          <div class="flex items-center gap-2 text-xs text-neutral-400">
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            <span>{t('noPrev')}</span>
+          </div>
+          <div class="mt-2 font-semibold text-neutral-300">{t('firstPost')}</div>
+        </div>
+      )}
+      {next ? (
+        <a href={next.href} class="group block rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 hover:border-emerald-500/40 transition-colors">
+          <div class="flex items-center gap-2 text-xs text-neutral-500">
+            <span>{t('next')}</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+          </div>
+          <div class="mt-2 font-semibold line-clamp-2 group-hover:text-white">{next.title}</div>
+        </a>
+      ) : (
+        <div class="block rounded-xl border border-neutral-900 bg-neutral-900/20 p-4 opacity-80 select-none">
+          <div class="flex items-center gap-2 text-xs text-neutral-400">
+            <span>{t('noNext')}</span>
+            <svg viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+          </div>
+          <div class="mt-2 font-semibold text-neutral-300">{t('lastPost')}</div>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+

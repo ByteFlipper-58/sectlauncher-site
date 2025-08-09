@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection } from 'astro:content';
+import BlogCard from "../../components/BlogCard.astro";
+
+const allPosts = (await getCollection('blog')).filter(p => !p.data.draft && (p.data.lang ?? 'ru') === 'ru');
+const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const tagSet = new Set(posts.flatMap(p => p.data.tags ?? []));
+const tags = Array.from(tagSet).sort((a,b) => a.localeCompare(b));
+---
+
+<BaseLayout title="Блог — SectLauncher" description="Новости и обновления SectLauncher.">
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h1 class="text-3xl font-extrabold">Блог</h1>
+      <div class="flex flex-wrap items-center gap-3">
+        <input id="search" type="search" placeholder="Поиск..." class="px-3 py-2 rounded-md bg-neutral-900 border border-neutral-800 focus:outline-none focus:border-emerald-500 w-full md:w-80" />
+        <div id="tags" class="flex flex-wrap gap-2 text-sm">
+          <button data-tag="" class="px-2 py-1 rounded-md border border-neutral-800 bg-neutral-900/60">Все</button>
+          {tags.map((t) => (
+            <button data-tag={t} class="px-2 py-1 rounded-md border border-neutral-800 bg-neutral-900/60 hover:bg-neutral-900">{t}</button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <div id="grid" class="mt-6 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {posts.map((post) => {
+        const slugBase = post.slug.split('/').pop();
+        return (
+          <BlogCard
+            href={`/ru/blog/${slugBase}`}
+            title={post.data.title ?? 'Без названия'}
+            description={post.data.description}
+            date={post.data.date}
+            tags={post.data.tags}
+            heroImage={post.data.heroImage}
+            locale="ru"
+          />
+        );
+      })}
+    </div>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+
+<script is:inline>
+  const filter = { q: '', tag: '' };
+  const search = document.getElementById('search');
+  const tagContainer = document.getElementById('tags');
+  const grid = document.getElementById('grid');
+
+  function normalize(text){ return (text || '').toLowerCase(); }
+  function cardMatches(card){
+    const title = card.querySelector('h2')?.textContent || '';
+    const desc = card.querySelector('p')?.textContent || '';
+    const tags = Array.from(card.querySelectorAll('[data-tag-val]')).map(e => e.getAttribute('data-tag-val'));
+    const byText = normalize(title + ' ' + desc).includes(normalize(filter.q));
+    const byTag = !filter.tag || tags.includes(filter.tag);
+    return byText && byTag;
+  }
+  function apply(){
+    const cards = Array.from(grid.children);
+    cards.forEach((c) => { c.style.display = cardMatches(c) ? '' : 'none'; });
+  }
+
+  tagContainer?.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+    filter.tag = btn.dataset.tag || '';
+    apply();
+  });
+  search?.addEventListener('input', (e) => { filter.q = e.target.value; apply(); });
+</script>
+

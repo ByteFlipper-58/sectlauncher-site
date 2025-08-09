@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SectLauncher</title>
+
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="SectLauncher" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <style>html,body{height:100%} body{margin:0;background:#0b0b0b}</style>
+    <script>
+      (function(){
+        try {
+          var supported = ['ru','en'];
+          var pref = null; try { pref = localStorage.getItem('pref_locale'); } catch(e) {}
+          var langs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'ru']).map(function(l){return (l||'').toLowerCase().split('-')[0];});
+          var chosen = (pref && supported.indexOf(pref) > -1) ? pref : (langs.find(function(l){return supported.indexOf(l) > -1;}) || 'ru');
+          var target = '/' + chosen + '/' + (location.search || '') + (location.hash || '');
+          location.replace(target);
+        } catch(e) {}
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>
+

@@ -1,0 +1,472 @@
+---
+---
+<script is:inline>
+  (() => {
+    const SELECTOR = 'img[data-lightbox]';
+
+    function getGallery() {
+      return Array.from(document.querySelectorAll(SELECTOR));
+    }
+
+    function createOverlay() {
+      const el = document.createElement('div');
+      el.className = 'slb fixed inset-0 bg-black/95 backdrop-blur-md z-[60] p-2 sm:p-3 md:p-4 flex flex-col';
+      el.innerHTML = `
+        <div class="slb-header flex items-center justify-between text-white mb-3">
+          <div class="flex items-center gap-4 min-w-0">
+            <div class="slb-caption text-lg font-medium text-white/90 truncate"></div>
+            <div class="slb-counter shrink-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm px-3 py-1.5 rounded-xl text-sm font-medium text-white/80 border border-white/10"></div>
+          </div>
+          <button title="Закрыть" class="slb-close text-2xl text-white/70 hover:text-red-400 hover:scale-110 transition-all duration-200 p-2">✕</button>
+        </div>
+        
+        <div class="slb-controls flex items-center justify-center gap-2 mb-4">
+          <div class="controls-group bg-gradient-to-r from-gray-800/60 to-gray-900/60 backdrop-blur-xl border border-white/10 rounded-2xl p-2 flex items-center gap-1">
+            <button title="Уменьшить" class="slb-zoom-out control-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M8 11h6"></path>
+              </svg>
+            </button>
+            <button title="Увеличить" class="slb-zoom-in control-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="M11 8v6M8 11h6"></path>
+              </svg>
+            </button>
+            <div class="w-px h-6 bg-white/20 mx-1"></div>
+            <button title="По экрану / Оригинал" class="slb-fit control-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+              </svg>
+            </button>
+            <button title="Повернуть" class="slb-rotate control-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 4v6h6M23 20v-6h-6"></path>
+                <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+              </svg>
+            </button>
+            <div class="w-px h-6 bg-white/20 mx-1"></div>
+            <a title="Скачать" class="slb-download control-btn" download>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+              </svg>
+            </a>
+            <a title="Открыть в новой вкладке" class="slb-open control-btn" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path>
+              </svg>
+            </a>
+            <button title="Полноэкранный режим" class="slb-full control-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="slb-body relative flex-1 overflow-hidden grid place-items-center">
+          <img class="slb-img max-h-[80vh] max-w-full w-auto h-auto object-contain rounded-xl will-change-transform shadow-2xl" />
+          <button class="slb-prev nav-btn hidden md:flex absolute left-6 top-1/2 -translate-y-1/2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button class="slb-next nav-btn hidden md:flex absolute right-6 top-1/2 -translate-y-1/2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          <div class="slb-loading hidden absolute inset-0 grid place-items-center">
+            <div class="w-16 h-16 border-4 border-white/20 border-t-blue-400 rounded-full animate-spin"></div>
+          </div>
+        </div>`;
+      return el;
+    }
+
+    function openLightbox(startIndex) {
+      const gallery = getGallery();
+      let index = Math.max(0, Math.min(startIndex, gallery.length - 1));
+      if (!gallery[index]) return;
+
+      const overlay = createOverlay();
+      const imgEl = overlay.querySelector('.slb-img');
+      const captionEl = overlay.querySelector('.slb-caption');
+      const counterEl = overlay.querySelector('.slb-counter');
+      const downloadEl = overlay.querySelector('.slb-download');
+      const openEl = overlay.querySelector('.slb-open');
+      const closeBtn = overlay.querySelector('.slb-close');
+      const prevBtn = overlay.querySelector('.slb-prev');
+      const nextBtn = overlay.querySelector('.slb-next');
+      const zoomInBtn = overlay.querySelector('.slb-zoom-in');
+      const zoomOutBtn = overlay.querySelector('.slb-zoom-out');
+      const rotateBtn = overlay.querySelector('.slb-rotate');
+      const fitBtn = overlay.querySelector('.slb-fit');
+      const fullBtn = overlay.querySelector('.slb-full');
+      const loadingEl = overlay.querySelector('.slb-loading');
+
+      let scale = 1;
+      let posX = 0;
+      let posY = 0;
+      let rotation = 0;
+      let fit = true;
+      let dragging = false;
+      let startX = 0, startY = 0;
+      let hideUiTimer;
+      let touchStartDistance = 0;
+
+      function applyTransform() {
+        imgEl.style.transform = `translate(${posX}px, ${posY}px) scale(${scale}) rotate(${rotation}deg)`;
+        imgEl.style.cursor = scale > 1 ? 'grab' : 'auto';
+      }
+
+      function showLoading() {
+        loadingEl.classList.remove('hidden');
+        imgEl.style.opacity = '0';
+      }
+
+      function hideLoading() {
+        loadingEl.classList.add('hidden');
+        imgEl.style.opacity = '1';
+      }
+
+      function load(idx) {
+        index = idx;
+        const node = gallery[index];
+        const src = node.getAttribute('src');
+        const alt = node.getAttribute('data-caption') || node.getAttribute('alt') || '';
+        
+        showLoading();
+        
+        const tempImg = new Image();
+        tempImg.onload = () => {
+          imgEl.setAttribute('src', src || '');
+          imgEl.setAttribute('alt', alt);
+          hideLoading();
+        };
+        tempImg.src = src;
+        
+        captionEl.textContent = alt || `Изображение ${index + 1}`;
+        downloadEl.setAttribute('href', src || '#');
+        openEl.setAttribute('href', src || '#');
+        scale = 1; posX = 0; posY = 0; rotation = 0; fit = true; applyTransform();
+        if (prevBtn) prevBtn.style.display = index > 0 ? 'flex' : 'none';
+        if (nextBtn) nextBtn.style.display = index < gallery.length - 1 ? 'flex' : 'none';
+        if (counterEl) counterEl.textContent = `${index + 1} из ${gallery.length}`;
+      }
+
+      function onKey(e) {
+        if (e.key === 'Escape') { close(); }
+        if (e.key === 'ArrowRight') { if (index < gallery.length - 1) load(index + 1); }
+        if (e.key === 'ArrowLeft') { if (index > 0) load(index - 1); }
+        if (e.key === '+' || e.key === '=') { scale = Math.min(4, scale + 0.2); applyTransform(); }
+        if (e.key === '-') { scale = Math.max(1, scale - 0.2); if (scale === 1) { posX = 0; posY = 0; } applyTransform(); }
+      }
+
+      function close() {
+        document.removeEventListener('keydown', onKey);
+        overlay.classList.add('fade-out');
+        setTimeout(() => overlay.remove(), 200);
+      }
+
+      overlay.addEventListener('click', (e) => {
+        const isBody = e.target.classList?.contains('slb-body');
+        if (isBody) close();
+      });
+      closeBtn?.addEventListener('click', close);
+      prevBtn?.addEventListener('click', () => load(index - 1));
+      nextBtn?.addEventListener('click', () => load(index + 1));
+      zoomInBtn?.addEventListener('click', () => { scale = Math.min(4, scale + 0.2); applyTransform(); });
+      zoomOutBtn?.addEventListener('click', () => { scale = Math.max(1, scale - 0.2); if (scale === 1) { posX = 0; posY = 0; } applyTransform(); });
+      rotateBtn?.addEventListener('click', () => { rotation = (rotation + 90) % 360; applyTransform(); });
+      fitBtn?.addEventListener('click', () => {
+        if (fit) { scale = 2; } else { scale = 1; posX = 0; posY = 0; }
+        fit = !fit; applyTransform();
+      });
+      fullBtn?.addEventListener('click', async () => {
+        if (!document.fullscreenElement) {
+          await overlay.requestFullscreen().catch(() => {});
+        } else {
+          await document.exitFullscreen().catch(() => {});
+        }
+      });
+
+      // Drag to pan
+      imgEl.addEventListener('mousedown', (e) => {
+        if (scale <= 1) return;
+        dragging = true; startX = e.clientX - posX; startY = e.clientY - posY; imgEl.style.cursor = 'grabbing';
+      });
+      window.addEventListener('mousemove', (e) => {
+        if (!dragging) return;
+        posX = e.clientX - startX; posY = e.clientY - startY; applyTransform();
+      });
+      window.addEventListener('mouseup', () => { if (dragging) { dragging = false; imgEl.style.cursor = 'grab'; } });
+      
+      // Touch support
+      let touchStartX = 0, touchStartY = 0;
+      imgEl.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          touchStartDistance = Math.sqrt(dx * dx + dy * dy);
+        } else if (e.touches.length === 1 && scale > 1) {
+          touchStartX = e.touches[0].clientX - posX;
+          touchStartY = e.touches[0].clientY - posY;
+        }
+      });
+      
+      imgEl.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2) {
+          e.preventDefault();
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const delta = distance / touchStartDistance;
+          scale = Math.max(1, Math.min(4, scale * delta));
+          touchStartDistance = distance;
+          if (scale === 1) { posX = 0; posY = 0; }
+          applyTransform();
+        } else if (e.touches.length === 1 && scale > 1) {
+          posX = e.touches[0].clientX - touchStartX;
+          posY = e.touches[0].clientY - touchStartY;
+          applyTransform();
+        }
+      });
+      
+      imgEl.addEventListener('wheel', (e) => {
+        if (!e.ctrlKey) return;
+        e.preventDefault();
+        const delta = Math.sign(e.deltaY);
+        scale = Math.max(1, Math.min(4, scale - delta * 0.1));
+        if (scale === 1) { posX = 0; posY = 0; }
+        applyTransform();
+      }, { passive: false });
+
+      // Swipe navigation
+      let swipeStartX = 0;
+      overlay.addEventListener('touchstart', (e) => {
+        swipeStartX = e.touches[0].clientX;
+      });
+      
+      overlay.addEventListener('touchend', (e) => {
+        const swipeEndX = e.changedTouches[0].clientX;
+        const swipeDiff = swipeEndX - swipeStartX;
+        if (Math.abs(swipeDiff) > 50 && scale === 1) {
+          if (swipeDiff > 0 && index > 0) {
+            load(index - 1);
+          } else if (swipeDiff < 0 && index < gallery.length - 1) {
+            load(index + 1);
+          }
+        }
+      });
+
+      document.addEventListener('keydown', onKey);
+      document.body.appendChild(overlay);
+
+      // Autohide UI
+      const showUi = () => overlay.classList.remove('slb-ui-hidden');
+      const hideUiLater = () => { 
+        clearTimeout(hideUiTimer); 
+        hideUiTimer = setTimeout(() => overlay.classList.add('slb-ui-hidden'), 3000); 
+      };
+      overlay.addEventListener('mousemove', () => { showUi(); hideUiLater(); });
+      overlay.addEventListener('touchstart', () => { showUi(); hideUiLater(); });
+      hideUiLater();
+
+      load(index);
+    }
+
+    // Open on click
+    document.addEventListener('click', (e) => {
+      const img = e.target.closest(SELECTOR);
+      if (!img) return;
+      const gallery = getGallery();
+      const idx = gallery.indexOf(img);
+      openLightbox(idx);
+    });
+  })();
+</script>
+
+<style>
+/* Alignment helpers for inline images in prose */
+.prose img[data-lightbox][data-align="left"] {
+  float: left;
+  margin: 0.5rem 1rem 0.5rem 0;
+  max-width: min(420px, 50%);
+}
+.prose img[data-lightbox][data-align="right"] {
+  float: right;
+  margin: 0.5rem 0 0.5rem 1rem;
+  max-width: min(420px, 50%);
+}
+.prose img[data-lightbox][data-align="center"] {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media (max-width: 768px) {
+  .prose img[data-lightbox][data-align] {
+    float: none !important;
+    display: block;
+    margin: 0.5rem auto !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Enhanced control buttons */
+.control-btn { 
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #ffffff;
+  border-radius: 0.75rem;
+  padding: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.control-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.control-btn:hover::before {
+  opacity: 1;
+}
+
+.control-btn:hover { 
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.3);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
+}
+
+.control-btn:active {
+  transform: translateY(0) scale(0.98);
+  background: rgba(255,255,255,0.15);
+}
+
+/* Navigation buttons */
+.nav-btn { 
+  padding: 16px;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #ffffff;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.nav-btn:hover { 
+  background: linear-gradient(135deg, rgba(20,20,20,0.8), rgba(10,10,10,0.95));
+  border-color: rgba(255,255,255,0.3);
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,255,255,0.1);
+}
+
+.nav-btn:active {
+  transform: scale(1.05);
+}
+
+/* Controls group styling */
+.controls-group {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.05);
+}
+
+/* Smooth UI transitions */
+.slb-ui-hidden .slb-header, 
+.slb-ui-hidden .slb-controls,
+.slb-ui-hidden .nav-btn { 
+  opacity: 0; 
+  pointer-events: none; 
+  transition: opacity 0.4s ease; 
+}
+
+.slb-header, 
+.slb-controls,
+.nav-btn { 
+  transition: opacity 0.4s ease; 
+}
+
+/* Loading animation enhancement */
+.slb-loading {
+  background: radial-gradient(circle, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+}
+
+/* Fade out animation */
+.slb.fade-out {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* Counter badge enhanced style */
+.slb-counter {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-weight: 600;
+}
+
+/* Close button enhancement */
+.slb-close {
+  border-radius: 0.75rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.slb-close:hover {
+  background: rgba(255,0,0,0.1);
+  border-color: rgba(255,0,0,0.3);
+  box-shadow: 0 0 20px rgba(255,0,0,0.2);
+}
+
+/* Mobile optimizations */
+@media (max-width: 640px) {
+  .control-btn {
+    padding: 8px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+  
+  .controls-group {
+    padding: 1.5rem 1rem;
+    gap: 0.5rem;
+  }
+  
+  .slb-header {
+    margin-bottom: 1rem;
+  }
+  
+  .slb-controls {
+    margin-bottom: 2rem;
+  }
+  
+  .slb-caption {
+    font-size: 1rem;
+  }
+}
+
+/* Glassmorphism effect for overlay */
+.slb {
+  background: linear-gradient(135deg, 
+    rgba(0,0,0,0.9), 
+    rgba(0,0,0,0.95)
+  );
+}
+</style>

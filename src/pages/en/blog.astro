@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import { getCollection } from 'astro:content';
+import BlogCard from "../../components/BlogCard.astro";
+
+const allPosts = (await getCollection('blog')).filter(p => !p.data.draft && (p.data.lang ?? 'ru') === 'en');
+const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+---
+
+<BaseLayout title="Blog — SectLauncher" description="News and updates.">
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <div class="flex items-end justify-between gap-4">
+      <h1 class="text-3xl font-extrabold">Blog</h1>
+    </div>
+
+    <div class="mt-6 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {posts.map((post) => {
+        const slugBase = post.slug.split('/').pop();
+        return (
+          <BlogCard
+            href={`/en/blog/${slugBase}`}
+            title={post.data.title ?? 'Untitled'}
+            description={post.data.description}
+            date={post.data.date}
+            tags={post.data.tags}
+            heroImage={post.data.heroImage}
+            locale="en"
+          />
+        );
+      })}
+    </div>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+

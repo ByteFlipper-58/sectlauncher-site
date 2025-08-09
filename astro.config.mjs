@@ -9,11 +9,21 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  // TODO: замените на реальный домен проекта
-  site: 'https://sectlauncher.app',
+  // Публичный домен сайта
+  site: 'https://sectlauncher.byteflipper.com',
+  i18n: {
+    defaultLocale: 'ru',
+    locales: ['ru', 'en'],
+    routing: {
+      prefixDefaultLocale: true,
+      redirectToDefaultLocale: false
+    }
+  },
   vite: {
     plugins: [tailwindcss()]
   },
+
+  // markdown: { syntaxHighlight: 'shiki' }, // use Astro defaults
 
   integrations: [mdx(), sitemap()]
 });

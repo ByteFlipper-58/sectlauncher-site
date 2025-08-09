@@ -1,0 +1,87 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<BaseLayout title="SectLauncher — Minecraft launcher" description="Mods, profiles, auto‑updates in one click.">
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="hero-bg">
+    <div class="mx-auto max-w-6xl px-4 pt-16 pb-14 grid md:grid-cols-2 gap-10 items-center">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">SectLauncher — a lightweight Minecraft launcher</h1>
+        <p class="mt-4 text-neutral-300 text-lg">Mods, profiles and auto‑updates in one click. More play — less setup.</p>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <a href="/en/download" class="px-5 py-3 rounded-md font-semibold text-neutral-900 bg-emerald-500">Download for Windows</a>
+          <a href="https://github.com/byteflipper-58/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">GitHub</a>
+          <a href="https://discord.gg/" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">Discord</a>
+        </div>
+        <div class="mt-3 text-xs text-neutral-400">Version v0.1.0 · SHA‑256: —</div>
+      </div>
+      <div class="relative">
+        <div class="aspect-video rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden">
+          <div class="w-full h-full grid place-items-center text-neutral-500">Launcher screenshot</div>
+        </div>
+        <div class="absolute -bottom-4 -left-4 px-3 py-1 rounded-md text-xs border border-neutral-700 bg-neutral-900">Safe updates</div>
+      </div>
+    </div>
+  </section>
+
+  <div aria-hidden="true" class="relative">
+    <div class="mx-auto max-w-6xl px-4">
+      <div class="h-px bg-gradient-to-r from-transparent via-neutral-800 to-transparent"></div>
+    </div>
+  </div>
+
+  <section id="features" class="mx-auto max-w-6xl px-4 py-12">
+    <h2 class="text-2xl font-bold mb-6">Why SectLauncher</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
+        <div class="w-10 h-10 rounded-md grid place-items-center bg-emerald-500/10 text-emerald-400">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M21 7 9 19l-6-6 1.5-1.5L9 16l10.5-10.5L21 7Z"/></svg>
+        </div>
+        <h3 class="font-bold mt-3">Mods without pain</h3>
+        <p class="text-neutral-400 mt-1">Presets, auto‑install and compatibility checks (Fabric/Forge/Quilt).</p>
+      </div>
+      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
+        <div class="w-10 h-10 rounded-md grid place-items-center bg-yellow-500/10 text-yellow-400">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M7 3h10v2H7V3Zm12 6H5v2h14V9Zm-2 6H7v2h10v-2Z"/></svg>
+        </div>
+        <h3 class="font-bold mt-3">Profiles</h3>
+        <p class="text-neutral-400 mt-1">Versions, JVM args, modpacks and resources as separate sets.</p>
+      </div>
+      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
+        <div class="w-10 h-10 rounded-md grid place-items-center bg-blue-500/10 text-blue-400">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/></svg>
+        </div>
+        <h3 class="font-bold mt-3">Auto updates</h3>
+        <p class="text-neutral-400 mt-1">Diff patches, checksums and rollback for stability.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="mx-auto max-w-6xl px-4 py-6">
+    <h2 class="text-2xl font-bold mb-4">How it works</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="rounded-xl border border-neutral-800 p-5 bg-neutral-900/40">
+        <div class="w-8 h-8 rounded-full grid place-items-center bg-neutral-800 text-neutral-200 font-bold">1</div>
+        <div class="mt-3 font-semibold">Download & install</div>
+        <p class="text-neutral-400 mt-1">Windows available; macOS/Linux planned.</p>
+      </div>
+      <div class="rounded-xl border border-neutral-800 p-5 bg-neutral-900/40">
+        <div class="w-8 h-8 rounded-full grid place-items-center bg-neutral-800 text-neutral-200 font-bold">2</div>
+        <div class="mt-3 font-semibold">Choose version & mod profile</div>
+        <p class="text-neutral-400 mt-1">Fabric/Forge/Quilt, JVM args and resources in a few clicks.</p>
+      </div>
+      <div class="rounded-xl border border-neutral-800 p-5 bg-neutral-900/40">
+        <div class="w-8 h-8 rounded-full grid place-items-center bg-neutral-800 text-neutral-200 font-bold">3</div>
+        <div class="mt-3 font-semibold">Press “Play”</div>
+        <p class="text-neutral-400 mt-1">Auto updates and rollbacks to avoid wasting time.</p>
+      </div>
+    </div>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+

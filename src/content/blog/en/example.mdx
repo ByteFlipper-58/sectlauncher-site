@@ -1,0 +1,135 @@
+---
+title: "Content example"
+description: "Test post with all supported content types"
+date: 2025-08-09
+tags: ["example", "docs", "test"]
+heroImage: "/web-app-manifest-512x512.png"
+media:
+  - type: image
+    src: "/web-app-manifest-512x512.png"
+    alt: "Screenshot 1"
+  - type: image
+    src: "/web-app-manifest-192x192.png"
+    alt: "Screenshot 2"
+  - type: video
+    src: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+    alt: "Video demo"
+author:
+  name: "Sect Team"
+  avatar: "/favicon-96x96.png"
+  role: "Maintainer"
+  links:
+    - label: "GitHub"
+      url: "https://github.com/byteflipper-58/sectlauncher"
+    - label: "Website"
+      url: "https://sectlauncher.byteflipper.com"
+lang: en
+tKey: example
+---
+
+# H1 Heading
+
+Short intro paragraph with a link to the [home](/en/) and inline code `npm run build`.
+
+> A blockquote to emphasize important information.
+
+---
+
+## H2 Lists
+
+- Regular item
+- Another item
+  - Nested sub‑item
+
+1. Ordered item
+2. Second item
+
+- [ ] Todo incomplete
+- [x] Todo complete
+
+---
+
+## H2 Code
+
+```bash
+echo "Hello SectLauncher"
+```
+
+```ts
+type Version = {
+  id: string;
+  stable: boolean;
+}
+
+export function selectStable(versions: Version[]): Version[] {
+  return versions.filter(v => v.stable);
+}
+```
+
+---
+
+## H2 Callout blocks
+
+<Callout type="note" title="Note">
+Neutral note example.
+</Callout>
+
+<Callout type="tip" title="Tip">
+Use profiles to keep different mod sets.
+</Callout>
+
+<Callout type="warning" title="Warning">
+Back up your configs before updating.
+</Callout>
+
+---
+
+## H2 Table (Markdown)
+
+| Feature         | Status   |
+| --------------- | -------- |
+| Authentication  | Planned  |
+| Mods/Modpacks   | Planned  |
+| Auto‑updates    | Planned  |
+
+---
+
+## H2 Table (HTML)
+
+<table>
+  <thead>
+    <tr><th>Key</th><th>Value</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>OS</td><td>Windows</td></tr>
+    <tr><td>Arch</td><td>x64</td></tr>
+  </tbody>
+</table>
+
+---
+
+## H2 Images and lightbox
+
+Plain image:
+
+<img src="/web-app-manifest-192x192.png" alt="Icon" />
+
+Lightbox image (click to zoom):
+
+<img src="/web-app-manifest-512x512.png" alt="Preview" data-lightbox />
+
+---
+
+## H2 Video in body
+
+<video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" controls width="640"></video>
+
+---
+
+## H2 Misc
+
+External link: <a href="https://www.minecraft.net/" target="_blank" rel="noopener">Minecraft</a>.
+
+Another paragraph to ensure reading time calculation has text.
+
+

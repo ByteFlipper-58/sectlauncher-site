@@ -1,0 +1,30 @@
+---
+interface Props { url: string; title: string; text?: string }
+const { url, title, text }: Props = Astro.props;
+const tg = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+const tw = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`;
+const wa = `https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`;
+---
+<div class="flex items-center gap-2">
+  <button type="button" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60 hover:bg-neutral-900" id="ws-btn">Share</button>
+  <a href={tg} target="_blank" rel="noopener" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60 hover:bg-neutral-900">TG</a>
+  <a href={tw} target="_blank" rel="noopener" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60 hover:bg-neutral-900">Twitter</a>
+  <a href={wa} target="_blank" rel="noopener" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60 hover:bg-neutral-900">WhatsApp</a>
+  <script is:inline>
+    const wsBtn = document.getElementById('ws-btn');
+    wsBtn?.addEventListener('click', async () => {
+      try {
+        const shareData = { url: `${url}`, title: `${title}`, text: `${text ?? ''}` };
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else {
+          await navigator.clipboard?.writeText(shareData.url);
+          wsBtn.textContent = 'Copied';
+          setTimeout(() => (wsBtn.textContent = 'Share'), 1200);
+        }
+      } catch {}
+    });
+  </script>
+</div>
+
+

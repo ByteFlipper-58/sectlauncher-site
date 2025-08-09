@@ -1,0 +1,140 @@
+---
+title: "Open beta EN"
+description: "The first blog post of SectLauncher"
+date: 2025-08-08
+tags: ["beta", "announcement"]
+heroImage: "/favicon.svg"
+media:
+  - type: image
+    src: "/web-app-manifest-512x512.png"
+    alt: "Screenshot 1"
+  - type: image
+    src: "/web-app-manifest-192x192.png"
+    alt: "Screenshot 2"
+author:
+  name: "Sect Team"
+  avatar: "/favicon-96x96.png"
+  role: "Maintainer"
+  links:
+    - label: "GitHub"
+      url: "https://github.com/byteflipper-58/sectlauncher"
+    - label: "Website"
+      url: "https://sectlauncher.byteflipper.com"
+lang: en
+tKey: open-beta
+---
+
+## Hello!
+
+SectLauncher is launching a blog. We'll share release news, roadmap and tips.
+
+```bash
+./gradlew build && ./gradlew run
+```
+
+# SectLauncher
+
+Cross‑platform Minecraft launcher with a modern UI and modular architecture.
+
+## 📖 Overview
+
+SectLauncher is a modern Minecraft launcher built with Clean Architecture and Kotlin Multiplatform. It aims to provide a stable, convenient experience for managing game versions, mods and servers.
+
+### ✨ Features
+
+**MVP:**
+- 🔐 Mojang login
+- 📦 Select and download Minecraft versions
+- 🚀 Launch the game
+- 🔄 Offline mode
+
+**Additionally:**
+- 👤 Multiple profiles
+- 🔧 Mod & modpack management (CurseForge)
+- 🔄 Auto‑updates for launcher and game
+- 📰 News and updates from servers
+- 🌐 Server support (listing, connect)
+
+---
+
+## 🧩 Modularity
+Each source parser (Mojang API, CurseForge, Modrinth) is a separate module for easy extension and maintenance.
+
+## 🛠️ Tech stack
+
+- **Language**: Kotlin
+- **Platform**: Kotlin Multiplatform
+- **UI**: Jetpack Compose Desktop
+- **Build**: Gradle
+- **Architecture**: Clean Architecture
+- **Testing**: Unit tests for use cases
+
+## 🚀 Setup & Run
+
+### Requirements
+- JDK 17+
+- Gradle 8.0+
+
+### Clone
+```bash
+git clone https://github.com/your-username/SectLauncher.git
+cd SectLauncher
+```
+
+### Build
+```bash
+./gradlew build
+```
+
+### Run
+```bash
+./gradlew run
+```
+
+## Rich content showcase
+
+<Callout type="tip" title="Pro tip">
+You can manage mods with ease and keep versions in profiles.
+</Callout>
+
+<table>
+  <thead>
+    <tr><th>Feature</th><th>Status</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Auth</td><td>Planned</td></tr>
+    <tr><td>Mods</td><td>Planned</td></tr>
+  </tbody>
+</table>
+
+<img src="/web-app-manifest-512x512.png" alt="Preview" data-lightbox />
+
+
+## 🗺️ Roadmap
+
+### 1.0 (MVP)
+- [ ] Base architecture
+- [ ] Mojang auth
+- [ ] Version downloads
+- [ ] Launch game
+- [ ] Basic UI
+
+### 1.1
+- [ ] Multi‑profiles
+- [ ] Mod management
+- [ ] CurseForge integration
+
+### 2.0
+- [ ] macOS support
+- [ ] Linux support
+- [ ] Modrinth integration
+- [ ] Auto‑updates
+
+## 🤝 Contribute
+
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+

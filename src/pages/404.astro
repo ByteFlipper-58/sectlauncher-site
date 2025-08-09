@@ -1,0 +1,89 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+const locale = Astro.currentLocale ?? 'ru';
+const t = (key: string): string => {
+  const dict: Record<string, Record<string, string>> = {
+    ru: {
+      title: 'Ой... 404 — SectLauncher',
+      h1: 'Крипер подкрался незаметно… и эта страница — бум 💥',
+      p: 'Не переживай, респавн рядом. Куда отправимся?',
+      home: '🏠 На главную',
+      blog: '📝 Блог',
+      dl: '⬇️ Скачать',
+    },
+    en: {
+      title: 'Oops... 404 — SectLauncher',
+      h1: 'A creeper snuck up on us… and this page went boom 💥',
+      p: 'No worries, respawn is near. Where to?',
+      home: '🏠 Home',
+      blog: '📝 Blog',
+      dl: '⬇️ Download',
+    },
+  };
+  return (dict[locale] && dict[locale][key]) || dict.ru[key] || key;
+};
+---
+
+<BaseLayout title={t('title')} description="404">
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="relative overflow-hidden">
+    <div class="glitch-bg fixed inset-0 z-[-1] pointer-events-none" aria-hidden="true"></div>
+    <div class="relative z-10 mx-auto max-w-6xl px-4 py-24 text-center">
+      <div class="glitch" data-text="404">404</div>
+      <h1 class="mt-4 text-2xl font-bold">{t('h1')}</h1>
+      <p class="mt-2 text-neutral-400">{t('p')}</p>
+
+      <div class="mt-6 flex items-center justify-center gap-3">
+        <a href="/" class="px-4 py-2.5 rounded-md text-neutral-900 font-semibold bg-emerald-500">{t('home')}</a>
+        <a href="/blog" class="px-4 py-2.5 rounded-md border border-neutral-700 hover:bg-neutral-800">{t('blog')}</a>
+        <a href="/download" class="px-4 py-2.5 rounded-md border border-neutral-700 hover:bg-neutral-800">{t('dl')}</a>
+      </div>
+    </div>
+
+    <style>
+      .glitch-bg {
+        opacity:.08;
+        background-image:
+          linear-gradient(90deg, rgba(52,211,153,.6) 1px, transparent 1px),
+          linear-gradient(rgba(52,211,153,.6) 1px, transparent 1px);
+        background-size: 24px 24px, 24px 24px;
+        animation: drift 14s linear infinite;
+      }
+      .glitch {
+        position: relative; display:inline-block; font-size: 9rem; line-height: .9; font-weight: 900;
+        color:#e5e7eb; letter-spacing: .04em; text-shadow: 0 2px 24px rgba(16,16,16,.6);
+        animation: shake 5.5s ease-in-out infinite;
+      }
+      .glitch::before, .glitch::after {
+        content: attr(data-text); position:absolute; left:0; top:0; width:100%; height:100%;
+        clip-path: polygon(0% 2%, 100% 2%, 100% 46%, 0% 46%);
+      }
+      .glitch::before { color:#34d399; transform: translate(2px, -2px); animation: glitch-1 2s infinite linear alternate-reverse; }
+      .glitch::after  { color:#fbbf24; transform: translate(-2px, 2px); animation: glitch-2 1.6s infinite linear alternate-reverse; }
+
+      @keyframes glitch-1 { 0%{clip-path: polygon(0 10%,100% 12%,100% 22%,0 20%);} 50%{clip-path: polygon(0 60%,100% 62%,100% 78%,0 76%);} 100%{clip-path: polygon(0 32%,100% 34%,100% 44%,0 42%);} }
+      @keyframes glitch-2 { 0%{clip-path: polygon(0 70%,100% 72%,100% 86%,0 84%);} 50%{clip-path: polygon(0 6%,100% 8%,100% 18%,0 16%);} 100%{clip-path: polygon(0 40%,100% 42%,100% 56%,0 54%);} }
+      @keyframes drift { to { background-position: 120px 0, 0 120px; } }
+      @keyframes shake {
+        0%, 100% { transform: translate(0,0) rotate(0deg); }
+        10% { transform: translate(1px,-1px) rotate(.4deg); }
+        20% { transform: translate(-1px,1px) rotate(-.4deg); }
+        30% { transform: translate(2px,0) rotate(.2deg); }
+        40% { transform: translate(-1px,-1px) rotate(-.2deg); }
+        50% { transform: translate(0,1px) rotate(.2deg); }
+        60% { transform: translate(1px,0) rotate(-.2deg); }
+        70% { transform: translate(-1px,1px) rotate(.2deg); }
+        80% { transform: translate(1px,-1px) rotate(-.2deg); }
+        90% { transform: translate(0,0) rotate(0deg); }
+      }
+      @media (max-width: 640px){ .glitch{ font-size: 5.5rem; } }
+      @media (prefers-reduced-motion: reduce){ .glitch, .glitch::before, .glitch::after, .glitch-bg { animation: none !important; } }
+    </style>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+

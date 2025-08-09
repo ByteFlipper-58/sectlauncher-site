@@ -1,0 +1,24 @@
+---
+interface Props { locale: 'ru' | 'en' }
+const { locale }: Props = Astro.props;
+const t = (key: string) => {
+  const ru = { title: 'Подписка', text: 'Следите за новостями в Telegram или Discord', tg: 'Telegram', ds: 'Discord' } as const;
+  const en = { title: 'Subscribe', text: 'Follow updates on Telegram or Discord', tg: 'Telegram', ds: 'Discord' } as const;
+  return (locale === 'ru' ? ru : en)[key as keyof typeof ru];
+}
+---
+<div class="mx-auto w-full lg:max-w-[70%] px-4 mt-10 mb-10">
+  <div class="rounded-xl border border-neutral-800 bg-neutral-900/60 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_0_0_1px_rgba(0,0,0,0.2)]">
+    <div>
+      <div class="font-bold">{t('title')}</div>
+      <div class="text-neutral-400">{t('text')}</div>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="https://t.me/" class="px-4 py-2 rounded-md border border-neutral-800 bg-neutral-950 hover:bg-neutral-900">{t('tg')}</a>
+      <a href="https://discord.gg/" class="px-4 py-2 rounded-md border border-neutral-800 bg-neutral-950 hover:bg-neutral-900">{t('ds')}</a>
+    </div>
+  </div>
+  <slot />
+  </div>
+
+

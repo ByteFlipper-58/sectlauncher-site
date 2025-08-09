@@ -1,0 +1,20 @@
+---
+---
+<div id="rpbar" class="fixed top-0 left-0 right-0 h-0.5 bg-transparent z-50">
+  <div id="rpbar-line" class="h-full bg-emerald-500 w-0"></div>
+  <script is:inline>
+    const line = document.getElementById('rpbar-line');
+    function update(){
+      const h = document.documentElement;
+      const scrollTop = h.scrollTop || document.body.scrollTop;
+      const height = h.scrollHeight - h.clientHeight;
+      const p = height > 0 ? Math.min(100, (scrollTop / height) * 100) : 0;
+      if (line) line.style.width = p + '%';
+    }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+  </script>
+  </div>
+
+

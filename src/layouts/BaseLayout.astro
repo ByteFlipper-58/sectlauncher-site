@@ -1,24 +1,36 @@
 ---
 import "../styles/global.css";
 const { title = "SectLauncher", description = "Кроссплатформенный лаунчер Minecraft" } = Astro.props;
+const isDev = import.meta.env.DEV;
 ---
-<html lang="ru" class="bg-neutral-950 text-neutral-100">
+<html lang={Astro.currentLocale ?? 'ru'} class="bg-neutral-950 text-neutral-100">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content={isDev ? 'noindex, nofollow' : 'index, follow'} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <link rel="icon" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="SectLauncher" />
+    <link rel="manifest" href="/site.webmanifest" />
     <style>
       .hero-bg{background:radial-gradient(1200px 600px at 20% 0%, rgba(46,204,113,.25), transparent 60%),radial-gradient(900px 500px at 80% 10%, rgba(241,196,15,.18), transparent 60%)}
     </style>
+    <slot name="head" />
+    <script is:inline>
+      try { localStorage.setItem('pref_locale', (Astro.currentLocale ?? 'ru')); } catch {}
+    </script>
   </head>
   <body class="antialiased min-h-screen flex flex-col">
     <slot name="header" />
     <main class="flex-1"><slot /></main>
     <slot name="footer" />
+    <script type="module">import '../scripts/firebase.ts';</script>
   </body>
 </html>
 

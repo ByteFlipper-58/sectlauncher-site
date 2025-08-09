@@ -1,19 +1,130 @@
 ---
+const currentPath = Astro.url.pathname;
+const locale = Astro.currentLocale ?? 'ru';
+const base = locale === 'ru' ? '/ru' : `/${locale}`;
+const links = [
+  { href: `${base}/`, label: locale === 'en' ? 'Home' : 'Главная' },
+  { href: `${base}/blog`, label: locale === 'en' ? 'Blog' : 'Блог' },
+  { href: `${base}/download`, label: locale === 'en' ? 'Download' : 'Скачать' },
+  { href: `${base}/about`, label: locale === 'en' ? 'About' : 'О проекте' },
+];
+const isActive = (href: string) => currentPath === href || (href !== `${base}/` && currentPath.startsWith(href));
+const switchPath = (target: 'ru' | 'en') => {
+  const startsWithLocale = /^\/(ru|en)(\/|$)/.test(currentPath);
+  const next = startsWithLocale
+    ? currentPath.replace(/^\/(ru|en)/, `/${target}`)
+    : `/${target}${currentPath.startsWith('/') ? '' : '/'}${currentPath}`;
+  return next;
+};
+const navAria = locale === 'en' ? 'Main navigation' : 'Главная навигация';
 ---
 
-<header class="sticky top-0 z-40 backdrop-blur bg-neutral-950/70 border-b border-neutral-800">
-  <div class="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-2">
+<header data-header class="sticky top-0 z-40 backdrop-blur bg-neutral-950/70 border-b border-neutral-800/80 supports-[backdrop-filter]:bg-neutral-950/60 transition-shadow">
+  <div class="mx-auto max-w-6xl px-4 h-14 flex items-center justify-between gap-3">
+    <a href={base + '/'} class="flex items-center gap-2 shrink-0" aria-label="SectLauncher" rel="canonical">
       <div class="w-7 h-7 rounded-sm bg-gradient-to-br from-emerald-500 to-yellow-400"></div>
       <span class="font-extrabold">SectLauncher</span>
     </a>
-    <nav class="hidden md:flex items-center gap-6 text-sm">
-      <a href="/" class="hover:text-white text-neutral-300">Главная</a>
-      <a href="/blog" class="hover:text-white text-neutral-300">Блог</a>
-      <a href="/download" class="hover:text-white text-neutral-300">Скачать</a>
-      <a href="/about" class="hover:text-white text-neutral-300">О проекте</a>
+
+    <nav class="hidden md:flex items-center gap-1 text-sm rounded-lg bg-neutral-900/40 px-1.5 py-1" aria-label={navAria}>
+      {links.map((l) => (
+        <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}
+          class={`px-3 py-1.5 rounded-md transition-all ${isActive(l.href) ? 'bg-emerald-500/10 text-emerald-400 font-medium' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white'}`}>{l.label}</a>
+      ))}
     </nav>
+
+    <div class="flex items-center gap-2">
+      <div class="hidden md:flex items-center gap-1 text-xs rounded-lg bg-neutral-900/40 p-0.5">
+        <a href={switchPath('ru')} class={`px-2.5 py-1 rounded-md transition-all ${locale === 'ru' ? 'bg-neutral-800 text-white' : 'hover:bg-neutral-800'}`}>RU</a>
+        <span class="text-neutral-600">/</span>
+        <a href={switchPath('en')} class={`px-2.5 py-1 rounded-md transition-all ${locale === 'en' ? 'bg-neutral-800 text-white' : 'hover:bg-neutral-800'}`}>EN</a>
+      </div>
+      <a href={`${base}/download`} class="hidden md:inline-flex px-4 py-1.5 rounded-lg text-neutral-900 font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-emerald-500/20">{locale === 'en' ? 'Download' : 'Скачать'}</a>
+      <a href="https://github.com/byteflipper-58/sectlauncher" class="hidden md:inline-flex p-2 rounded-lg hover:bg-neutral-800 transition-colors" aria-label="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-neutral-300 hover:text-white"><path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.87 3.16 9 7.55 10.45.55.1.75-.25.75-.55v-2c-3.07.67-3.72-1.3-3.72-1.3-.52-1.32-1.27-1.67-1.27-1.67-1.04-.7.07-.68.07-.68 1.14.08 1.74 1.17 1.74 1.17 1.02 1.73 2.68 1.23 3.33.94.1-.74.4-1.23.72-1.51-2.45-.28-5.02-1.22-5.02-5.42 0-1.2.43-2.18 1.14-2.95-.12-.28-.5-1.42.1-2.96 0 0 .95-.3 3.1 1.13.9-.25 1.86-.37 2.82-.37.96 0 1.92.12 2.82.37 2.15-1.43 3.1-1.13 3.1-1.13.6 1.54.22 2.68.1 2.96.7.77 1.14 1.75 1.14 2.95 0 4.21-2.58 5.14-5.03 5.41.42.36.78 1.08.78 2.19v3.25c0 .3.2.65.76.54 4.38-1.46 7.54-5.58 7.54-10.45C23.1 5.33 18.27.5 12 .5Z"/></svg>
+      </a>
+      <a href="https://discord.gg/" class="hidden md:inline-flex p-2 rounded-lg hover:bg-neutral-800 transition-colors" aria-label="Discord">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-neutral-300 hover:text-white"><path d="M20.32 4.37A18.16 18.16 0 0 0 15.9 3c-.2.37-.43.87-.6 1.28a16.65 16.65 0 0 0-6.6 0c-.18-.43-.4-.9-.62-1.28-1.5.25-3 .69-4.4 1.37C.86 8.12-.1 11.74.03 15.32a18.3 18.3 0 0 0 5.58 2.8c.45-.62.85-1.28 1.2-1.97-.66-.25-1.3-.57-1.9-.95.16-.12.32-.25.46-.39 3.7 1.73 7.7 1.73 11.34 0 .15.14.3.27.46.39-.6.38-1.25.7-1.92.95.36.7.77 1.36 1.23 1.97a18.22 18.22 0 0 0 5.57-2.8c.15-3.2-.48-6.8-2.73-10.95ZM8.85 13.67c-1 0-1.84-.92-1.84-2.05s.82-2.06 1.84-2.06 1.87.92 1.84 2.06-.83 2.05-1.84 2.05Zm6.3 0c-1 0-1.84-.92-1.84-2.05s.82-2.06 1.84-2.06 1.87.92 1.84 2.06-.83 2.05-1.84 2.05Z"/></svg>
+      </a>
+      <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-neutral-800 text-neutral-200 transition-colors active:scale-95" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
+        <svg id="menu-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 transition-transform duration-300">
+          <path d="M3 6h18v2H3V6Zm0 5h18v2H3v-2Zm0 5h18v2H3v-2Z"/>
+        </svg>
+        <svg id="close-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 hidden">
+          <path d="M6.225 4.811a1 1 0 00-1.414 1.414L10.586 12 4.81 17.775a1 1 0 101.414 1.414L12 13.414l5.775 5.775a1 1 0 001.414-1.414L13.414 12l5.775-5.775a1 1 0 00-1.414-1.414L12 10.586 6.225 4.81z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" data-open="false" class="md:hidden overflow-hidden max-h-0 transition-all duration-300 ease-out border-t border-neutral-800 bg-neutral-950/95 backdrop-blur-sm">
+    <div class="px-4 py-3 flex flex-col gap-2 text-base">
+      {links.map((l) => (
+        <a href={l.href} class={`px-3 py-2.5 rounded-lg transition-all ${isActive(l.href) ? 'bg-emerald-500/10 text-emerald-400 font-medium' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white active:scale-95'}`}>{l.label}</a>
+      ))}
+      <a href={`${base}/download`} class="mt-2 px-4 py-2.5 rounded-lg text-neutral-900 font-semibold bg-gradient-to-r from-emerald-500 to-emerald-600 text-center hover:brightness-110 active:scale-95 transition-all shadow-lg shadow-emerald-500/20">{locale === 'en' ? 'Download' : 'Скачать'}</a>
+      <div class="flex gap-3 mt-2">
+        <div class="flex items-center gap-1 text-sm bg-neutral-800/50 rounded-lg px-1 py-0.5">
+          <a href={switchPath('ru')} class={`px-2.5 py-1 rounded-md transition-all ${locale === 'ru' ? 'bg-neutral-700 text-white' : 'hover:bg-neutral-700/50'}`}>RU</a>
+          <span class="text-neutral-600">/</span>
+          <a href={switchPath('en')} class={`px-2.5 py-1 rounded-md transition-all ${locale === 'en' ? 'bg-neutral-700 text-white' : 'hover:bg-neutral-700/50'}`}>EN</a>
+        </div>
+        <a href="https://github.com/byteflipper-58/sectlauncher" class="flex-1 px-3 py-2 rounded-lg bg-neutral-800/50 text-center hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.87 3.16 9 7.55 10.45.55.1.75-.25.75-.55v-2c-3.07.67-3.72-1.3-3.72-1.3-.52-1.32-1.27-1.67-1.27-1.67-1.04-.7.07-.68.07-.68 1.14.08 1.74 1.17 1.74 1.17 1.02 1.73 2.68 1.23 3.33.94.1-.74.4-1.23.72-1.51-2.45-.28-5.02-1.22-5.02-5.42 0-1.2.43-2.18 1.14-2.95-.12-.28-.5-1.42.1-2.96 0 0 .95-.3 3.1 1.13.9-.25 1.86-.37 2.82-.37.96 0 1.92.12 2.82.37 2.15-1.43 3.1-1.13 3.1-1.13.6 1.54.22 2.68.1 2.96.7.77 1.14 1.75 1.14 2.95 0 4.21-2.58 5.14-5.03 5.41.42.36.78 1.08.78 2.19v3.25c0 .3.2.65.76.54 4.38-1.46 7.54-5.58 7.54-10.45C23.1 5.33 18.27.5 12 .5Z"/></svg>
+          GitHub
+        </a>
+        <a href="https://discord.gg/" class="flex-1 px-3 py-2 rounded-lg bg-neutral-800/50 text-center hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M20.32 4.37A18.16 18.16 0 0 0 15.9 3c-.2.37-.43.87-.6 1.28a16.65 16.65 0 0 0-6.6 0c-.18-.43-.4-.9-.62-1.28-1.5.25-3 .69-4.4 1.37C.86 8.12-.1 11.74.03 15.32a18.3 18.3 0 0 0 5.58 2.8c.45-.62.85-1.28 1.2-1.97-.66-.25-1.3-.57-1.9-.95.16-.12.32-.25.46-.39 3.7 1.73 7.7 1.73 11.34 0 .15.14.3.27.46.39-.6.38-1.25.7-1.92.95.36.7.77 1.36 1.23 1.97a18.22 18.22 0 0 0 5.57-2.8c.15-3.2-.48-6.8-2.73-10.95ZM8.85 13.67c-1 0-1.84-.92-1.84-2.05s.82-2.06 1.84-2.06 1.87.92 1.84 2.06-.83 2.05-1.84 2.05Zm6.3 0c-1 0-1.84-.92-1.84-2.05s.82-2.06 1.84-2.06 1.87.92 1.84 2.06-.83 2.05-1.84 2.05Z"/></svg>
+          Discord
+        </a>
+      </div>
+    </div>
   </div>
 </header>
+
+<script is:inline>
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const menuIcon = document.getElementById('menu-icon');
+  const closeIcon = document.getElementById('close-icon');
+  const header = document.querySelector('[data-header]');
+  
+  function toggleMenu(){
+    const open = menu.dataset.open === 'true';
+    const next = (!open).toString();
+    menu.dataset.open = next;
+    btn.setAttribute('aria-expanded', next);
+    
+    if (next === 'true') {
+      menu.style.maxHeight = menu.scrollHeight + 'px';
+      menuIcon.classList.add('hidden');
+      closeIcon.classList.remove('hidden');
+    } else {
+      menu.style.maxHeight = '0';
+      menuIcon.classList.remove('hidden');
+      closeIcon.classList.add('hidden');
+    }
+  }
+  
+  btn?.addEventListener('click', toggleMenu);
+  
+  // Закрыть меню при клике на ссылку
+  const mobileLinks = menu?.querySelectorAll('a');
+  mobileLinks?.forEach(link => {
+    link.addEventListener('click', () => {
+      if (menu.dataset.open === 'true') {
+        toggleMenu();
+      }
+    });
+  });
+  
+  // Тень при скролле
+  const onScroll = () => {
+    if (window.scrollY > 4) header?.classList.add('shadow-sm');
+    else header?.classList.remove('shadow-sm');
+  };
+  document.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+</script>
 
 

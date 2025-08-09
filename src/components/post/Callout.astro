@@ -1,0 +1,11 @@
+---
+interface Props { type?: 'note' | 'tip' | 'warning'; title?: string }
+const { type = 'note', title }: Props = Astro.props;
+const color = type === 'tip' ? 'emerald' : type === 'warning' ? 'yellow' : 'neutral';
+---
+<div class={`block w-full my-6 border-l-2 pl-4 pr-4 py-3 rounded border-${color}-500/60 bg-${color}-500/10`}>
+  {title && (<div class="font-semibold mb-1">{title}</div>)}
+  <slot />
+</div>
+
+

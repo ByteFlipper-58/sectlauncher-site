@@ -1,3 +1,45 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Astro build cache
+.astro/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+vite-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Editors/IDE
+.vscode/
+.idea/
+
+# Misc caches
+.cache/
+.parcel-cache/
+.turbo/
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+.eslintcache
+
+# Firebase local state
+.firebase/
+
 # build output
 dist/
 # generated types

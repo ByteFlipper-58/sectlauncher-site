@@ -1,0 +1,140 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Header from "../../../components/Header.astro";
+import Footer from "../../../components/Footer.astro";
+import PostBanner from "../../../components/post/PostBanner.astro";
+import PostNav from "../../../components/post/PostNav.astro";
+import MediaCarousel from "../../../components/post/MediaCarousel.astro";
+import Breadcrumbs from "../../../components/Breadcrumbs.astro";
+import ShareButtons from "../../../components/post/ShareButtons.astro";
+import AuthorCard from "../../../components/post/AuthorCard.astro";
+import TOC from "../../../components/post/TOC.astro";
+import SEOJsonLd from "../../../components/post/SEOJsonLd.astro";
+import TableStyled from "../../../components/post/TableStyled.astro";
+import ImageLightbox from "../../../components/post/ImageLightbox.astro";
+import ReadingProgressBar from "../../../components/post/ReadingProgressBar.astro";
+import SubscribeCTA from "../../../components/post/SubscribeCTA.astro";
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter((p) => (p.data.lang ?? 'ru') === 'ru' && !p.data.draft)
+    .map((post) => {
+      const slugBase = post.slug.split('/').pop();
+      return {
+        params: { slug: slugBase },
+        props: { post },
+      };
+    });
+}
+
+const { post } = Astro.props;
+const { title, description, date, heroImage, tags, tKey, media, author } = post.data;
+const { Content } = await post.render();
+const locale: 'ru' | 'en' = 'ru';
+
+// Alt/Canonical helpers
+const baseHref = Astro.site?.href ?? 'https://sectlauncher.byteflipper.com/';
+function toAbsoluteUrl(pathOrUrl: string | undefined): string | undefined {
+  if (!pathOrUrl) return undefined;
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  const base = baseHref.endsWith('/') ? baseHref.slice(0, -1) : baseHref;
+  const path = pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`;
+  return `${base}${path}`;
+}
+
+// Find alternate language post by tKey if available
+const allPostsForAlt = await getCollection('blog');
+const altPost = tKey
+  ? allPostsForAlt.find((p) => (p.data.lang ?? 'ru') === 'en' && p.data.tKey === tKey && !p.data.draft)
+  : undefined;
+const slugBase = post.slug.split('/').pop();
+const canonicalPath = `/ru/blog/${slugBase}`;
+const canonicalUrl = toAbsoluteUrl(canonicalPath);
+const altHrefEn = altPost ? toAbsoluteUrl(`/en/blog/${altPost.slug.split('/').pop()}`) : undefined;
+
+// OG/Twitter helpers
+const ogLocale = 'ru_RU';
+const publishedISO = new Date(date).toISOString();
+const ogImage = toAbsoluteUrl(heroImage) ?? toAbsoluteUrl('/web-app-manifest-512x512.png');
+
+// Соседние посты той же локали
+const allPosts = await getCollection('blog');
+const sameLocalePosts = allPosts
+  .filter((p) => (p.data.lang ?? 'ru') === locale && !p.data.draft)
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const index = sameLocalePosts.findIndex((p) => p.slug.split('/').pop() === slugBase);
+const prev = index > 0 ? sameLocalePosts[index - 1] : undefined;
+const next = index >= 0 && index < sameLocalePosts.length - 1 ? sameLocalePosts[index + 1] : undefined;
+
+function calcReadingTime(text: string){
+  const words = (text || '').trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return { minutes, words };
+}
+const reading = calcReadingTime(post.body as string);
+---
+
+<BaseLayout title={`${title} — Блог SectLauncher`} description={description ?? ''}>
+  <Fragment slot="header"><Header /></Fragment>
+  <Fragment slot="head">
+    {canonicalUrl && (<link rel="canonical" href={canonicalUrl} />)}
+    {altHrefEn && (
+      <>
+        <link rel="alternate" hreflang="en" href={altHrefEn} />
+        <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+      </>
+    )}
+    <meta property="og:type" content="article" />
+    {canonicalUrl && (<meta property="og:url" content={canonicalUrl} />)}
+    <meta property="og:title" content={title} />
+    {description && (<meta property="og:description" content={description} />)}
+    {ogImage && (<meta property="og:image" content={ogImage} />)}
+    <meta property="og:site_name" content="SectLauncher" />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="article:published_time" content={publishedISO} />
+    {Array.isArray(tags) && tags.map((t) => (<meta property="article:tag" content={t} />))}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && (<meta name="twitter:description" content={description} />)}
+    {ogImage && (<meta name="twitter:image" content={ogImage} />)}
+    {canonicalUrl && (
+      <SEOJsonLd url={canonicalUrl} title={title} description={description} datePublished={publishedISO} authorName={author?.name} image={ogImage} />
+    )}
+  </Fragment>
+
+  <ReadingProgressBar />
+  <section class="mx-auto w-full lg:max-w-[70%] px-4 pt-8">
+    <Breadcrumbs items={[{ href: '/ru/', label: 'Главная' }, { href: '/ru/blog', label: 'Блог' }, { label: title }]} />
+  </section>
+
+  <PostBanner title={title} date={date} heroImage={heroImage} tags={tags} locale={locale} readingMinutes={reading.minutes} />
+
+  <MediaCarousel items={media} />
+
+  <article class="mx-auto w-full lg:max-w-[70%] px-4 py-8 prose prose-invert">
+    <ImageLightbox />
+    <Content components={{ Callout: (await import('../../../components/post/Callout.astro')).default, table: (await import('../../../components/post/TableStyled.astro')).default }} />
+    <TableStyled />
+  </article>
+
+  <section class="mx-auto w-full lg:max-w-[70%] px-4 -mt-4 pb-4">
+    {canonicalUrl && (<ShareButtons url={canonicalUrl} title={title} text={description} />)}
+  </section>
+
+  <AuthorCard author={author} />
+  <div class="relative z-10">
+    <SubscribeCTA locale={locale} />
+  </div>
+
+  <PostNav
+    locale={locale}
+    prev={prev ? { href: `/ru/blog/${prev.slug.split('/').pop()}`, title: prev.data.title } : undefined}
+    translate={altPost ? { href: `/en/blog/${altPost.slug.split('/').pop()}`, title: altPost.data.title } : undefined}
+    next={next ? { href: `/ru/blog/${next.slug.split('/').pop()}`, title: next.data.title } : undefined}
+  />
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+

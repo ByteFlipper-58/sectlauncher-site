@@ -1,0 +1,31 @@
+---
+interface Link { label: string; url: string }
+interface Author { name: string; avatar?: string; role?: string; links?: Link[] }
+interface Props { author?: Author }
+const { author }: Props = Astro.props;
+if (!author) { /* no render */ }
+---
+{author && (
+  <div class="mx-auto w-full lg:max-w-[70%] px-4 mt-8">
+    <div class="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 flex items-center gap-4">
+      {author.avatar ? (
+        <img src={author.avatar} alt={author.name} class="w-12 h-12 rounded-full object-cover" />
+      ) : (
+        <div class="w-12 h-12 rounded-full bg-neutral-800 grid place-items-center text-neutral-400">{author.name.slice(0,1)}</div>
+      )}
+      <div class="flex-1">
+        <div class="font-semibold">{author.name}</div>
+        {author.role && (<div class="text-sm text-neutral-400">{author.role}</div>)}
+        {author.links && author.links.length > 0 && (
+          <div class="mt-2 flex flex-wrap gap-2 text-sm">
+            {author.links.map((l) => (
+              <a href={l.url} target="_blank" rel="noopener" class="px-2 py-1 rounded border border-neutral-800 hover:bg-neutral-900">{l.label}</a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+)}
+
+

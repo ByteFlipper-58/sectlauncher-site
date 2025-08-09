@@ -1,0 +1,21 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+---
+
+<BaseLayout title="Terms of Use — SectLauncher" description="Rules of using the site and the launcher.">
+  <Fragment slot="header"><Header /></Fragment>
+
+  <section class="mx-auto max-w-6xl px-4 py-12">
+    <div class="mx-auto max-w-3xl prose prose-invert">
+      <h1>Terms of Use</h1>
+      <p>By using SectLauncher, you agree to comply with applicable law and third‑party licenses. The project is provided “as is” without warranties.</p>
+      <h2>Licenses</h2>
+      <p>See dependency licenses in the repository. Mojang/Microsoft content is used according to their policies.</p>
+    </div>
+  </section>
+
+  <Fragment slot="footer"><Footer /></Fragment>
+</BaseLayout>
+

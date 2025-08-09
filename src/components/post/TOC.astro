@@ -1,0 +1,23 @@
+---
+interface Props { headings?: Array<{ depth: number; slug: string; text: string }>; locale: 'ru' | 'en' }
+const { headings = [], locale }: Props = Astro.props;
+const title = locale === 'ru' ? 'Содержание' : 'Contents';
+---
+{headings.length > 0 && (
+  <aside class="mx-auto max-w-6xl px-4 mt-6 md:mt-0 md:fixed md:top-24 md:right-[max(calc((100vw-72rem)/2),1rem)] md:w-64">
+    <div class="rounded-xl border border-neutral-800 bg-neutral-900/40 p-3">
+      <div class="font-semibold text-sm mb-2">{title}</div>
+      <nav class="text-sm text-neutral-400">
+        <ul class="space-y-1">
+          {headings.map(h => (
+            <li class={(h.depth === 2 ? 'pl-0' : h.depth === 3 ? 'pl-3' : 'pl-5')}>
+              <a href={`#${h.slug}`} class="hover:text-white">{h.text}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </aside>
+)}
+
+
