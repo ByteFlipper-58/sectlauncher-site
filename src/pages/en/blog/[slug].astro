@@ -4,14 +4,13 @@ import Header from "../../../components/Header.astro";
 import Footer from "../../../components/Footer.astro";
 import PostBanner from "../../../components/post/PostBanner.astro";
 import PostNav from "../../../components/post/PostNav.astro";
-import MediaCarousel from "../../../components/post/MediaCarousel.astro";
+import MediaViewer from "../../../components/post/MediaViewer.astro";
 import Breadcrumbs from "../../../components/Breadcrumbs.astro";
 import ShareButtons from "../../../components/post/ShareButtons.astro";
 import AuthorCard from "../../../components/post/AuthorCard.astro";
 import TOC from "../../../components/post/TOC.astro";
 import SEOJsonLd from "../../../components/post/SEOJsonLd.astro";
-import TableStyled from "../../../components/post/TableStyled.astro";
-import ImageLightbox from "../../../components/post/ImageLightbox.astro";
+import Table from "../../../components/post/Table.astro";
 import ReadingProgressBar from "../../../components/post/ReadingProgressBar.astro";
 import SubscribeCTA from "../../../components/post/SubscribeCTA.astro";
 import { getCollection } from 'astro:content';
@@ -112,16 +111,30 @@ const reading = calcReadingTime(post.body as string);
 
   <PostBanner title={title} date={date} heroImage={heroImage} tags={tags} locale={locale} readingMinutes={reading.minutes} />
 
-  <MediaCarousel items={media} />
+  <MediaViewer items={media} mode="carousel" lightbox={true} />
 
   <article class="mx-auto w-full lg:max-w-[70%] px-4 py-8 prose prose-invert">
-    <ImageLightbox />
-    <Content components={{ Callout: (await import('../../../components/post/Callout.astro')).default, table: (await import('../../../components/post/TableStyled.astro')).default }} />
-    <TableStyled />
+    <Content components={{
+      Callout: (await import('../../../components/post/Callout.astro')).default,
+      table: (await import('../../../components/post/Table.astro')).default,
+      CodeBlock: (await import('../../../components/CodeBlock.astro')).default,
+      h1: (await import('../../../components/post/H1.astro')).default,
+      h2: (await import('../../../components/post/H2.astro')).default,
+      h3: (await import('../../../components/post/H3.astro')).default,
+      h4: (await import('../../../components/post/H4.astro')).default,
+      h5: (await import('../../../components/post/H5.astro')).default,
+      h6: (await import('../../../components/post/H6.astro')).default,
+      ul: (await import('../../../components/post/UL.astro')).default,
+      ol: (await import('../../../components/post/OL.astro')).default,
+      li: (await import('../../../components/post/LI.astro')).default,
+      hr: (await import('../../../components/post/HR.astro')).default,
+    }} />
+    <!-- Include lightbox functionality for images with data-lightbox attribute -->
+    <MediaViewer items={[]} />
   </article>
 
   <section class="mx-auto w-full lg:max-w-[70%] px-4 -mt-4 pb-4">
-    {canonicalUrl && (<ShareButtons url={canonicalUrl} title={title} text={description} />)}
+    {canonicalUrl && (<ShareButtons url={canonicalUrl} title={title} text={description} locale={locale} />)}
   </section>
 
   <AuthorCard author={author} />

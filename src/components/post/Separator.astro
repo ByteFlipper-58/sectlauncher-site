@@ -1,0 +1,250 @@
+---
+interface Props {
+  variant?: 'default' | 'gradient' | 'dotted' | 'minimal' | 'decorated' | 'spaced';
+  thickness?: 'thin' | 'medium' | 'thick';
+  class?: string;
+}
+
+const { 
+  variant = 'default', 
+  thickness = 'medium',
+  class: additionalClasses = ''
+}: Props = Astro.props;
+
+const variantConfig = {
+  default: {
+    base: 'border-neutral-700',
+    style: 'border-t',
+    decoration: ''
+  },
+  gradient: {
+    base: 'bg-gradient-to-r from-transparent via-neutral-600 to-transparent',
+    style: 'h-px',
+    decoration: ''
+  },
+  dotted: {
+    base: 'border-neutral-600',
+    style: 'border-t border-dotted',
+    decoration: ''
+  },
+  minimal: {
+    base: 'border-neutral-800',
+    style: 'border-t',
+    decoration: ''
+  },
+  decorated: {
+    base: 'border-neutral-700',
+    style: 'border-t relative',
+    decoration: 'decorated'
+  },
+  spaced: {
+    base: 'border-neutral-600',
+    style: 'border-t',
+    decoration: 'spaced'
+  }
+};
+
+const thicknessConfig = {
+  thin: variant === 'gradient' ? 'h-px' : 'border-t',
+  medium: variant === 'gradient' ? 'h-0.5' : 'border-t-2',
+  thick: variant === 'gradient' ? 'h-1' : 'border-t-4'
+};
+
+const spacingConfig = {
+  default: 'my-8',
+  gradient: 'my-8',
+  dotted: 'my-6',
+  minimal: 'my-4',
+  decorated: 'my-12',
+  spaced: 'my-16'
+};
+
+const config = variantConfig[variant];
+const thicknessClass = thicknessConfig[thickness];
+const spacingClass = spacingConfig[variant];
+---
+
+<div class={`
+  separator-wrapper
+  ${spacingClass}
+  ${additionalClasses}
+`}>
+  {variant === 'decorated' ? (
+    <div class="relative flex items-center justify-center">
+      <div class={`flex-1 ${config.style} ${config.base} ${thicknessClass}`}></div>
+      <div class="px-4 bg-neutral-950 relative">
+        <div class="w-3 h-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 relative">
+          <div class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-pulse"></div>
+        </div>
+      </div>
+      <div class={`flex-1 ${config.style} ${config.base} ${thicknessClass}`}></div>
+    </div>
+  ) : variant === 'spaced' ? (
+    <div class="flex items-center justify-center space-x-4">
+      <div class={`flex-1 max-w-32 ${config.style} ${config.base} ${thicknessClass}`}></div>
+      <div class="flex space-x-2">
+        <div class="w-1 h-1 rounded-full bg-neutral-600"></div>
+        <div class="w-1 h-1 rounded-full bg-neutral-500"></div>
+        <div class="w-1 h-1 rounded-full bg-neutral-600"></div>
+      </div>
+      <div class={`flex-1 max-w-32 ${config.style} ${config.base} ${thicknessClass}`}></div>
+    </div>
+  ) : (
+    <div class={`
+      separator-line
+      ${config.style}
+      ${config.base}
+      ${thicknessClass}
+      transition-all duration-300
+      hover:opacity-80
+    `}></div>
+  )}
+</div>
+
+<style>
+  .separator-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Hover effects for gradient separators */
+  .separator-wrapper:has(.separator-line.bg-gradient-to-r) .separator-line {
+    transition: all 0.3s ease;
+  }
+
+  .separator-wrapper:hover .separator-line.bg-gradient-to-r {
+    background-image: linear-gradient(
+      to right,
+      transparent,
+      theme('colors.blue.400'),
+      theme('colors.purple.400'),
+      theme('colors.blue.400'),
+      transparent
+    );
+  }
+
+  /* Dotted separator animation */
+  .separator-line.border-dotted {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .separator-line.border-dotted::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to right,
+      transparent,
+      theme('colors.blue.400'),
+      transparent
+    );
+    animation: shimmer 3s infinite;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .separator-wrapper:hover .separator-line.border-dotted::before {
+    opacity: 0.6;
+  }
+
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+  }
+
+  /* Decorated separator effects */
+  .separator-wrapper:has(.decorated) .w-3 {
+    transition: all 0.3s ease;
+  }
+
+  .separator-wrapper:hover .w-3 {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  }
+
+  /* Spaced separator hover */
+  .separator-wrapper:has(.space-x-2) .w-1 {
+    transition: all 0.3s ease;
+  }
+
+  .separator-wrapper:hover .w-1 {
+    background-color: theme('colors.blue.400');
+    transform: scale(1.3);
+  }
+
+  .separator-wrapper:hover .w-1:nth-child(2) {
+    animation: bounce 0.6s ease-in-out;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: scale(1.3) translateY(0); }
+    50% { transform: scale(1.5) translateY(-2px); }
+  }
+
+  /* Accessibility improvements */
+  .separator-wrapper {
+    role: separator;
+    aria-hidden: true;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .separator-wrapper {
+      margin-left: -1rem;
+      margin-right: -1rem;
+    }
+    
+    .decorated .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+    
+    .space-x-4 {
+      gap: 0.75rem;
+    }
+    
+    .max-w-32 {
+      max-width: 4rem;
+    }
+  }
+
+  /* Dark mode optimization */
+  @media (prefers-color-scheme: dark) {
+    .separator-line {
+      filter: brightness(1.1);
+    }
+  }
+</style>
+
+<script>
+  // Добавляем интерактивность при скролле
+  document.addEventListener('DOMContentLoaded', () => {
+    const separators = document.querySelectorAll('.separator-wrapper');
+    
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.target instanceof HTMLElement) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    separators.forEach(separator => {
+      const element = separator as HTMLElement;
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(10px)';
+      element.style.transition = 'all 0.6s ease-out';
+      observer.observe(separator);
+    });
+  });
+</script>

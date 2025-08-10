@@ -1,0 +1,136 @@
+---
+interface Props {
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  id?: string;
+  class?: string;
+}
+
+const { level, id, class: additionalClasses = '' }: Props = Astro.props;
+
+// Генерируем ID из текста если не передан
+function generateId(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Убираем спецсимволы
+    .replace(/\s+/g, '-') // Пробелы в дефисы
+    .replace(/--+/g, '-') // Множественные дефисы в один
+    .trim();
+}
+
+// Получаем текст из слота для генерации ID
+const slotContent = await Astro.slots.render('default');
+const textContent = slotContent.replace(/<[^>]*>/g, '').trim();
+const headingId = id || generateId(textContent);
+
+const levelConfig = {
+  1: {
+    tag: 'h1',
+    classes: 'text-2xl md:text-3xl font-bold text-white',
+    iconSize: 'w-5 h-5',
+    spacing: 'mt-8 mb-6'
+  },
+  2: {
+    tag: 'h2', 
+    classes: 'text-xl md:text-2xl font-semibold text-neutral-200',
+    iconSize: 'w-4 h-4',
+    spacing: 'mt-8 mb-4'
+  },
+  3: {
+    tag: 'h3',
+    classes: 'text-lg md:text-xl font-semibold text-neutral-300',
+    iconSize: 'w-4 h-4',
+    spacing: 'mt-6 mb-3'
+  },
+  4: {
+    tag: 'h4',
+    classes: 'text-base md:text-lg font-medium text-neutral-300',
+    iconSize: 'w-4 h-4',
+    spacing: 'mt-6 mb-3'
+  },
+  5: {
+    tag: 'h5',
+    classes: 'text-base font-medium text-neutral-400',
+    iconSize: 'w-3 h-3',
+    spacing: 'mt-4 mb-2'
+  },
+  6: {
+    tag: 'h6',
+    classes: 'text-sm font-medium text-neutral-400',
+    iconSize: 'w-3 h-3',
+    spacing: 'mt-4 mb-2'
+  }
+};
+
+const config = levelConfig[level];
+const HeadingTag = config.tag as any;
+---
+
+<div class={`heading-wrapper group ${config.spacing} ${additionalClasses}`}>
+  <HeadingTag 
+    id={headingId}
+    class={`heading-element flex items-center gap-2 scroll-mt-24 ${config.classes} transition-colors duration-200`}
+  >
+    <!-- Содержимое заголовка -->
+    <span class="heading-content">
+      <slot />
+    </span>
+    
+    <!-- Иконка якорной ссылки -->
+    <button 
+      class={`anchor-link opacity-0 group-hover:opacity-60 hover:opacity-100 transition-opacity duration-200 ${config.iconSize} text-neutral-600 hover:text-neutral-400 flex-shrink-0 ml-2`}
+      onclick={`navigator.clipboard?.writeText(window.location.origin + window.location.pathname + '#${headingId}'); this.style.color='#10b981'; setTimeout(() => this.style.color='', 1000);`}
+      title="Копировать ссылку на заголовок"
+      aria-label="Копировать ссылку на заголовок"
+    >
+      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-full h-full">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path>
+      </svg>
+    </button>
+  </HeadingTag>
+</div>
+
+<style>
+  /* Убираем сложные эффекты, оставляем только необходимое */
+  .heading-element {
+    cursor: pointer;
+  }
+  
+  /* Простая анимация для иконки */
+  .anchor-link {
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .anchor-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  /* На мобильных иконка всегда видна */
+  @media (max-width: 768px) {
+    .anchor-link {
+      opacity: 0.6 !important;
+    }
+  }
+</style>
+
+<script>
+  // Плавный скролл к заголовку при клике
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.heading-element').forEach(heading => {
+      heading.addEventListener('click', (e) => {
+        // Не скроллим если кликнули по кнопке якоря
+        if (e.target && (e.target as Element).closest?.('.anchor-link')) return;
+        
+        const id = heading.getAttribute('id');
+        if (id) {
+          const element = document.getElementById(id);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Обновляем URL без перезагрузки
+            window.history.pushState(null, '', `#${id}`);
+          }
+        }
+      });
+    });
+  });
+</script>

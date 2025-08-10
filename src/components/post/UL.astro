@@ -1,0 +1,26 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: additionalClasses = '' }: Props = Astro.props;
+---
+
+<ul class={`space-y-1 pl-6 my-4 text-neutral-300 list-none ${additionalClasses}`}>
+  <slot />
+</ul>
+
+<style>
+  ul li {
+    position: relative;
+    padding-left: 0.75rem;
+  }
+
+  ul li::before {
+    content: "•";
+    position: absolute;
+    left: -0.75rem;
+    color: #60a5fa;
+    font-weight: bold;
+  }
+</style>

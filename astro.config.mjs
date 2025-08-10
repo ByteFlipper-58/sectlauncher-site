@@ -4,7 +4,6 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 import mdx from '@astrojs/mdx';
-
 import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
@@ -25,5 +24,15 @@ export default defineConfig({
 
   // markdown: { syntaxHighlight: 'shiki' }, // use Astro defaults
 
-  integrations: [mdx(), sitemap()]
+  integrations: [
+    mdx({
+      // Настройка компонентов для замены стандартных HTML элементов
+      remarkRehype: {
+        handlers: {
+          // Обработчик для таблиц будет добавлен через MDX компоненты
+        }
+      }
+    }), 
+    sitemap()
+  ]
 });

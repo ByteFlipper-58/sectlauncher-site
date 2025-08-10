@@ -1,8 +1,8 @@
 ---
-title: "Content example"
-description: "Test post with all supported content types"
+title: "Complete Content Example"
+description: "Test post with all supported content types and components"
 date: 2025-08-09
-tags: ["example", "docs", "test"]
+tags: ["example", "docs", "test", "components"]
 heroImage: "/web-app-manifest-512x512.png"
 media:
   - type: image
@@ -27,7 +27,9 @@ lang: en
 tKey: example
 ---
 
-# H1 Heading
+# H1 Main Heading
+
+This is the main heading with anchor link functionality. Click the link icon to copy the URL to this section.
 
 Short intro paragraph with a link to the [home](/en/) and inline code `npm run build`.
 
@@ -35,101 +37,274 @@ Short intro paragraph with a link to the [home](/en/) and inline code `npm run b
 
 ---
 
-## H2 Lists
+## H2 Secondary Heading
 
-- Regular item
-- Another item
-  - Nested sub‑item
+This demonstrates the H2 heading style with automatic anchor links.
 
-1. Ordered item
-2. Second item
+### H3 Subsection Heading  
 
-- [ ] Todo incomplete
-- [x] Todo complete
+Third level heading for organizing content sections.
+
+#### H4 Detail Heading
+
+Fourth level heading for detailed subsections.
+
+##### H5 Minor Heading
+
+Fifth level heading for minor sections.
+
+###### H6 Smallest Heading
+
+Sixth level heading for the smallest text divisions.
 
 ---
 
-## H2 Code
+## H2 Callout Components
 
+<Callout type="note" title="Information Note">
+This is a neutral note callout. Perfect for general information and tips.
+</Callout>
+
+<Callout type="info" title="Information">
+This is an info callout with a blue accent. Great for highlighting important details.
+</Callout>
+
+<Callout type="tip" title="Pro Tip">
+Use profiles to keep different mod sets organized and easily switchable.
+</Callout>
+
+<Callout type="success" title="Success">
+This indicates something positive or completed successfully.
+</Callout>
+
+<Callout type="warning" title="Important Warning">
+Back up your configs before updating to prevent data loss.
+</Callout>
+
+<Callout type="danger" title="Critical Alert">
+This action cannot be undone. Proceed with extreme caution.
+</Callout>
+
+<Callout type="note" dismissible={true}>
+This is a dismissible callout - you can close it with the X button.
+</Callout>
+
+<Callout type="tip" icon="🚀">
+You can also add custom icons to callouts like this rocket!
+</Callout>
+
+---
+
+## H2 Code Examples
+
+### Inline Code
+Here's some inline code: `npm install sectlauncher` and `const version = "1.0.0"`.
+
+### Basic Code Block
 ```bash
 echo "Hello SectLauncher"
+npm run dev
 ```
 
-```ts
+### Advanced TypeScript Example
+```typescript
 type Version = {
   id: string;
   stable: boolean;
+  releaseDate: Date;
 }
 
 export function selectStable(versions: Version[]): Version[] {
   return versions.filter(v => v.stable);
 }
+
+export function getLatest(versions: Version[]): Version | undefined {
+  return versions
+    .sort((a, b) => b.releaseDate.getTime() - a.releaseDate.getTime())[0];
+}
 ```
 
----
+### Enhanced Code Block Component
 
-## H2 Callout blocks
+<CodeBlock 
+  language="typescript"
+  title="calcReadingTime.ts"
+  showLineNumbers={true}
+  showStats={true}
+  code={`
+export function calcReadingTime(text: string): { minutes: number; words: number } {
+  const words = (text || '').trim().split(/\\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return { minutes, words };
+}
 
-<Callout type="note" title="Note">
-Neutral note example.
-</Callout>
-
-<Callout type="tip" title="Tip">
-Use profiles to keep different mod sets.
-</Callout>
-
-<Callout type="warning" title="Warning">
-Back up your configs before updating.
-</Callout>
-
----
-
-## H2 Table (Markdown)
-
-| Feature         | Status   |
-| --------------- | -------- |
-| Authentication  | Planned  |
-| Mods/Modpacks   | Planned  |
-| Auto‑updates    | Planned  |
+export function formatReadingTime(minutes: number): string {
+  return minutes === 1 ? '1 min read' : \`\${minutes} min read\`;
+}
+  `}
+/>
 
 ---
 
-## H2 Table (HTML)
+## H2 Lists and Tasks
+
+### Unordered Lists
+- Regular item
+- Another item
+  - Nested sub‑item
+  - Another nested item
+    - Deep nested item
+
+### Ordered Lists
+1. First ordered item
+2. Second ordered item
+3. Third item with details
+   1. Sub-ordered item
+   2. Another sub-item
+
+### Task Lists
+- [ ] Todo incomplete
+- [x] Todo complete
+- [ ] Setup development environment
+- [x] Create component documentation
+- [ ] Implement user authentication
+- [x] Design landing page
+
+---
+
+## H2 Tables
+
+### Markdown Table (Auto-converted to Table Component)
+
+| Feature         | Status      | Priority | Notes              |
+| --------------- | ----------- | -------- | ------------------ |
+| Authentication  | In Progress | High     | OAuth integration  |
+| Mods/Modpacks   | Planned     | High     | Core functionality |
+| Auto‑updates    | Planned     | Medium   | Background service |
+| Profiles        | Complete    | High     | User management    |
+| Theme Support   | Complete    | Low      | Dark/Light modes   |
+
+### HTML Table (Also converted to Table Component)
 
 <table>
   <thead>
-    <tr><th>Key</th><th>Value</th></tr>
+    <tr>
+      <th>Configuration</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
   </thead>
   <tbody>
-    <tr><td>OS</td><td>Windows</td></tr>
-    <tr><td>Arch</td><td>x64</td></tr>
+    <tr>
+      <td>OS</td>
+      <td>Windows</td>
+      <td>Operating System</td>
+    </tr>
+    <tr>
+      <td>Architecture</td>
+      <td>x64</td>
+      <td>System Architecture</td>
+    </tr>
+    <tr>
+      <td>Memory</td>
+      <td>8GB</td>
+      <td>Recommended RAM</td>
+    </tr>
+    <tr>
+      <td>Storage</td>
+      <td>50GB</td>
+      <td>Free disk space</td>
+    </tr>
   </tbody>
 </table>
 
 ---
 
-## H2 Images and lightbox
+## H2 Images and Enhanced Lightbox
 
-Plain image:
+### Basic Lightbox Images
 
-<img src="/web-app-manifest-192x192.png" alt="Icon" />
+Single image with enhanced lightbox (click to zoom, drag to pan, zoom with mouse wheel, keyboard controls):
 
-Lightbox image (click to zoom):
+<img src="/web-app-manifest-512x512.png" alt="App Icon" data-lightbox data-caption="Sectlauncher application icon - click to zoom, drag to pan, use mouse wheel to zoom" />
 
-<img src="/web-app-manifest-512x512.png" alt="Preview" data-lightbox />
+### Multiple Images Gallery
+
+Multiple images that work together in lightbox gallery:
+
+<img src="/web-app-manifest-512x512.png" alt="Large Icon" data-lightbox data-caption="High resolution app icon (512x512)" />
+
+<img src="/web-app-manifest-192x192.png" alt="Standard Icon" data-lightbox data-caption="Standard resolution icon (192x192)" />
+
+<img src="/favicon-96x96.png" alt="Favicon" data-lightbox data-caption="Browser favicon (96x96)" />
+
+<img src="/apple-touch-icon.png" alt="Apple Touch Icon" data-lightbox data-caption="Apple Touch Icon for iOS devices" />
+
+### Aligned Images with Text Integration
+
+Left aligned image with integrated text flow:
+
+<div class="text-flow-container">
+<img src="/favicon-96x96.png" alt="Left aligned" data-lightbox data-caption="This image floats to the left with integrated text flow" data-align="left" class="max-w-24" />
+This is an example of text flowing around a left-aligned image. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The image should appear on the left side with this text wrapping around it naturally.
+</div>
+
+<div style="clear: both; height: 2rem;"></div>
+
+Right aligned image with integrated text flow:
+
+<div class="text-flow-container">
+<img src="/favicon-96x96.png" alt="Right aligned" data-lightbox data-caption="This image floats to the right with integrated text flow" data-align="right" class="max-w-24" />
+This is an example of text flowing around a right-aligned image. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. The image should appear on the right side with this text wrapping around it naturally.
+</div>
+
+<div style="clear: both; height: 2rem;"></div>
+
+Centered full-width image:
+
+<img src="/web-app-manifest-512x512.png" alt="Centered full width" data-lightbox data-caption="This image is centered and takes full available width" class="w-full mx-auto block" />
 
 ---
 
-## H2 Video in body
+## H2 Social Sharing
 
-<video src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" controls width="640"></video>
+The page automatically includes social sharing buttons at the bottom with support for:
+- Native sharing (if supported by browser)
+- Twitter/X sharing
+- LinkedIn sharing  
+- Reddit sharing
+- Copy link to clipboard
 
 ---
 
-## H2 Misc
+## H2 Subscribe Call-to-Action
 
-External link: <a href="https://www.minecraft.net/" target="_blank" rel="noopener">Minecraft</a>.
+The page includes a subscribe CTA component that can show:
+- Telegram channel link
+- Discord server link
+- Newsletter signup (if enabled)
 
-Another paragraph to ensure reading time calculation has text.
+---
 
+## H2 Additional Features
 
+### Links and Navigation
+- Internal link: [Home page](/en/)
+- External link: <a href="https://www.minecraft.net/" target="_blank" rel="noopener">Minecraft</a>
+- Automatic breadcrumb navigation
+- Table of contents (TOC) generation
+- Reading progress bar
+
+### SEO and Meta
+- Automatic JSON-LD structured data
+- Open Graph meta tags
+- Twitter Card support
+- Automatic reading time calculation
+
+### Responsive Design
+- Mobile-optimized layout
+- Touch-friendly controls
+- Responsive images and tables
+- Adaptive typography
+
+This example demonstrates all the supported content types and components available in the blog system. Each component is designed to work seamlessly together while maintaining accessibility and performance.

@@ -1,0 +1,11 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: additionalClasses = '' }: Props = Astro.props;
+---
+
+<div class={`my-8 ${additionalClasses}`}>
+  <div class="h-px bg-gradient-to-r from-transparent via-neutral-600 to-transparent transition-all duration-300 hover:via-blue-400"></div>
+</div>

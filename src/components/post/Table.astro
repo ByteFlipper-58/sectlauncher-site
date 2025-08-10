@@ -1,0 +1,222 @@
+---
+interface Props {
+  variant?: 'default' | 'compact' | 'striped' | 'bordered';
+  size?: 'sm' | 'md' | 'lg';
+  stickyHeader?: boolean;
+  searchable?: boolean;
+  sortable?: boolean;
+  caption?: string;
+  class?: string;
+}
+
+const { 
+  variant = 'default',
+  size = 'md',
+  stickyHeader = true,
+  searchable = false,
+  sortable = false,
+  caption,
+  class: additionalClasses = ''
+}: Props = Astro.props;
+
+const sizeClasses = {
+  sm: 'text-xs [&_th]:px-2 [&_td]:px-2 [&_th]:py-2 [&_td]:py-2',
+  md: 'text-sm md:text-base [&_th]:px-3 [&_td]:px-3 md:[&_th]:px-4 md:[&_td]:px-4 [&_th]:py-3 [&_td]:py-3',
+  lg: 'text-base md:text-lg [&_th]:px-4 [&_td]:px-4 md:[&_th]:px-6 md:[&_td]:px-6 [&_th]:py-4 [&_td]:py-4'
+};
+
+const variantClasses = {
+  default: '[&_tbody_tr:nth-child(even)]:bg-neutral-900/20 [&_tbody_tr:hover]:bg-neutral-800/40',
+  compact: '[&_tbody_tr:hover]:bg-neutral-800/30',
+  striped: '[&_tbody_tr:nth-child(even)]:bg-neutral-900/30 [&_tbody_tr:hover]:bg-neutral-800/40',
+  bordered: '[&_td]:border [&_th]:border [&_td]:border-neutral-700/50 [&_th]:border-neutral-700/50 [&_tbody_tr:hover]:bg-neutral-800/40'
+};
+
+const uniqueId = `table-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<div class={`table-wrapper relative ${additionalClasses}`}>
+  {searchable && (
+    <div class="mb-4 flex items-center gap-3">
+      <div class="relative flex-1 max-w-sm">
+        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+        <input 
+          type="text" 
+          placeholder="Поиск по таблице..."
+          class="w-full pl-10 pr-4 py-2 rounded-lg border border-neutral-700 bg-neutral-900/60 text-neutral-300 placeholder-neutral-500 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 transition-colors"
+          id={`search-${uniqueId}`}
+        />
+      </div>
+    </div>
+  )}
+
+  <div class="table-container relative overflow-x-auto rounded-xl border border-neutral-800 bg-neutral-900/60 backdrop-blur-sm shadow-[0_0_0_1px_rgba(0,0,0,0.2)]">
+    
+    <table
+      class={`min-w-full border-collapse transition-all duration-200
+             [&_th]:text-left [&_th]:text-neutral-200 [&_td]:text-neutral-300
+             ${sizeClasses[size]}
+             [&_thead_tr]:border-b [&_tbody_tr]:border-b [&_thead_tr]:border-neutral-700/60 [&_tbody_tr]:border-neutral-800/40
+             ${variantClasses[variant]}
+             [&_thead]:bg-neutral-900/60 [&_thead_th]:font-semibold [&_thead_th]:text-neutral-100
+             ${stickyHeader ? 'md:[&_thead_th]:sticky md:[&_thead_th]:top-0 md:[&_thead_th]:z-10 md:[&_thead_th]:bg-neutral-950/70 md:[&_thead_th]:backdrop-blur-md' : ''}
+             ${variant !== 'bordered' ? '[&_tr>*:not(:last-child)]:border-r [&_tr>*:not(:last-child)]:border-neutral-800/30' : ''}
+             [&_caption]:caption-bottom [&_caption]:text-neutral-400 [&_caption]:text-xs [&_caption]:px-4 [&_caption]:py-2
+             [&_td]:align-top [&_th]:align-middle
+             [&_th[align=center]]:text-center [&_td[align=center]]:text-center
+             [&_th[align=right]]:text-right [&_td[align=right]]:text-right
+             [&_tr>*:first-child]:pl-5 [&_tr>*:last-child]:pr-5
+             scrollbar-hide`}
+      id={uniqueId}
+    >
+      {caption && <caption>{caption}</caption>}
+      <slot />
+    </table>
+
+    <!-- Индикаторы прокрутки -->
+    <div class="scroll-fade-left absolute top-0 left-0 bottom-0 w-6 bg-gradient-to-r from-neutral-900/80 to-transparent pointer-events-none z-10 opacity-0 transition-opacity duration-300"></div>
+    <div class="scroll-fade-right absolute top-0 right-0 bottom-0 w-6 bg-gradient-to-l from-neutral-900/80 to-transparent pointer-events-none z-10 opacity-0 transition-opacity duration-300"></div>
+  </div>
+
+  {sortable && (
+    <script is:inline define:vars={{ uniqueId }}>
+      // Добавляем иконки сортировки к заголовкам
+      document.addEventListener('DOMContentLoaded', () => {
+        const table = document.getElementById(uniqueId);
+        if (!table) return;
+
+        const headers = table.querySelectorAll('thead th');
+        headers.forEach((header, index) => {
+          if (header.textContent.trim()) {
+            header.style.cursor = 'pointer';
+            header.style.userSelect = 'none';
+            header.style.position = 'relative';
+            
+            const sortIcon = document.createElement('span');
+            sortIcon.innerHTML = `
+              <svg class="inline-block w-4 h-4 ml-1 opacity-50 hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+              </svg>
+            `;
+            header.appendChild(sortIcon);
+
+            let sortDirection = 'asc';
+            header.addEventListener('click', () => {
+              // Простая сортировка (для демонстрации)
+              const tbody = table.querySelector('tbody');
+              if (!tbody) return;
+
+              const rows = Array.from(tbody.querySelectorAll('tr'));
+              const sortedRows = rows.sort((a, b) => {
+                const aText = a.cells[index]?.textContent?.trim() || '';
+                const bText = b.cells[index]?.textContent?.trim() || '';
+                
+                const comparison = aText.localeCompare(bText, 'ru', { numeric: true });
+                return sortDirection === 'asc' ? comparison : -comparison;
+              });
+
+              tbody.innerHTML = '';
+              sortedRows.forEach(row => tbody.appendChild(row));
+              
+              sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+              
+              // Обновляем иконку
+              headers.forEach(h => {
+                const icon = h.querySelector('svg');
+                if (icon) icon.style.opacity = '0.5';
+              });
+              sortIcon.querySelector('svg').style.opacity = '1';
+            });
+          }
+        });
+      });
+    </script>
+  )}
+
+  {searchable && (
+    <script is:inline define:vars={{ uniqueId }}>
+      document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById(`search-${uniqueId}`);
+        const table = document.getElementById(uniqueId);
+        
+        if (!searchInput || !table) return;
+
+        searchInput.addEventListener('input', (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          const tbody = table.querySelector('tbody');
+          if (!tbody) return;
+
+          const rows = tbody.querySelectorAll('tr');
+          rows.forEach(row => {
+            const text = row.textContent.toLowerCase();
+            const shouldShow = text.includes(searchTerm);
+            row.style.display = shouldShow ? '' : 'none';
+          });
+        });
+      });
+    </script>
+  )}
+
+  <script is:inline define:vars={{ uniqueId }}>
+    // Индикаторы прокрутки
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.querySelector(`#${uniqueId}`)?.closest('.table-container');
+      if (!container) return;
+
+      const leftFade = container.querySelector('.scroll-fade-left');
+      const rightFade = container.querySelector('.scroll-fade-right');
+      
+      const updateScrollIndicators = () => {
+        const { scrollLeft, scrollWidth, clientWidth } = container;
+        
+        if (leftFade) {
+          leftFade.style.opacity = scrollLeft > 10 ? '1' : '0';
+        }
+        
+        if (rightFade) {
+          rightFade.style.opacity = scrollLeft < scrollWidth - clientWidth - 10 ? '1' : '0';
+        }
+      };
+
+      container.addEventListener('scroll', updateScrollIndicators);
+      updateScrollIndicators(); // Инициализация
+    });
+  </script>
+</div>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar { 
+    display: none; 
+  }
+  .scrollbar-hide { 
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+  }
+
+  /* Плавные переходы для строк */
+  .table-container table tbody tr {
+    transition: background-color 0.2s ease, transform 0.1s ease;
+  }
+
+  .table-container table tbody tr:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Анимация появления */
+  .table-wrapper {
+    animation: fadeInUp 0.4s ease-out;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>

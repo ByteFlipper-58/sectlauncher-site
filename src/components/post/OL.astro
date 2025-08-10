@@ -1,0 +1,23 @@
+---
+interface Props {
+  class?: string;
+  start?: number;
+}
+
+const { class: additionalClasses = '', start }: Props = Astro.props;
+---
+
+<ol class={`space-y-1 pl-6 my-4 text-neutral-300 list-decimal ${additionalClasses}`} start={start}>
+  <slot />
+</ol>
+
+<style>
+  ol li {
+    padding-left: 0.25rem;
+  }
+
+  ol li::marker {
+    color: #60a5fa;
+    font-weight: 600;
+  }
+</style>

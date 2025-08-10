@@ -1,24 +1,155 @@
 ---
-interface Props { locale: 'ru' | 'en' }
-const { locale }: Props = Astro.props;
+interface Props { 
+  locale: 'ru' | 'en';
+  telegramUrl?: string;
+  discordUrl?: string;
+  showNewsletter?: boolean;
+}
+const { 
+  locale, 
+  telegramUrl = 'https://t.me/sectlauncher', 
+  discordUrl = 'https://discord.gg/sectlauncher',
+  showNewsletter = false 
+}: Props = Astro.props;
+
 const t = (key: string) => {
-  const ru = { title: 'Подписка', text: 'Следите за новостями в Telegram или Discord', tg: 'Telegram', ds: 'Discord' } as const;
-  const en = { title: 'Subscribe', text: 'Follow updates on Telegram or Discord', tg: 'Telegram', ds: 'Discord' } as const;
+  const ru = { 
+    title: 'Оставайтесь на связи', 
+    text: 'Следите за обновлениями и получайте уведомления о новых релизах', 
+    tg: 'Telegram канал', 
+    ds: 'Discord сервер',
+    newsletter: 'Email рассылка',
+    newsletterPlaceholder: 'Введите ваш email...',
+    subscribe: 'Подписаться',
+    subscribed: 'Подписан!',
+    benefits: 'Первыми узнавайте о новых функциях и обновлениях'
+  } as const;
+  const en = { 
+    title: 'Stay Connected', 
+    text: 'Follow updates and get notified about new releases', 
+    tg: 'Telegram Channel', 
+    ds: 'Discord Server',
+    newsletter: 'Email Newsletter',
+    newsletterPlaceholder: 'Enter your email...',
+    subscribe: 'Subscribe',
+    subscribed: 'Subscribed!',
+    benefits: 'Be the first to know about new features and updates'
+  } as const;
   return (locale === 'ru' ? ru : en)[key as keyof typeof ru];
 }
 ---
+
 <div class="mx-auto w-full lg:max-w-[70%] px-4 mt-10 mb-10">
-  <div class="rounded-xl border border-neutral-800 bg-neutral-900/60 p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_0_0_1px_rgba(0,0,0,0.2)]">
-    <div>
-      <div class="font-bold">{t('title')}</div>
-      <div class="text-neutral-400">{t('text')}</div>
-    </div>
-    <div class="flex items-center gap-3">
-      <a href="https://t.me/" class="px-4 py-2 rounded-md border border-neutral-800 bg-neutral-950 hover:bg-neutral-900">{t('tg')}</a>
-      <a href="https://discord.gg/" class="px-4 py-2 rounded-md border border-neutral-800 bg-neutral-950 hover:bg-neutral-900">{t('ds')}</a>
+  <div class="relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/60 backdrop-blur-sm">
+    <!-- Тонкий декоративный элемент -->
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-neutral-600 to-transparent"></div>
+    
+    <div class="relative p-5">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <!-- Контент -->
+        <div class="flex-1">
+          <h3 class="text-lg font-bold text-white mb-1">{t('title')}</h3>
+          <p class="text-neutral-400 text-sm">{t('text')}</p>
+        </div>
+
+        <!-- Кнопки и форма -->
+        <div class="flex-shrink-0">
+          <div class="flex items-center gap-3">
+            <!-- Telegram -->
+            <a 
+              href={telegramUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="group flex items-center gap-2 px-3 py-2 rounded-md border border-sky-700/50 bg-gradient-to-r from-sky-900/60 to-sky-800/60 hover:from-sky-800/80 hover:to-sky-700/80 transition-all duration-200 backdrop-blur-sm"
+            >
+              <svg class="w-4 h-4 text-sky-300 group-hover:text-white transition-colors flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+              </svg>
+              <span class="text-sm font-medium text-sky-300 group-hover:text-white transition-colors">{t('tg')}</span>
+            </a>
+
+            <!-- Discord -->
+            <a 
+              href={discordUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="group flex items-center gap-2 px-3 py-2 rounded-md border border-indigo-700/50 bg-gradient-to-r from-indigo-900/60 to-indigo-800/60 hover:from-indigo-800/80 hover:to-indigo-700/80 transition-all duration-200 backdrop-blur-sm"
+            >
+              <svg class="w-4 h-4 text-indigo-300 group-hover:text-white transition-colors flex-shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.864-.608 1.249a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.249.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418Z"/>
+              </svg>
+              <span class="text-sm font-medium text-indigo-300 group-hover:text-white transition-colors">{t('ds')}</span>
+            </a>
+          </div>
+
+          {showNewsletter && (
+            <div class="mt-4 p-4 rounded-xl bg-neutral-800/50 border border-neutral-700/50">
+              <div class="flex items-center gap-2 mb-3">
+                <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                <span class="text-sm font-medium text-neutral-300">{t('newsletter')}</span>
+              </div>
+              <form class="flex gap-2" id="newsletter-form">
+                <input 
+                  type="email" 
+                  placeholder={t('newsletterPlaceholder')}
+                  class="flex-1 px-3 py-2 rounded-lg bg-neutral-900 border border-neutral-600 text-neutral-300 placeholder-neutral-500 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/20 text-sm"
+                  required
+                />
+                <button 
+                  type="submit"
+                  class="px-4 py-2 rounded-lg bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-medium text-sm transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-500/20"
+                >
+                  {t('subscribe')}
+                </button>
+              </form>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   </div>
+  
   <slot />
-  </div>
+
+  <script is:inline>
+    // Обработка формы подписки на newsletter
+    const newsletterForm = document.getElementById('newsletter-form');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const button = e.target.querySelector('button[type="submit"]');
+        const input = e.target.querySelector('input[type="email"]');
+        const originalText = button.textContent;
+        
+        // Визуальная обратная связь
+        button.textContent = '...';
+        button.disabled = true;
+        
+        try {
+          // Здесь можно добавить реальную логику подписки
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Имитация запроса
+          
+          button.textContent = 'Подписан!' || 'Subscribed!';
+          button.classList.add('bg-green-600', 'hover:bg-green-500');
+          button.classList.remove('bg-gradient-to-r', 'from-amber-600', 'to-orange-600');
+          input.value = '';
+          
+          setTimeout(() => {
+            button.textContent = originalText;
+            button.disabled = false;
+            button.classList.remove('bg-green-600', 'hover:bg-green-500');
+            button.classList.add('bg-gradient-to-r', 'from-amber-600', 'to-orange-600');
+          }, 3000);
+        } catch (error) {
+          button.textContent = originalText;
+          button.disabled = false;
+          console.error('Ошибка подписки:', error);
+        }
+      });
+    }
+  </script>
+</div>
 
 

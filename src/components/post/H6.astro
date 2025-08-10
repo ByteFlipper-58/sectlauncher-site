@@ -1,0 +1,14 @@
+---
+import Heading from './Heading.astro';
+
+interface Props {
+  id?: string;
+  class?: string;
+}
+
+const { id, class: additionalClasses }: Props = Astro.props;
+---
+
+<Heading level={6} id={id} class={additionalClasses}>
+  <slot />
+</Heading>

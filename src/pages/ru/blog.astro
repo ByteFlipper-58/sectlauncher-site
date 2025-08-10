@@ -6,29 +6,120 @@ import { getCollection } from 'astro:content';
 import BlogCard from "../../components/BlogCard.astro";
 
 const allPosts = (await getCollection('blog')).filter(p => !p.data.draft && (p.data.lang ?? 'ru') === 'ru');
-const posts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
-const tagSet = new Set(posts.flatMap(p => p.data.tags ?? []));
-const tags = Array.from(tagSet).sort((a,b) => a.localeCompare(b));
+const sortedPosts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+
+// Получаем параметр тега из URL
+const url = new URL(Astro.request.url);
+const selectedTag = url.searchParams.get('tag');
+
+// Фильтруем посты по тегу, если он указан
+const posts = selectedTag 
+  ? sortedPosts.filter(post => post.data.tags?.includes(selectedTag))
+  : sortedPosts;
+
+// Получаем все уникальные теги для отображения
+const allTags = [...new Set(allPosts.flatMap(post => post.data.tags || []))].sort();
 ---
 
 <BaseLayout title="Блог — SectLauncher" description="Новости и обновления SectLauncher.">
   <Fragment slot="header"><Header /></Fragment>
 
   <section class="mx-auto max-w-6xl px-4 py-12">
-    <div class="flex flex-wrap items-end justify-between gap-4">
-      <h1 class="text-3xl font-extrabold">Блог</h1>
-      <div class="flex flex-wrap items-center gap-3">
-        <input id="search" type="search" placeholder="Поиск..." class="px-3 py-2 rounded-md bg-neutral-900 border border-neutral-800 focus:outline-none focus:border-emerald-500 w-full md:w-80" />
-        <div id="tags" class="flex flex-wrap gap-2 text-sm">
-          <button data-tag="" class="px-2 py-1 rounded-md border border-neutral-800 bg-neutral-900/60">Все</button>
-          {tags.map((t) => (
-            <button data-tag={t} class="px-2 py-1 rounded-md border border-neutral-800 bg-neutral-900/60 hover:bg-neutral-900">{t}</button>
-          ))}
+    <!-- Header with search -->
+    <div class="mb-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <h1 class="text-3xl md:text-4xl font-black bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
+          {selectedTag ? `Посты с тегом "${selectedTag}"` : 'Блог'}
+        </h1>
+        {selectedTag && (
+          <a 
+            href="/ru/blog" 
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm text-neutral-300 hover:text-white transition-all duration-200 border border-neutral-700 rounded-lg hover:border-blue-500 hover:bg-blue-500/10 backdrop-blur-sm"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Все посты
+          </a>
+        )}
+      </div>
+
+      <!-- Search and Tags Row -->
+      <div class="flex flex-col md:flex-row gap-4 mb-6">
+        <!-- Search bar - 30% on desktop, full width on mobile -->
+        <div class="relative w-full md:w-[30%] h-[60px] flex items-center">
+          <input 
+            type="search" 
+            id="searchInput"
+            placeholder="Поиск постов..." 
+            class="w-full h-full px-4 pl-12 pr-4 bg-neutral-900/60 border border-neutral-700 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 backdrop-blur-sm text-white placeholder-neutral-400"
+          />
+          <div class="absolute left-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+            <svg class="w-5 h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
         </div>
+
+        <!-- Tags filter - 69% on desktop, full width on mobile -->
+        {allTags.length > 0 && (
+          <div class="w-full md:w-[69%] h-[60px] flex flex-col bg-neutral-900/30 border border-neutral-800/50 rounded-xl backdrop-blur-sm">
+            <div class="flex items-center justify-between px-4 pt-2 pb-1 min-h-0">
+              <h3 class="text-xs font-medium text-neutral-400 flex items-center gap-1">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 713 12V7a4 4 0 714-4z"></path>
+                </svg>
+                Теги
+              </h3>
+              {selectedTag && (
+                <a 
+                  href="/ru/blog" 
+                  class="text-xs text-blue-400 hover:text-blue-300 transition-colors whitespace-nowrap"
+                >
+                  Очистить
+                </a>
+              )}
+            </div>
+            <div class="flex gap-1.5 overflow-x-auto scrollbar-hide px-4 pb-2 flex-1 items-center">
+              <a 
+                href="/ru/blog"
+                class={`px-2.5 py-1 rounded-md text-xs font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
+                  !selectedTag 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-300'
+                }`}
+              >
+                Все ({allPosts.length})
+              </a>
+              {allTags.map((tag) => {
+                const tagPostCount = allPosts.filter(post => post.data.tags?.includes(tag)).length;
+                return (
+                  <a 
+                    href={`/ru/blog?tag=${encodeURIComponent(tag)}`}
+                    class={`px-2.5 py-1 rounded-md text-xs font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
+                      selectedTag === tag 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-300'
+                    }`}
+                    title={`Постов с тегом ${tag}: ${tagPostCount}`}
+                  >
+                    #{tag} ({tagPostCount})
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <!-- Search Results -->
+      <div id="searchResults" class="text-sm text-neutral-400 mb-4 hidden">
+        Показано <span id="resultCount">0</span> из <span id="totalCount">{posts.length}</span> постов
       </div>
     </div>
 
-    <div id="grid" class="mt-6 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <!-- Posts grid -->
+    <div id="postsGrid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
       {posts.map((post) => {
         const slugBase = post.slug.split('/').pop();
         return (
@@ -49,32 +140,94 @@ const tags = Array.from(tagSet).sort((a,b) => a.localeCompare(b));
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>
 
-<script is:inline>
-  const filter = { q: '', tag: '' };
-  const search = document.getElementById('search');
-  const tagContainer = document.getElementById('tags');
-  const grid = document.getElementById('grid');
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('searchInput') as HTMLInputElement;
+    const postsGrid = document.getElementById('postsGrid');
+    const searchResults = document.getElementById('searchResults');
+    const resultCount = document.getElementById('resultCount');
+    const totalCount = document.getElementById('totalCount');
 
-  function normalize(text){ return (text || '').toLowerCase(); }
-  function cardMatches(card){
-    const title = card.querySelector('h2')?.textContent || '';
-    const desc = card.querySelector('p')?.textContent || '';
-    const tags = Array.from(card.querySelectorAll('[data-tag-val]')).map(e => e.getAttribute('data-tag-val'));
-    const byText = normalize(title + ' ' + desc).includes(normalize(filter.q));
-    const byTag = !filter.tag || tags.includes(filter.tag);
-    return byText && byTag;
-  }
-  function apply(){
-    const cards = Array.from(grid.children);
-    cards.forEach((c) => { c.style.display = cardMatches(c) ? '' : 'none'; });
-  }
+    if (!searchInput || !postsGrid || !searchResults || !resultCount || !totalCount) return;
 
-  tagContainer?.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
-    filter.tag = btn.dataset.tag || '';
-    apply();
+    const allPosts = Array.from(postsGrid.children);
+    let currentQuery = '';
+
+    function normalizeText(text: string): string {
+      return text.toLowerCase().trim();
+    }
+
+    function searchPosts(query: string) {
+      currentQuery = normalizeText(query);
+      let visibleCount = 0;
+
+      allPosts.forEach((post) => {
+        const title = post.querySelector('h2')?.textContent || '';
+        const description = post.querySelector('p')?.textContent || '';
+        const tags = Array.from(post.querySelectorAll('[data-tag-val]'))
+          .map(el => el.getAttribute('data-tag-val') || '').join(' ');
+
+        const searchableText = normalizeText(`${title} ${description} ${tags}`);
+        const matches = !currentQuery || searchableText.includes(currentQuery);
+
+        if (matches) {
+          (post as HTMLElement).style.display = '';
+          visibleCount++;
+        } else {
+          (post as HTMLElement).style.display = 'none';
+        }
+      });
+
+      // Update search results
+      if (resultCount) resultCount.textContent = visibleCount.toString();
+      if (currentQuery) {
+        searchResults?.classList.remove('hidden');
+      } else {
+        searchResults?.classList.add('hidden');
+      }
+
+      // Handle no results
+      const noResultsMessage = document.getElementById('noResults');
+      if (visibleCount === 0 && currentQuery) {
+        if (!noResultsMessage && postsGrid) {
+          const message = document.createElement('div');
+          message.id = 'noResults';
+          message.className = 'col-span-full text-center py-12';
+          message.innerHTML = `
+            <div class="text-neutral-500 mb-4">
+              <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+              </svg>
+              <p class="text-lg font-medium">Постов не найдено</p>
+              <p class="text-sm">Попробуйте изменить поисковый запрос</p>
+            </div>
+          `;
+          postsGrid.appendChild(message);
+        }
+      } else if (noResultsMessage) {
+        noResultsMessage.remove();
+      }
+    }
+
+    // Debounced search
+    let searchTimeout: ReturnType<typeof setTimeout>;
+    searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        searchPosts((e.target as HTMLInputElement).value);
+      }, 300);
+    });
+
+    // Clear search on Escape
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        searchPosts('');
+      }
+    });
+
+    // Initialize
+    if (totalCount) totalCount.textContent = allPosts.length.toString();
   });
-  search?.addEventListener('input', (e) => { filter.q = e.target.value; apply(); });
 </script>
 

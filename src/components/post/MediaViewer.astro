@@ -1,0 +1,1489 @@
+---
+interface MediaItem { 
+  type: 'image' | 'video'; 
+  src: string; 
+  alt?: string; 
+  caption?: string; 
+  align?: 'left' | 'right' | 'center' | 'full'; 
+}
+
+interface Props { 
+  items?: MediaItem[]; 
+  mode?: 'single' | 'carousel' | 'grid' | 'hero';
+  lightbox?: boolean;
+  title?: string;
+  heroHeight?: string;
+  columns?: number;
+  spacing?: 'tight' | 'normal' | 'loose';
+}
+
+const { 
+  items = [], 
+  mode = 'single', 
+  lightbox = true, 
+  title, 
+  heroHeight = '18rem',
+  columns = 3,
+  spacing = 'normal'
+}: Props = Astro.props;
+
+const hasItems = items.length > 0;
+const isMultipleItems = items.length > 1;
+const spacingClass = spacing === 'tight' ? 'gap-2' : spacing === 'loose' ? 'gap-6' : 'gap-4';
+---
+
+{hasItems && (
+  <div class="mx-auto w-full lg:max-w-[70%] px-4 my-6">
+    <!-- Hero Mode -->
+    {mode === 'hero' && items[0] && (
+      <div class="relative overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900" style={`height: ${heroHeight}`}>
+        {items[0].type === 'image' ? (
+          <img 
+            src={items[0].src} 
+            alt={items[0].alt || title || ''} 
+            class="w-full h-full object-cover"
+            data-lightbox={lightbox ? 'true' : undefined}
+            data-caption={items[0].caption || items[0].alt}
+            loading="eager"
+          />
+        ) : (
+          <video 
+            src={items[0].src} 
+            poster={items[0].alt}
+            controls 
+            class="w-full h-full object-cover"
+          />
+        )}
+        <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-transparent to-transparent" />
+        {title && (
+          <div class="absolute bottom-0 left-0 right-0 p-6">
+            <h2 class="text-2xl md:text-3xl font-bold text-white">{title}</h2>
+            {items[0].caption && (
+              <p class="mt-2 text-neutral-300">{items[0].caption}</p>
+            )}
+          </div>
+        )}
+      </div>
+    )}
+
+    <!-- Single Image/Video Mode -->
+    {mode === 'single' && items[0] && (
+      <figure class={`relative rounded-xl border border-neutral-800 bg-neutral-900/40 overflow-hidden ${
+        items[0].align === 'left' ? 'float-left mr-4 mb-4 max-w-sm' :
+        items[0].align === 'right' ? 'float-right ml-4 mb-4 max-w-sm' :
+        items[0].align === 'center' ? 'mx-auto' :
+        items[0].align === 'full' ? 'w-full' : 'mx-auto'
+      }`}>
+        {items[0].type === 'image' ? (
+          <img 
+            src={items[0].src} 
+            alt={items[0].alt || ''} 
+            class="w-full h-auto object-contain max-h-[80vh] hover:scale-105 transition-transform duration-300"
+            data-lightbox={lightbox ? 'true' : undefined}
+            data-caption={items[0].caption || items[0].alt}
+            loading="lazy"
+          />
+        ) : (
+          <video 
+            src={items[0].src} 
+            controls 
+            class="w-full h-auto object-contain max-h-[80vh]"
+            poster={items[0].alt}
+          />
+        )}
+        {items[0].caption && (
+          <figcaption class="px-4 py-2 text-sm text-neutral-400 bg-neutral-900/60">
+            {items[0].caption}
+          </figcaption>
+        )}
+      </figure>
+    )}
+
+    <!-- Carousel Mode -->
+    {mode === 'carousel' && isMultipleItems && (
+      <div class="relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 h-[60vh] min-h-[400px] max-h-[80vh]">
+        <div class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide h-full" id="carousel-container">
+          {items.map((item, idx) => (
+            <div class="min-w-full snap-center flex flex-col items-center justify-center p-4 h-full">
+              <div class="flex flex-col items-center justify-center max-h-[90%] w-full">
+                {item.type === 'image' ? (
+                  <img 
+                    src={item.src} 
+                    alt={item.alt || ''} 
+                    class="max-w-full max-h-full w-auto h-auto object-contain rounded-lg hover:scale-105 transition-transform duration-300"
+                    data-lightbox={lightbox ? 'true' : undefined}
+                    data-caption={item.caption || item.alt}
+                    loading="lazy"
+                  />
+                ) : (
+                  <video 
+                    src={item.src} 
+                    controls 
+                    class="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
+                    poster={item.alt}
+                  />
+                )}
+                {item.caption && (
+                  <p class="mt-2 text-sm text-neutral-400 text-center max-w-md flex-shrink-0">{item.caption}</p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <!-- Carousel Navigation -->
+        <div class="carousel-nav-left absolute inset-y-0 left-4 flex items-center transition-opacity duration-300">
+          <button 
+            class="carousel-nav carousel-prev bg-black/50 hover:bg-black/70 text-white p-2 rounded-full backdrop-blur-sm transition-all"
+            aria-label="Предыдущее изображение"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+        </div>
+        <div class="carousel-nav-right absolute inset-y-0 right-4 flex items-center transition-opacity duration-300">
+          <button 
+            class="carousel-nav carousel-next bg-black/50 hover:bg-black/70 text-white p-2 rounded-full backdrop-blur-sm transition-all"
+            aria-label="Следующее изображение"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black/30 backdrop-blur-sm rounded-full px-3 py-2 flex space-x-2 transition-opacity duration-300">
+          {items.map((_, idx) => (
+            <button 
+              class="carousel-indicator w-2 h-2 rounded-full bg-white/40 hover:bg-white/70 transition-colors"
+              data-index={idx}
+              aria-label={`Перейти к изображению ${idx + 1}`}
+            ></button>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Grid Mode -->
+    {mode === 'grid' && isMultipleItems && (
+      <div class={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-${Math.min(columns, 4)} ${spacingClass}`}>
+        {items.map((item, idx) => (
+          <figure class="relative rounded-xl border border-neutral-800 bg-neutral-900/40 overflow-hidden group">
+            {item.type === 'image' ? (
+              <img 
+                src={item.src} 
+                alt={item.alt || ''} 
+                class="w-full h-48 md:h-64 max-h-[60vh] object-cover group-hover:scale-110 transition-transform duration-500"
+                data-lightbox={lightbox ? 'true' : undefined}
+                data-caption={item.caption || item.alt}
+                loading="lazy"
+              />
+            ) : (
+              <video 
+                src={item.src} 
+                controls 
+                class="w-full h-48 md:h-64 max-h-[60vh] object-cover"
+                poster={item.alt}
+              />
+            )}
+            {item.caption && (
+              <figcaption class="absolute bottom-0 left-0 right-0 px-3 py-2 text-sm text-white bg-gradient-to-t from-black/80 to-transparent">
+                {item.caption}
+              </figcaption>
+            )}
+          </figure>
+        ))}
+      </div>
+    )}
+
+    {title && mode !== 'hero' && (
+      <div class="text-center mt-4">
+        <h3 class="text-lg font-semibold text-neutral-200">{title}</h3>
+      </div>
+    )}
+  </div>
+)}
+
+<!-- Enhanced Lightbox Script -->
+<script is:inline>
+  (() => {
+    const SELECTOR = 'img[data-lightbox]';
+
+    function getGallery() {
+      return Array.from(document.querySelectorAll(SELECTOR));
+    }
+
+    function createOverlay() {
+      const el = document.createElement('div');
+      el.className = 'slb fixed inset-0 bg-black/95 backdrop-blur-md z-[60] flex flex-col';
+      el.innerHTML = `
+        <!-- Верхняя панель -->
+        <div class="slb-header absolute top-0 left-0 right-0 z-10 p-4 flex items-start justify-between text-white">
+          <!-- Левый верхний угол: информация о фото -->
+          <div class="slb-info bg-black/50 backdrop-blur-sm rounded-lg px-4 py-3 border border-white/10">
+            <div class="slb-counter text-base font-semibold text-white"></div>
+          </div>
+          
+          <!-- Правый верхний угол: управление -->
+          <div class="controls-group bg-black/50 backdrop-blur-xl border border-white/10 rounded-lg p-3 flex items-center gap-2">
+            <button title="Повернуть" class="slb-rotate control-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M1 4v6h6M23 20v-6h-6"></path>
+                <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+              </svg>
+            </button>
+            <div class="w-px h-6 bg-white/20 mx-1"></div>
+            <a title="Скачать" class="slb-download control-btn" download>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+              </svg>
+            </a>
+            <a title="Открыть в новой вкладке" class="slb-open control-btn" target="_blank" rel="noopener">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path>
+              </svg>
+            </a>
+            <button title="Полноэкранный режим" class="slb-full control-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+              </svg>
+            </button>
+            <button title="Поделиться" class="slb-share control-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
+                <polyline points="16,6 12,2 8,6"></polyline>
+                <line x1="12" y1="2" x2="12" y2="15"></line>
+              </svg>
+            </button>
+            <div class="w-px h-6 bg-white/20 mx-1"></div>
+            <button title="Закрыть" class="slb-close control-btn">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Основное содержимое -->
+        <div class="slb-body relative flex-1 overflow-hidden flex items-center justify-center">
+          <img class="slb-img will-change-transform rounded-lg shadow-2xl" />
+          
+          <!-- Навигационные кнопки -->
+          <button class="slb-prev nav-btn hidden md:flex absolute left-6 top-1/2 -translate-y-1/2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button class="slb-next nav-btn hidden md:flex absolute right-6 top-1/2 -translate-y-1/2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+          
+          <!-- Загрузка -->
+          <div class="slb-loading hidden absolute inset-0 flex items-center justify-center">
+            <div class="flex flex-col items-center gap-3">
+              <div class="w-16 h-16 border-4 border-white/20 border-t-blue-400 rounded-full animate-spin"></div>
+              <div class="text-white/80 text-sm">Загрузка...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Нижняя панель: описание -->
+        <div class="slb-caption-container absolute bottom-0 left-0 right-0 z-10 p-4 flex justify-center">
+          <div class="slb-caption bg-black/50 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/10 text-center text-white max-w-2xl">
+            <div class="slb-caption-text text-sm leading-tight line-clamp-2"></div>
+          </div>
+        </div>`;
+      return el;
+    }
+
+    function openLightbox(startIndex) {
+      const gallery = getGallery();
+      let index = Math.max(0, Math.min(startIndex, gallery.length - 1));
+      if (!gallery[index]) return;
+
+      const overlay = createOverlay();
+      const imgEl = overlay.querySelector('.slb-img');
+      const captionEl = overlay.querySelector('.slb-caption-text');
+      const counterEl = overlay.querySelector('.slb-counter');
+      const downloadEl = overlay.querySelector('.slb-download');
+      const openEl = overlay.querySelector('.slb-open');
+      const shareEl = overlay.querySelector('.slb-share');
+      const closeBtn = overlay.querySelector('.slb-close');
+      const prevBtn = overlay.querySelector('.slb-prev');
+      const nextBtn = overlay.querySelector('.slb-next');
+      // Zoom buttons removed
+      const rotateBtn = overlay.querySelector('.slb-rotate');
+      const fullBtn = overlay.querySelector('.slb-full');
+      const loadingEl = overlay.querySelector('.slb-loading');
+
+      let scale = 1;
+      let posX = 0;
+      let posY = 0;
+      let rotation = 0;
+      let hideTimeout = null;
+      let baseScale = 1;
+      let dragging = false;
+      let startX = 0, startY = 0;
+      let hideUiTimer;
+      let touchStartDistance = 0;
+
+      function calculateOptimalSize() {
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+        const maxWidth = viewportWidth * 0.9;
+        const maxHeight = viewportHeight * 0.8;
+        
+        if (imgEl.naturalWidth && imgEl.naturalHeight) {
+          const imgRatio = imgEl.naturalWidth / imgEl.naturalHeight;
+          const viewRatio = maxWidth / maxHeight;
+          
+          let targetWidth, targetHeight;
+          
+          if (imgRatio > viewRatio) {
+            // Изображение шире - ограничиваем по ширине
+            targetWidth = Math.min(maxWidth, imgEl.naturalWidth);
+            targetHeight = targetWidth / imgRatio;
+          } else {
+            // Изображение выше - ограничиваем по высоте
+            targetHeight = Math.min(maxHeight, imgEl.naturalHeight);
+            targetWidth = targetHeight * imgRatio;
+          }
+          
+          // Если изображение слишком маленькое, увеличиваем его
+          const minSize = Math.min(viewportWidth, viewportHeight) * 0.3;
+          if (Math.max(targetWidth, targetHeight) < minSize) {
+            const scaleFactor = minSize / Math.max(targetWidth, targetHeight);
+            targetWidth *= scaleFactor;
+            targetHeight *= scaleFactor;
+          }
+          
+          imgEl.style.width = targetWidth + 'px';
+          imgEl.style.height = targetHeight + 'px';
+          imgEl.style.maxWidth = 'none';
+          imgEl.style.maxHeight = 'none';
+          
+          baseScale = targetWidth / imgEl.naturalWidth;
+        }
+      }
+
+      function applyTransform() {
+        const finalScale = baseScale * scale;
+        imgEl.style.transform = `translate(${posX}px, ${posY}px) scale(${scale}) rotate(${rotation}deg)`;
+        imgEl.style.cursor = scale > 1 ? 'grab' : 'auto';
+      }
+
+      function showUI() {
+        overlay.classList.remove('slb-ui-hidden');
+        clearTimeout(hideTimeout);
+        hideTimeout = setTimeout(() => {
+          overlay.classList.add('slb-ui-hidden');
+        }, 3000);
+      }
+
+      function resetHideTimer() {
+        showUI();
+      }
+
+      function showLoading() {
+        loadingEl.classList.remove('hidden');
+        imgEl.style.opacity = '0';
+      }
+
+      function hideLoading() {
+        loadingEl.classList.add('hidden');
+        imgEl.style.opacity = '1';
+      }
+
+      function load(idx) {
+        index = idx;
+        const node = gallery[index];
+        const src = node.getAttribute('src');
+        const alt = node.getAttribute('data-caption') || node.getAttribute('alt') || '';
+        
+        showLoading();
+        
+        const tempImg = new Image();
+        tempImg.onload = () => {
+          imgEl.setAttribute('src', src || '');
+          imgEl.setAttribute('alt', alt);
+          
+          // Ждем загрузки для расчета размеров
+          imgEl.onload = () => {
+            calculateOptimalSize();
+            hideLoading();
+          };
+        };
+        tempImg.onerror = () => {
+          hideLoading();
+          imgEl.setAttribute('alt', 'Ошибка загрузки изображения');
+        };
+        tempImg.src = src;
+        
+        captionEl.textContent = alt || `Изображение ${index + 1}`;
+        downloadEl.setAttribute('href', src || '#');
+        downloadEl.setAttribute('download', `image-${index + 1}.jpg`);
+        openEl.setAttribute('href', src || '#');
+        scale = 1; posX = 0; posY = 0; rotation = 0; baseScale = 1;
+        
+        // Сброс стилей изображения
+        imgEl.style.width = 'auto';
+        imgEl.style.height = 'auto';
+        imgEl.style.maxWidth = '90vw';
+        imgEl.style.maxHeight = '80vh';
+        
+        applyTransform();
+        if (prevBtn) prevBtn.style.display = index > 0 ? 'flex' : 'none';
+        if (nextBtn) nextBtn.style.display = index < gallery.length - 1 ? 'flex' : 'none';
+        if (counterEl) counterEl.textContent = `${index + 1} из ${gallery.length}`;
+      }
+
+      function onKey(e) {
+        // Предотвращаем действия по умолчанию для наших клавиш
+        if (['Escape', 'ArrowRight', 'ArrowLeft', '+', '=', '-', '_', 'r', 'R'].includes(e.key)) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        
+        if (e.key === 'Escape') { close(); }
+        if (e.key === 'ArrowRight') { if (index < gallery.length - 1) load(index + 1); }
+        if (e.key === 'ArrowLeft') { if (index > 0) load(index - 1); }
+        if (e.key === '+' || e.key === '=') { 
+          scale = Math.min(5, scale + 0.25); 
+          applyTransform(); 
+        }
+        if (e.key === '-' || e.key === '_') { 
+          scale = Math.max(0.5, scale - 0.25); 
+          if (scale <= 1) { scale = 1; posX = 0; posY = 0; } 
+          applyTransform(); 
+        }
+        if (e.key === 'r' || e.key === 'R') { 
+          rotation = (rotation + 90) % 360; 
+          applyTransform(); 
+        }
+        if (e.key === '0') {
+          // Сброс зума и позиции на "0"
+          scale = 1;
+          posX = 0;
+          posY = 0;
+          rotation = 0;
+          applyTransform();
+        }
+      }
+
+      function close() {
+        document.removeEventListener('keydown', onKey);
+        // Восстанавливаем скролл страницы
+        document.body.style.overflow = '';
+        overlay.classList.add('fade-out');
+        setTimeout(() => overlay.remove(), 200);
+      }
+
+      // Event listeners
+      overlay.addEventListener('click', (e) => {
+        // Закрываем только если клик был по фону, а не по изображению или контролам
+        const isBody = e.target.classList?.contains('slb-body');
+        const isOverlay = e.target === overlay;
+        if (isBody || isOverlay) {
+          e.preventDefault();
+          e.stopPropagation();
+          close();
+        }
+      });
+      
+      closeBtn?.addEventListener('click', close);
+      prevBtn?.addEventListener('click', () => load(index - 1));
+      nextBtn?.addEventListener('click', () => load(index + 1));
+      // Zoom button handlers removed - use mouse wheel for zoom
+      rotateBtn?.addEventListener('click', () => { 
+        rotation = (rotation + 90) % 360; 
+        applyTransform(); 
+      });
+      
+      fullBtn?.addEventListener('click', async () => {
+        if (!document.fullscreenElement) {
+          await overlay.requestFullscreen().catch(() => {});
+        } else {
+          await document.exitFullscreen().catch(() => {});
+        }
+      });
+
+      shareEl?.addEventListener('click', async () => {
+        const src = gallery[index].getAttribute('src');
+        const title = gallery[index].getAttribute('data-caption') || 'Изображение';
+        
+        if (navigator.share) {
+          try {
+            // Загружаем изображение как blob
+            const response = await fetch(src);
+            const blob = await response.blob();
+            const file = new File([blob], 'image.jpg', { type: blob.type });
+            
+            await navigator.share({ 
+              title, 
+              files: [file]
+            });
+          } catch (e) {
+            // Fallback to copy URL
+            await navigator.clipboard?.writeText(src);
+          }
+        } else {
+          await navigator.clipboard?.writeText(src);
+        }
+      });
+
+      // Drag to pan
+      imgEl.addEventListener('mousedown', (e) => {
+        e.stopPropagation(); // Предотвращаем всплытие к overlay
+        if (scale <= 1) return;
+        dragging = true; startX = e.clientX - posX; startY = e.clientY - posY; imgEl.style.cursor = 'grabbing';
+      });
+      
+      // Предотвращаем закрытие при клике на изображение
+      imgEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+      window.addEventListener('mousemove', (e) => {
+        if (!dragging) return;
+        posX = e.clientX - startX; posY = e.clientY - startY; applyTransform();
+      });
+      window.addEventListener('mouseup', () => { if (dragging) { dragging = false; imgEl.style.cursor = 'grab'; } });
+      
+      // Touch support for zoom and pan
+      let touchStartX = 0, touchStartY = 0;
+      imgEl.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 2) {
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          touchStartDistance = Math.sqrt(dx * dx + dy * dy);
+        } else if (e.touches.length === 1 && scale > 1) {
+          touchStartX = e.touches[0].clientX - posX;
+          touchStartY = e.touches[0].clientY - posY;
+        }
+      });
+      
+      imgEl.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 2) {
+          e.preventDefault();
+          const dx = e.touches[0].clientX - e.touches[1].clientX;
+          const dy = e.touches[0].clientY - e.touches[1].clientY;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const delta = distance / touchStartDistance;
+          scale = Math.max(1, Math.min(4, scale * delta));
+          touchStartDistance = distance;
+          if (scale === 1) { posX = 0; posY = 0; }
+          applyTransform();
+        } else if (e.touches.length === 1 && scale > 1) {
+          posX = e.touches[0].clientX - touchStartX;
+          posY = e.touches[0].clientY - touchStartY;
+          applyTransform();
+        }
+      });
+      
+      // Mouse wheel zoom - работает везде в лайтбоксе
+      const wheelHandler = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        const delta = Math.sign(e.deltaY);
+        const zoomFactor = e.ctrlKey ? 0.05 : 0.15; // Более чувствительный зум с Ctrl
+        
+        scale = Math.max(0.5, Math.min(5, scale - delta * zoomFactor));
+        if (scale <= 1) { 
+          scale = 1;
+          posX = 0; 
+          posY = 0; 
+        }
+        applyTransform();
+      };
+      
+      // Добавляем обработчик на весь оверлей
+      overlay.addEventListener('wheel', wheelHandler, { passive: false });
+      
+      // Предотвращаем скролл страницы когда лайтбокс открыт
+      document.body.style.overflow = 'hidden';
+
+      // Swipe navigation
+      let swipeStartX = 0;
+      overlay.addEventListener('touchstart', (e) => {
+        swipeStartX = e.touches[0].clientX;
+      });
+      
+      overlay.addEventListener('touchend', (e) => {
+        const swipeEndX = e.changedTouches[0].clientX;
+        const swipeDiff = swipeEndX - swipeStartX;
+        if (Math.abs(swipeDiff) > 50 && scale === 1) {
+          if (swipeDiff > 0 && index > 0) {
+            load(index - 1);
+          } else if (swipeDiff < 0 && index < gallery.length - 1) {
+            load(index + 1);
+          }
+        }
+      });
+
+      document.addEventListener('keydown', onKey);
+      document.body.appendChild(overlay);
+
+      // Запускаем таймер автоскрытия
+      showUI();
+
+      // Auto-hide UI
+      const showUi = () => overlay.classList.remove('slb-ui-hidden');
+      const hideUiLater = () => { 
+        clearTimeout(hideUiTimer); 
+        hideUiTimer = setTimeout(() => overlay.classList.add('slb-ui-hidden'), 3000); 
+      };
+      overlay.addEventListener('mousemove', resetHideTimer);
+      overlay.addEventListener('touchstart', () => { showUi(); hideUiLater(); });
+      hideUiLater();
+
+      load(index);
+    }
+
+    // Lightbox activation
+    document.addEventListener('click', (e) => {
+      const img = e.target.closest(SELECTOR);
+      if (!img) return;
+      
+      // Предотвращаем множественное открытие
+      if (document.querySelector('.slb')) return;
+      
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const gallery = getGallery();
+      const idx = gallery.indexOf(img);
+      openLightbox(idx);
+    });
+
+    // Carousel functionality
+    function initCarousels() {
+      document.querySelectorAll('#carousel-container').forEach(container => {
+        const prevBtn = container.parentElement.querySelector('.carousel-prev');
+        const nextBtn = container.parentElement.querySelector('.carousel-next');
+        const indicators = container.parentElement.querySelectorAll('.carousel-indicator');
+        let currentIndex = 0;
+        const totalItems = container.children.length;
+
+        // Function to resize carousel media content
+        function resizeCarouselContent() {
+          const viewportWidth = window.innerWidth;
+          const viewportHeight = window.innerHeight;
+          const maxWidth = viewportWidth * 0.85;
+          const maxHeight = viewportHeight * 0.72; // 80% * 90% = 72% от высоты экрана
+          
+          Array.from(container.children).forEach(slide => {
+            const media = slide.querySelector('img, video');
+            if (!media) return;
+            
+            if (media.tagName === 'IMG') {
+              // Wait for image to load to get natural dimensions
+              if (media.complete && media.naturalWidth > 0) {
+                resizeMedia(media, maxWidth, maxHeight);
+              } else {
+                media.addEventListener('load', () => {
+                  resizeMedia(media, maxWidth, maxHeight);
+                }, { once: true });
+              }
+            } else if (media.tagName === 'VIDEO') {
+              // For videos, use videoWidth/videoHeight if available
+              media.addEventListener('loadedmetadata', () => {
+                resizeMedia(media, maxWidth, maxHeight);
+              }, { once: true });
+              
+              // Fallback for already loaded videos
+              if (media.videoWidth > 0) {
+                resizeMedia(media, maxWidth, maxHeight);
+              }
+            }
+          });
+        }
+
+        function resizeMedia(media, maxWidth, maxHeight) {
+          let naturalWidth, naturalHeight;
+          
+          if (media.tagName === 'IMG') {
+            naturalWidth = media.naturalWidth;
+            naturalHeight = media.naturalHeight;
+          } else if (media.tagName === 'VIDEO') {
+            naturalWidth = media.videoWidth || 1920;
+            naturalHeight = media.videoHeight || 1080;
+          }
+          
+          if (!naturalWidth || !naturalHeight) return;
+          
+          const mediaRatio = naturalWidth / naturalHeight;
+          const containerRatio = maxWidth / maxHeight;
+          
+          let targetWidth, targetHeight;
+          
+          // Адаптивное масштабирование - всегда заполняем доступное пространство оптимально
+          if (mediaRatio > containerRatio) {
+            // Медиа шире контейнера - используем всю ширину
+            targetWidth = maxWidth;
+            targetHeight = targetWidth / mediaRatio;
+          } else {
+            // Медиа выше контейнера - используем всю высоту
+            targetHeight = maxHeight;
+            targetWidth = targetHeight * mediaRatio;
+          }
+          
+          // Умное масштабирование для маленьких изображений
+          const originalSize = Math.max(naturalWidth, naturalHeight);
+          const targetSize = Math.max(targetWidth, targetHeight);
+          const minDisplaySize = Math.min(maxWidth, maxHeight) * 0.4;
+          
+          if (targetSize < minDisplaySize) {
+            // Увеличиваем маленькие изображения для лучшей видимости
+            const upscaleFactor = minDisplaySize / targetSize;
+            targetWidth *= upscaleFactor;
+            targetHeight *= upscaleFactor;
+          }
+          
+          // Ограничиваем слишком большие изображения
+          if (targetWidth > maxWidth) {
+            const downscaleFactor = maxWidth / targetWidth;
+            targetWidth *= downscaleFactor;
+            targetHeight *= downscaleFactor;
+          }
+          
+          if (targetHeight > maxHeight) {
+            const downscaleFactor = maxHeight / targetHeight;
+            targetWidth *= downscaleFactor;
+            targetHeight *= downscaleFactor;
+          }
+          
+          // Apply the calculated dimensions
+          media.style.width = Math.round(targetWidth) + 'px';
+          media.style.height = Math.round(targetHeight) + 'px';
+          media.style.maxWidth = 'none';
+          media.style.maxHeight = 'none';
+          media.style.objectFit = 'contain';
+          media.style.transition = 'all 0.3s ease';
+        }
+
+        // Auto-hide controls functionality
+        const navLeft = container.parentElement.querySelector('.carousel-nav-left');
+        const navRight = container.parentElement.querySelector('.carousel-nav-right');
+        const indicatorsContainer = container.parentElement.querySelector('.carousel-indicators');
+        let hideControlsTimer;
+
+        function showControls() {
+          if (navLeft) navLeft.style.opacity = '1';
+          if (navRight) navRight.style.opacity = '1';
+          if (indicatorsContainer) indicatorsContainer.style.opacity = '1';
+        }
+
+        function hideControlsLater() {
+          clearTimeout(hideControlsTimer);
+          hideControlsTimer = setTimeout(() => {
+            if (navLeft) navLeft.style.opacity = '0';
+            if (navRight) navRight.style.opacity = '0';
+            if (indicatorsContainer) indicatorsContainer.style.opacity = '0';
+          }, 3000);
+        }
+
+        function resetHideTimer() {
+          showControls();
+          hideControlsLater();
+        }
+
+        function updateCarousel() {
+          container.scrollTo({
+            left: currentIndex * container.clientWidth,
+            behavior: 'smooth'
+          });
+          
+          indicators.forEach((indicator, idx) => {
+            indicator.classList.toggle('bg-white/70', idx === currentIndex);
+            indicator.classList.toggle('bg-white/40', idx !== currentIndex);
+          });
+        }
+
+        prevBtn?.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          currentIndex = Math.max(0, currentIndex - 1);
+          updateCarousel();
+          resetHideTimer();
+        });
+
+        nextBtn?.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          currentIndex = Math.min(totalItems - 1, currentIndex + 1);
+          updateCarousel();
+          resetHideTimer();
+        });
+
+        indicators.forEach((indicator, idx) => {
+          indicator.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            currentIndex = idx;
+            updateCarousel();
+            resetHideTimer();
+          });
+        });
+
+        // Auto-detect current slide on scroll
+        let scrollTimeout;
+        container.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            const scrollLeft = container.scrollLeft;
+            const itemWidth = container.clientWidth;
+            currentIndex = Math.round(scrollLeft / itemWidth);
+            updateCarousel();
+          }, 100);
+        });
+
+        // Event listeners for showing/hiding controls
+        container.addEventListener('mouseenter', showControls);
+        container.addEventListener('mousemove', resetHideTimer);
+        container.addEventListener('mouseleave', hideControlsLater);
+        container.addEventListener('touchstart', resetHideTimer);
+        container.addEventListener('touchmove', resetHideTimer);
+
+        // Show controls on interaction with navigation elements
+        if (navLeft) navLeft.addEventListener('mouseenter', showControls);
+        if (navRight) navRight.addEventListener('mouseenter', showControls);
+        if (indicatorsContainer) indicatorsContainer.addEventListener('mouseenter', showControls);
+
+        // Resize content on load and window resize
+        resizeCarouselContent();
+        window.addEventListener('resize', resizeCarouselContent);
+        
+        // Initial setup
+        updateCarousel();
+        hideControlsLater(); // Start the hide timer
+      });
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCarousels);
+    } else {
+      initCarousels();
+    }
+  })();
+</script>
+
+<style>
+/* Text flow container for aligned images */
+.text-flow-container {
+  overflow: hidden;
+  line-height: 1.6;
+  text-align: justify;
+  hyphens: auto;
+  word-wrap: break-word;
+  display: flow-root; /* Современный clearfix */
+  min-height: 120px; /* Минимальная высота для обтекания */
+}
+
+.text-flow-container img[data-align="left"],
+.text-flow-container img[data-align="right"] {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Enhanced alignment styles for inline images with text integration */
+.prose img[data-lightbox][data-align="left"],
+.text-flow-container img[data-align="left"] {
+  float: left;
+  margin: 0 1rem 0 0;
+  max-width: min(200px, 35%);
+  border-radius: 0.5rem;
+  border: 2px solid rgba(59, 130, 246, 0.3);
+  vertical-align: top;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 25px rgba(59, 130, 246, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  /* Упрощенная интеграция с текстом */
+  shape-outside: margin-box;
+}
+
+.prose img[data-lightbox][data-align="left"]:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(59, 130, 246, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(59, 130, 246, 0.5);
+  filter: brightness(1.05);
+}
+
+.prose img[data-lightbox][data-align="left"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(59, 130, 246, 0.1) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(147, 51, 234, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.prose img[data-lightbox][data-align="left"]:hover::before {
+  opacity: 1;
+}
+
+/* Эффект связующей линии для левого изображения */
+.prose img[data-lightbox][data-align="left"]::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -2px;
+  width: 4px;
+  height: 60%;
+  background: linear-gradient(to bottom, 
+    rgba(59, 130, 246, 0.8),
+    rgba(147, 51, 234, 0.8)
+  );
+  transform: translateY(-50%);
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.prose img[data-lightbox][data-align="left"]:hover::after {
+  opacity: 1;
+  right: -8px;
+  height: 80%;
+}
+
+.prose img[data-lightbox][data-align="right"],
+.text-flow-container img[data-align="right"] {
+  float: right;
+  margin: 0 0 0 1rem;
+  max-width: min(200px, 35%);
+  border-radius: 0.5rem;
+  border: 2px solid rgba(236, 72, 153, 0.3);
+  vertical-align: top;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    0 0 25px rgba(236, 72, 153, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+  /* Упрощенная интеграция с текстом */
+  shape-outside: margin-box;
+}
+
+.prose img[data-lightbox][data-align="right"]:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(236, 72, 153, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(236, 72, 153, 0.5);
+  filter: brightness(1.05);
+}
+
+.prose img[data-lightbox][data-align="right"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, 
+    rgba(236, 72, 153, 0.1) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(147, 51, 234, 0.1) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.prose img[data-lightbox][data-align="right"]:hover::before {
+  opacity: 1;
+}
+
+/* Эффект связующей линии для правого изображения */
+.prose img[data-lightbox][data-align="right"]::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -2px;
+  width: 4px;
+  height: 60%;
+  background: linear-gradient(to bottom, 
+    rgba(236, 72, 153, 0.8),
+    rgba(147, 51, 234, 0.8)
+  );
+  transform: translateY(-50%);
+  border-radius: 2px 0 0 2px;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.prose img[data-lightbox][data-align="right"]:hover::after {
+  opacity: 1;
+  left: -8px;
+  height: 80%;
+}
+
+.prose img[data-lightbox][data-align="center"] {
+  display: block;
+  margin: 1.5rem auto;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.3),
+    0 0 25px rgba(147, 51, 234, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.prose img[data-lightbox][data-align="center"]:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(147, 51, 234, 0.2);
+  border-color: rgba(147, 51, 234, 0.3);
+}
+
+.prose img[data-lightbox][data-align="center"]::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.7), 
+    rgba(147, 51, 234, 0.7), 
+    rgba(236, 72, 153, 0.7),
+    rgba(249, 115, 22, 0.7)
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.prose img[data-lightbox][data-align="center"]:hover::before {
+  opacity: 1;
+}
+
+/* Стилизация текста рядом с изображениями */
+.prose p:has(img[data-align="left"]) {
+  position: relative;
+  padding-left: 1rem;
+  border-left: 3px solid rgba(59, 130, 246, 0.2);
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.05) 0%,
+    transparent 20%
+  );
+  margin-left: -0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  transition: all 0.3s ease;
+}
+
+.prose p:has(img[data-align="left"]:hover) {
+  border-left-color: rgba(59, 130, 246, 0.4);
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.08) 0%,
+    transparent 25%
+  );
+  transform: translateX(4px);
+}
+
+.prose p:has(img[data-align="right"]) {
+  position: relative;
+  padding-right: 1rem;
+  border-right: 3px solid rgba(236, 72, 153, 0.2);
+  background: linear-gradient(-90deg, 
+    rgba(236, 72, 153, 0.05) 0%,
+    transparent 20%
+  );
+  margin-right: -0.5rem;
+  padding-left: 0.5rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.prose p:has(img[data-align="right"]:hover) {
+  border-right-color: rgba(236, 72, 153, 0.4);
+  background: linear-gradient(-90deg, 
+    rgba(236, 72, 153, 0.08) 0%,
+    transparent 25%
+  );
+  transform: translateX(-4px);
+}
+
+/* Дополнительные эффекты для параграфов с изображениями */
+.prose p:has(img[data-align]) {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.prose p:has(img[data-align])::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.prose p:has(img[data-align]:hover)::before {
+  opacity: 0.5;
+}
+
+/* Добавляем эффект свечения при клике */
+.prose img[data-lightbox][data-align]:active {
+  transform: scale(0.98);
+  filter: brightness(1.1);
+}
+
+/* Удалили старый эффект волны, используем новые ::after для связующих линий */
+
+/* Улучшенный курсор */
+.prose img[data-lightbox][data-align] {
+  cursor: pointer;
+}
+
+.prose img[data-lightbox][data-align]:hover {
+  cursor: zoom-in;
+}
+
+/* Улучшения для мобильных устройств */
+@media (max-width: 768px) {
+  .prose img[data-lightbox][data-align] {
+    float: none !important;
+    display: block;
+    margin: 1rem auto !important;
+    max-width: calc(100% - 2rem) !important;
+    border-radius: 1rem !important;
+    box-shadow: 
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 25px rgba(59, 130, 246, 0.15) !important;
+    /* Убираем clip-path на мобильных */
+    clip-path: none !important;
+    shape-outside: none !important;
+    border: 2px solid rgba(147, 51, 234, 0.3) !important;
+  }
+  
+  .prose img[data-lightbox][data-align]:hover {
+    transform: translateY(-2px) scale(1.01) !important;
+  }
+  
+  .prose img[data-lightbox][data-align="left"]::after,
+  .prose img[data-lightbox][data-align="right"]::after {
+    display: none !important;
+  }
+  
+  /* Убираем стили текста на мобильных */
+  .prose p:has(img[data-align]) {
+    border: none !important;
+    background: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    transform: none !important;
+  }
+}
+
+/* Дополнительные эффекты для больших экранов */
+@media (min-width: 1024px) {
+  .prose img[data-lightbox][data-align="left"]:hover,
+  .prose img[data-lightbox][data-align="right"]:hover {
+    transform: translateY(-6px) scale(1.03);
+  }
+  
+  .prose img[data-lightbox][data-align="center"]:hover {
+    transform: translateY(-8px) scale(1.03);
+  }
+}
+
+/* Scrollbar hiding */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Enhanced control buttons */
+.control-btn { 
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #ffffff;
+  border-radius: 0.5rem;
+  padding: 10px;
+  min-width: 40px;
+  min-height: 40px;
+  min-width: 36px;
+  min-height: 36px;
+  display: grid;
+  place-items: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+.control-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.control-btn:hover::before {
+  opacity: 1;
+}
+
+.control-btn:hover { 
+  background: rgba(255,255,255,0.2);
+  border-color: rgba(255,255,255,0.3);
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.1);
+}
+
+.control-btn:active {
+  transform: translateY(0) scale(0.98);
+  background: rgba(255,255,255,0.15);
+}
+
+/* Navigation buttons */
+.nav-btn { 
+  padding: 16px;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.9));
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #ffffff;
+  backdrop-filter: blur(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.nav-btn:hover { 
+  background: linear-gradient(135deg, rgba(20,20,20,0.8), rgba(10,10,10,0.95));
+  border-color: rgba(255,255,255,0.3);
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,255,255,0.1);
+}
+
+.nav-btn:active {
+  transform: scale(1.05);
+}
+
+/* Carousel navigation buttons */
+.carousel-nav {
+  transition: all 0.3s ease;
+}
+
+.carousel-nav:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.carousel-nav-left,
+.carousel-nav-right,
+.carousel-indicators {
+  transition: opacity 0.3s ease;
+  pointer-events: auto;
+}
+
+.carousel-nav-left[style*="opacity: 0"],
+.carousel-nav-right[style*="opacity: 0"],
+.carousel-indicators[style*="opacity: 0"] {
+  pointer-events: none;
+}
+
+.carousel-indicator {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.carousel-indicator:hover {
+  transform: scale(1.2);
+}
+
+.carousel-indicators {
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.carousel-indicators:hover {
+  background: rgba(0,0,0,0.5);
+}
+
+/* Carousel container and content centering */
+#carousel-container {
+  display: flex;
+  align-items: center;
+}
+
+#carousel-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+}
+
+#carousel-container img,
+#carousel-container video {
+  max-height: 90%;
+  max-width: 90%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Controls group styling */
+.controls-group {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.05);
+}
+
+/* Smooth UI transitions */
+.slb-ui-hidden .slb-header, 
+.slb-ui-hidden .slb-caption-container,
+.slb-ui-hidden .nav-btn { 
+  opacity: 0; 
+  pointer-events: none; 
+  transition: opacity 0.4s ease; 
+}
+
+.slb-header, 
+.slb-caption-container,
+.nav-btn { 
+  transition: opacity 0.4s ease; 
+}
+
+/* Caption styling */
+.slb-caption-container {
+  transition: all 0.3s ease;
+}
+
+.slb-caption-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+/* Loading animation enhancement */
+.slb-loading {
+  background: radial-gradient(circle, rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+}
+
+/* Fade out animation */
+.slb.fade-out {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+/* Counter badge enhanced style */
+.slb-counter {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Close button enhancement */
+.slb-close:hover {
+  background: rgba(255,0,0,0.2) !important;
+  border-color: rgba(255,0,0,0.4) !important;
+  box-shadow: 0 0 20px rgba(255,0,0,0.3) !important;
+}
+
+/* Info panel styling */
+.slb-info {
+  transition: all 0.3s ease;
+}
+
+.slb-info:hover {
+  background: rgba(0,0,0,0.7);
+}
+
+/* Grid responsiveness improvements */
+@media (max-width: 640px) {
+  .control-btn {
+    padding: 6px;
+    min-width: 32px;
+    min-height: 32px;
+  }
+  
+  .controls-group {
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+  
+  .slb-header {
+    padding: 1rem;
+  }
+  
+  .slb-info {
+    padding: 0.5rem 0.75rem;
+  }
+  
+  .slb-caption-container {
+    padding: 1rem;
+  }
+  
+  .slb-caption {
+    padding: 0.75rem 1rem;
+    max-width: calc(100vw - 2rem);
+  }
+  
+  .slb-caption-text {
+    font-size: 0.875rem;
+  }
+}
+
+/* Glassmorphism effect for overlay */
+.slb {
+  background: linear-gradient(135deg, 
+    rgba(0,0,0,0.9), 
+    rgba(0,0,0,0.95)
+  );
+}
+
+/* Enhanced hover effects for grid items */
+.group:hover figcaption {
+  background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+}
+
+/* Improved focus states for accessibility */
+.control-btn:focus,
+.nav-btn:focus,
+.carousel-nav:focus,
+.carousel-indicator:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.6);
+  outline-offset: 2px;
+}
+</style>
