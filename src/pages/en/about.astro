@@ -6,6 +6,12 @@ import Footer from "../../components/Footer.astro";
 
 <BaseLayout title="About — SectLauncher" description="Cross-platform Minecraft launcher with modular architecture.">
   <Fragment slot="header"><Header /></Fragment>
+  <Fragment slot="head">
+    <link rel="canonical" href="https://sectlauncher.byteflipper.com/en/about/" />
+    <link rel="alternate" hreflang="ru" href="https://sectlauncher.byteflipper.com/ru/about/" />
+    <link rel="alternate" hreflang="x-default" href="https://sectlauncher.byteflipper.com/ru/about/" />
+    <meta property="og:url" content="https://sectlauncher.byteflipper.com/en/about/" />
+  </Fragment>
 
   <section class="hero-bg">
     <div class="mx-auto max-w-6xl px-4 py-14 grid lg:grid-cols-12 gap-8 items-center">

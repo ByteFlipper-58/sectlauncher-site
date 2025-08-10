@@ -6,6 +6,12 @@ import Footer from "../../components/Footer.astro";
 
 <BaseLayout title="Политика конфиденциальности — SectLauncher" description="Политика конфиденциальности.">
   <Fragment slot="header"><Header /></Fragment>
+  <Fragment slot="head">
+    <link rel="canonical" href="https://sectlauncher.byteflipper.com/ru/privacy/" />
+    <link rel="alternate" hreflang="en" href="https://sectlauncher.byteflipper.com/en/privacy/" />
+    <link rel="alternate" hreflang="x-default" href="https://sectlauncher.byteflipper.com/ru/privacy/" />
+    <meta property="og:url" content="https://sectlauncher.byteflipper.com/ru/privacy/" />
+  </Fragment>
   <section class="mx-auto max-w-6xl px-4 py-12">
     <h1 class="text-3xl font-extrabold">Политика конфиденциальности</h1>
     <p class="text-neutral-300 mt-2">Текст политики.</p>

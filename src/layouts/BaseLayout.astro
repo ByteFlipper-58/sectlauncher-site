@@ -1,7 +1,20 @@
 ---
 import "../styles/global.css";
 const { title = "SectLauncher", description = "Кроссплатформенный лаунчер Minecraft" } = Astro.props;
-const isDev = import.meta.env.DEV;
+// Управление индексацией: по умолчанию запрещаем, включается только через PUBLIC_ALLOW_INDEXING=true
+const allowIndexing = String(import.meta.env.PUBLIC_ALLOW_INDEXING).toLowerCase() === 'true';
+const currentLocale = Astro.currentLocale ?? 'ru';
+const ogLocale = currentLocale === 'ru' ? 'ru_RU' : 'en_US';
+const ogLocaleAlt = currentLocale === 'ru' ? 'en_US' : 'ru_RU';
+const baseHref = Astro.site?.href ?? 'https://sectlauncher.byteflipper.com/';
+function toAbsoluteUrl(pathOrUrl: string | undefined): string | undefined {
+  if (!pathOrUrl) return undefined;
+  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
+  const base = baseHref.endsWith('/') ? baseHref.slice(0, -1) : baseHref;
+  const path = pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`;
+  return `${base}${path}`;
+}
+const defaultOgImage = toAbsoluteUrl('/web-app-manifest-512x512.png');
 ---
 <html lang={Astro.currentLocale ?? 'ru'} class="bg-neutral-950 text-neutral-100">
   <head>
@@ -9,9 +22,14 @@ const isDev = import.meta.env.DEV;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="robots" content={isDev ? 'noindex, nofollow' : 'index, follow'} />
+    <meta name="robots" content={allowIndexing ? 'index, follow' : 'noindex, nofollow'} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="SectLauncher" />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:image" content={defaultOgImage} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />

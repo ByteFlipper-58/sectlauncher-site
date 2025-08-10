@@ -6,13 +6,22 @@ interface Props {
   tags?: string[];
   locale: 'ru' | 'en';
   readingMinutes: number;
+  publishAt?: string | Date;
+  premiere?: boolean;
 }
-const { title, date, heroImage, tags = [], locale, readingMinutes }: Props = Astro.props;
+const { title, date, heroImage, tags = [], locale, readingMinutes, publishAt, premiere = false }: Props = Astro.props;
 const dateStr = new Date(date).toLocaleDateString(locale === 'ru' ? 'ru-RU' : 'en-US', {
   year: 'numeric',
   month: 'long',
   day: 'numeric'
 });
+const premiereTs = publishAt ? new Date(publishAt).getTime() : undefined;
+const isFuturePremiere = !!premiere && !!premiereTs && premiereTs > Date.now();
+const premiereStr = publishAt
+  ? new Date(publishAt).toLocaleString(locale === 'ru' ? 'ru-RU' : 'en-US', {
+      year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+    })
+  : '';
 ---
 
 <header class="mx-auto w-full lg:max-w-[70%] px-4 mt-6">
@@ -26,8 +35,8 @@ const dateStr = new Date(date).toLocaleDateString(locale === 'ru' ? 'ru-RU' : 'e
           loading="lazy" 
           class="w-full h-64 md:h-80 lg:h-96 object-cover transition-transform duration-700 hover:scale-105" 
         />
-        <!-- Decorative overlay with animated gradient -->
-        <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/90 via-neutral-950/20 to-transparent"></div>
+        <!-- Dark overlay for readability / premiere state -->
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10 opacity-40"></div>
       </div>
     ) : (
@@ -54,6 +63,13 @@ const dateStr = new Date(date).toLocaleDateString(locale === 'ru' ? 'ru-RU' : 'e
           {title}
         </span>
       </h1>
+
+      {isFuturePremiere && (
+        <div class="mb-4 inline-flex flex-col px-3 py-1.5 rounded-lg bg-black/50 text-white backdrop-blur-sm">
+          <span class="text-xs uppercase tracking-wide opacity-80">{locale === 'ru' ? 'Премьера' : 'Premiere'}</span>
+          {premiereStr && (<span class="text-sm font-semibold">{premiereStr}</span>)}
+        </div>
+      )}
       
       <!-- Metadata section with improved styling -->
       <div class="flex flex-col md:flex-row md:items-center gap-4 text-sm">

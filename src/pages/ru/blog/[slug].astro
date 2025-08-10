@@ -18,7 +18,19 @@ import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   return posts
-    .filter((p) => (p.data.lang ?? 'ru') === 'ru' && !p.data.draft)
+    .filter((p) => {
+      const isRu = (p.data.lang ?? 'ru') === 'ru';
+      const isDraft = !!p.data.draft;
+      const isPrivate = !!p.data.private;
+      const publishAt = p.data.publishAt ? new Date(p.data.publishAt).getTime() : undefined;
+      const now = Date.now();
+      const isProd = import.meta.env.MODE === 'production';
+      if (!isRu || isDraft) return false;
+      if (!isProd) return true;
+      if (isPrivate) return false;
+      if (publishAt && publishAt > now) return !!p.data.premiere; // генерим только если отмечен как премьера
+      return true;
+    })
     .map((post) => {
       const slugBase = post.slug.split('/').pop();
       return {
@@ -29,7 +41,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { title, description, date, heroImage, tags, tKey, media, author } = post.data;
+const { title, description, date, heroImage, tags, tKey, media, author, publishAt, premiere } = post.data;
 const { Content } = await post.render();
 const locale: 'ru' | 'en' = 'ru';
 
@@ -101,6 +113,12 @@ const reading = calcReadingTime(post.body as string);
     {canonicalUrl && (
       <SEOJsonLd url={canonicalUrl} title={title} description={description} datePublished={publishedISO} authorName={author?.name} image={ogImage} />
     )}
+    {publishAt && new Date(publishAt).getTime() > Date.now() && (
+      <>
+        <meta name="robots" content="noindex, nofollow" />
+        <meta name="x-premiere" content="not-ready" />
+      </>
+    )}
   </Fragment>
 
   <ReadingProgressBar />
@@ -108,10 +126,16 @@ const reading = calcReadingTime(post.body as string);
     <Breadcrumbs items={[{ href: '/ru/', label: 'Главная' }, { href: '/ru/blog', label: 'Блог' }, { label: title }]} />
   </section>
 
-  <PostBanner title={title} date={date} heroImage={heroImage} tags={tags} locale={locale} readingMinutes={reading.minutes} />
+  <PostBanner title={title} date={date} heroImage={heroImage} tags={tags} locale={locale} readingMinutes={reading.minutes} publishAt={publishAt} premiere={!!premiere} />
 
   <MediaViewer items={media} mode="carousel" lightbox={true} />
 
+  {publishAt && new Date(publishAt).getTime() > Date.now() ? (
+    <div class="mx-auto w-full lg:max-w-[70%] px-4 py-16 text-center">
+      <h2 class="text-2xl font-bold">Скоро премьера</h2>
+      <p class="text-neutral-400 mt-2">Пост будет доступен после премьеры.</p>
+    </div>
+  ) : (
   <article class="mx-auto w-full lg:max-w-[70%] px-4 py-8 prose prose-invert">
     <Content components={{
       Callout: (await import('../../../components/post/Callout.astro')).default,
@@ -131,6 +155,7 @@ const reading = calcReadingTime(post.body as string);
     <!-- Include lightbox functionality for images with data-lightbox attribute -->
     <MediaViewer items={[]} />
   </article>
+  )}
 
   <section class="mx-auto w-full lg:max-w-[70%] px-4 -mt-4 pb-4">
     {canonicalUrl && (<ShareButtons url={canonicalUrl} title={title} text={description} locale={locale} />)}

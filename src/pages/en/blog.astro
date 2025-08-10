@@ -5,7 +5,19 @@ import Footer from "../../components/Footer.astro";
 import { getCollection } from 'astro:content';
 import BlogCard from "../../components/BlogCard.astro";
 
-const allPosts = (await getCollection('blog')).filter(p => !p.data.draft && (p.data.lang ?? 'ru') === 'en');
+const allPosts = (await getCollection('blog')).filter(p => {
+  const isEn = (p.data.lang ?? 'ru') === 'en';
+  const isDraft = !!p.data.draft;
+  const isPrivate = !!p.data.private;
+  const publishAt = p.data.publishAt ? new Date(p.data.publishAt).getTime() : undefined;
+  const now = Date.now();
+  const isProd = import.meta.env.MODE === 'production';
+  if (!isEn || isDraft) return false;
+  if (!isProd) return true;
+  if (isPrivate) return false;
+  if (publishAt && publishAt > now) return !!p.data.premiere;
+  return true;
+});
 const sortedPosts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 // Получаем параметр тега из URL
@@ -23,6 +35,12 @@ const allTags = [...new Set(allPosts.flatMap(post => post.data.tags || []))].sor
 
 <BaseLayout title="Blog — SectLauncher" description="News and updates.">
   <Fragment slot="header"><Header /></Fragment>
+  <Fragment slot="head">
+    <link rel="canonical" href="https://sectlauncher.byteflipper.com/en/blog/" />
+    <link rel="alternate" hreflang="ru" href="https://sectlauncher.byteflipper.com/ru/blog/" />
+    <link rel="alternate" hreflang="x-default" href="https://sectlauncher.byteflipper.com/ru/blog/" />
+    <meta property="og:url" content="https://sectlauncher.byteflipper.com/en/blog/" />
+  </Fragment>
 
   <section class="mx-auto max-w-6xl px-4 py-12">
     <!-- Header with search -->
@@ -131,6 +149,9 @@ const allTags = [...new Set(allPosts.flatMap(post => post.data.tags || []))].sor
             tags={post.data.tags}
             heroImage={post.data.heroImage}
             locale="en"
+            premiere={!!post.data.premiere && (!!post.data.publishAt ? new Date(post.data.publishAt).getTime() > Date.now() : true)}
+            premiereAt={post.data.publishAt}
+            disabled={!!post.data.premiere && !!post.data.publishAt && new Date(post.data.publishAt).getTime() > Date.now()}
           />
         );
       })}
