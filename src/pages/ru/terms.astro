@@ -1,21 +1,226 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Условия использования - SectLauncher';
+const description = 'Условия использования SectLauncher. Правила и условия для пользователей нашего сервиса.';
 ---
 
-<BaseLayout title="Условия использования — SectLauncher" description="Условия использования.">
-  <Fragment slot="header"><Header /></Fragment>
-  <Fragment slot="head">
-    <link rel="canonical" href="https://sectlauncher.byteflipper.com/ru/terms/" />
-    <link rel="alternate" hreflang="en" href="https://sectlauncher.byteflipper.com/en/terms/" />
-    <link rel="alternate" hreflang="x-default" href="https://sectlauncher.byteflipper.com/ru/terms/" />
-    <meta property="og:url" content="https://sectlauncher.byteflipper.com/ru/terms/" />
-  </Fragment>
-  <section class="mx-auto max-w-6xl px-4 py-12">
-    <h1 class="text-3xl font-extrabод">Условия использования</h1>
-    <p class="text-neutral-300 mt-2">Текст условий.</p>
-  </section>
-  <Fragment slot="footer"><Footer /></Fragment>
-</BaseLayout>
+<BaseLayout title={title} description={description}>
+  <main class="min-h-screen bg-neutral-950 text-neutral-100">
+    <div class="mx-auto max-w-4xl px-4 py-16">
+      <!-- Навигация -->
+      <div class="mb-8">
+        <a href="/ru" class="inline-flex items-center gap-2 text-neutral-400 hover:text-orange-400 transition-colors group">
+          <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+          </svg>
+          Вернуться на главную
+        </a>
+      </div>
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+          Условия использования
+        </h1>
+        <p class="text-neutral-400 text-lg">
+          Последнее обновление: {new Date().toLocaleDateString('ru-RU')}
+        </p>
+      </div>
 
+      <div class="prose prose-invert prose-orange max-w-none">
+        <div class="bg-orange-500/10 border border-orange-500/20 rounded-lg p-6 mb-8">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-orange-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            <div>
+              <h3 class="text-lg font-semibold text-orange-300 mb-2">Важные условия</h3>
+              <p class="text-orange-200/90 text-sm leading-relaxed">
+                Используя SectLauncher, вы принимаете эти условия. Проект находится в стадии разработки, поэтому некоторые функции могут быть недоступны или работать нестабильно.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">1. Принятие условий</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-4 text-neutral-300">
+              Получая доступ и используя SectLauncher ("мы", "нас", "наш"), включая веб-сайт sectlauncher.com и приложение SectLauncher ("Сервис"), вы соглашаетесь соблюдать и быть связанными настоящими Условиями использования.
+            </p>
+            <p class="text-neutral-300">
+              Если вы не согласны с какой-либо частью этих условий, то вы не можете получить доступ к Сервису.
+            </p>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">2. Описание сервиса</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-3 text-neutral-300">SectLauncher представляет собой лаунчер для Minecraft, который предоставляет:</p>
+            <ul class="list-disc pl-6 space-y-2 text-neutral-300">
+              <li>Управление инстансами и профилями Minecraft</li>
+              <li>Установку и управление модами</li>
+              <li>Интеграцию с различными платформами модов</li>
+              <li>Удобный интерфейс для запуска игры</li>
+            </ul>
+            <div class="mt-4 p-4 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+              <p class="text-orange-200 text-sm">
+                <strong>Важно:</strong> Сервис находится в стадии активной разработки. Некоторые функции могут быть недоступны или работать нестабильно.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">3. Правила использования</h2>
+          <div class="space-y-4">
+            <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+              <h3 class="text-xl font-semibold mb-3 text-orange-300">3.1 Разрешенное использование</h3>
+              <ul class="list-disc pl-6 space-y-2 text-neutral-300">
+                <li>Использование Сервиса для личных, некоммерческих целей</li>
+                <li>Установка модов, соответствующих их лицензиям</li>
+                <li>Создание резервных копий ваших данных</li>
+                <li>Обратная связь и сообщения об ошибках</li>
+              </ul>
+            </div>
+
+            <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-6">
+              <h3 class="text-xl font-semibold mb-3 text-red-300">3.2 Запрещенная деятельность</h3>
+              <ul class="list-disc pl-6 space-y-2 text-red-200">
+                <li>Распространение вредоносного ПО или вирусов</li>
+                <li>Попытки взлома или несанкционированного доступа</li>
+                <li>Нарушение авторских прав или лицензий модов</li>
+                <li>Создание чрезмерной нагрузки на серверы</li>
+                <li>Использование для коммерческих целей без разрешения</li>
+                <li>Реверс-инжиниринг приложения</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">4. Интеллектуальная собственность</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-4 text-neutral-300">
+              Сервис и его оригинальный контент, функции и функциональность принадлежат SectLauncher и защищены международным авторским правом, торговыми марками, патентами, коммерческой тайной и другими законами об интеллектуальной собственности.
+            </p>
+            <div class="grid md:grid-cols-2 gap-4 mt-4">
+              <div>
+                <h4 class="font-semibold text-orange-300 mb-2">Наша собственность:</h4>
+                <ul class="list-disc pl-6 space-y-1 text-neutral-400 text-sm">
+                  <li>Код приложения SectLauncher</li>
+                  <li>Дизайн и интерфейс</li>
+                  <li>Логотип и торговые марки</li>
+                  <li>Документация</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-orange-300 mb-2">Третьи лица:</h4>
+                <ul class="list-disc pl-6 space-y-1 text-neutral-400 text-sm">
+                  <li>Minecraft принадлежит Mojang Studios</li>
+                  <li>Моды принадлежат их создателям</li>
+                  <li>Используемые библиотеки имеют свои лицензии</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">5. Отказ от ответственности</h2>
+          <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-6">
+            <div class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-yellow-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+              </svg>
+              <div>
+                <h3 class="text-lg font-semibold text-yellow-300 mb-2">Важное предупреждение</h3>
+                <p class="text-yellow-200 text-sm leading-relaxed mb-3">
+                  Сервис предоставляется "как есть" без каких-либо гарантий. Мы не несем ответственности за любые прямые, косвенные, случайные или последующие убытки.
+                </p>
+                <ul class="list-disc pl-6 space-y-1 text-yellow-200/80 text-xs">
+                  <li>Потеря данных или повреждение файлов</li>
+                  <li>Нестабильная работа во время разработки</li>
+                  <li>Совместимость с различными системами</li>
+                  <li>Работоспособность сторонних модов</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">6. Конфиденциальность</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-3 text-neutral-300">
+              Ваша конфиденциальность важна для нас. Обработка ваших данных регулируется нашей <a href="/ru/privacy" class="text-orange-400 hover:text-orange-300">Политикой конфиденциальности</a>.
+            </p>
+            <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
+              <p class="text-green-200 text-sm">
+                Мы собираем минимальную анонимную аналитику только для улучшения продукта и не передаем данные третьим лицам.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">7. Изменения в условиях</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-3 text-neutral-300">
+              Мы оставляем за собой право изменять или заменять эти Условия в любое время. Существенные изменения будут уведомлены заранее.
+            </p>
+            <div class="space-y-2 text-sm text-neutral-400">
+              <p>• Уведомления на веб-сайте</p>
+              <p>• Сообщения в Telegram канале</p>
+              <p>• Обновления в приложении</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">8. Прекращение использования</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-3 text-neutral-300">
+              Мы можем прекратить или приостановить ваш доступ немедленно, без предварительного уведомления, по нашему единоличному усмотрению, по любой причине и без ограничений, включая нарушение Условий.
+            </p>
+            <p class="text-neutral-400 text-sm">
+              При прекращении ваше право на использование Сервиса прекратится немедленно.
+            </p>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">9. Контактная информация</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-4 text-neutral-300">
+              Если у вас есть вопросы об этих Условиях использования, свяжитесь с нами:
+            </p>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <span class="text-neutral-300">byteflipper.business@gmail.com</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.820 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+                <a href="https://t.me/sectlauncher" class="text-orange-400 hover:text-orange-300">@sectlauncher</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="text-center py-8 border-t border-neutral-800">
+          <p class="text-neutral-400 text-sm">
+            Эти условия использования действуют с {new Date().toLocaleDateString('ru-RU')} года.
+          </p>
+          <p class="text-neutral-500 text-xs mt-2">
+            Версия 1.0 | SectLauncher © 2025
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>

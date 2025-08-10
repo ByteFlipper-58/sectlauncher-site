@@ -1,8 +1,9 @@
 ---
 import "../styles/global.css";
+import CookieBanner from "../components/CookieBanner.astro";
 const { title = "SectLauncher", description = "Кроссплатформенный лаунчер Minecraft" } = Astro.props;
-// Управление индексацией: по умолчанию запрещаем, включается только через PUBLIC_ALLOW_INDEXING=true
-const allowIndexing = String(import.meta.env.PUBLIC_ALLOW_INDEXING).toLowerCase() === 'true';
+// Разрешаем индексацию поисковиками
+const allowIndexing = true;
 const currentLocale = Astro.currentLocale ?? 'ru';
 const ogLocale = currentLocale === 'ru' ? 'ru_RU' : 'en_US';
 const ogLocaleAlt = currentLocale === 'ru' ? 'en_US' : 'ru_RU';
@@ -48,6 +49,7 @@ const defaultOgImage = toAbsoluteUrl('/web-app-manifest-512x512.png');
     <slot name="header" />
     <main class="flex-1"><slot /></main>
     <slot name="footer" />
+    <CookieBanner locale={currentLocale as 'ru' | 'en'} />
     <script type="module">import '../scripts/firebase.ts';</script>
   </body>
 </html>

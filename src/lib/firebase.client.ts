@@ -14,19 +14,32 @@ const firebaseConfig = {
 export const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 
 let analyticsInstance: Analytics | null = null;
+let analyticsEnabled = false;
 
 export async function initAnalytics(): Promise<Analytics | null> {
   if (typeof window === 'undefined') return null;
   if (!import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID) return null;
+  
+  // Check cookie consent
+  const cookieConsent = localStorage.getItem('cookie-consent');
+  if (cookieConsent !== 'accepted') {
+    analyticsEnabled = false;
+    return null;
+  }
+  
   try {
     const supported = await isSupported();
     analyticsInstance = supported ? getAnalytics(app) : null;
+    analyticsEnabled = Boolean(analyticsInstance);
+    
     try {
       // Экспонируем состояние для отладки
       (window as any).__fa = {
         supported,
         measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID,
         initialized: Boolean(analyticsInstance),
+        enabled: analyticsEnabled,
+        cookieConsent,
       };
       // Полезный лог
       // eslint-disable-next-line no-console
@@ -34,6 +47,8 @@ export async function initAnalytics(): Promise<Analytics | null> {
         supported,
         measurementId: import.meta.env.PUBLIC_FIREBASE_MEASUREMENT_ID,
         initialized: Boolean(analyticsInstance),
+        enabled: analyticsEnabled,
+        cookieConsent,
       });
     } catch {}
     return analyticsInstance;
@@ -42,9 +57,31 @@ export async function initAnalytics(): Promise<Analytics | null> {
   }
 }
 
+export function enableAnalytics(): void {
+  analyticsEnabled = true;
+  initAnalytics();
+}
+
+export function disableAnalytics(): void {
+  analyticsEnabled = false;
+  analyticsInstance = null;
+  
+  // Clear any existing analytics cookies
+  try {
+    // Clear GA cookies
+    document.cookie.split(";").forEach((c) => {
+      const eqPos = c.indexOf("=");
+      const name = eqPos > -1 ? c.substr(0, eqPos).trim() : c.trim();
+      if (name.startsWith('_ga') || name.startsWith('_gid')) {
+        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+      }
+    });
+  } catch {}
+}
+
 export function trackEvent(eventName: string, params?: Record<string, unknown>): void {
   try {
-    if (!analyticsInstance) return;
+    if (!analyticsInstance || !analyticsEnabled) return;
     logEvent(analyticsInstance, eventName, params as Record<string, never>);
   } catch {
     // no-op
@@ -53,7 +90,7 @@ export function trackEvent(eventName: string, params?: Record<string, unknown>):
 
 export function trackPageView(params?: Record<string, unknown>): void {
   try {
-    if (!analyticsInstance) return;
+    if (!analyticsInstance || !analyticsEnabled) return;
     const baseParams: Record<string, unknown> = {
       page_location: typeof window !== 'undefined' ? window.location.href : undefined,
       page_path: typeof window !== 'undefined' ? window.location.pathname : undefined,

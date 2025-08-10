@@ -4,7 +4,7 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 ---
 
-<BaseLayout title="О проекте — SectLauncher" description="О проекте SectLauncher.">
+<BaseLayout title="О проекте — SectLauncher" description="SectLauncher — кроссплатформенный лаунчер для Minecraft на Kotlin Multiplatform с Clean Architecture.">
   <Fragment slot="header"><Header /></Fragment>
   <Fragment slot="head">
     <link rel="canonical" href="https://sectlauncher.byteflipper.com/ru/about/" />
@@ -12,10 +12,245 @@ import Footer from "../../components/Footer.astro";
     <link rel="alternate" hreflang="x-default" href="https://sectlauncher.byteflipper.com/ru/about/" />
     <meta property="og:url" content="https://sectlauncher.byteflipper.com/ru/about/" />
   </Fragment>
-  <section class="mx-auto max-w-6xl px-4 py-12">
-    <h1 class="text-3xl font-extrabold">О проекте</h1>
-    <p class="text-neutral-300 mt-2">Коротко о целях и архитектуре проекта.</p>
+
+  <!-- Hero секция -->
+  <section class="hero-bg">
+    <div class="mx-auto max-w-6xl px-4 py-16">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
+          SectLauncher
+          <span class="block text-2xl md:text-3xl text-emerald-400 mt-2">Инженерный подход к лаунчерам</span>
+        </h1>
+        <p class="text-xl text-neutral-300 mb-6 leading-relaxed">
+          Кроссплатформенный лаунчер для Minecraft на Kotlin Multiplatform с UI на Jetpack Compose Desktop, построенный по принципам Clean Architecture. Цель — удобная, модульная и расширяемая оболочка для игры с поддержкой ванильных и модифицированных клиентов.
+        </p>
+        
+        <div class="inline-flex items-center px-4 py-3 rounded-lg bg-orange-500/20 border border-orange-500/30 mb-8">
+          <svg class="w-5 h-5 mr-3 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+          <div>
+            <div class="text-orange-300 font-medium text-base">Проект в активной разработке</div>
+            <div class="text-orange-400 text-sm">Код будет открыт позже</div>
+          </div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4">
+          <div class="px-6 py-3 rounded-lg font-semibold text-orange-900 bg-orange-500 cursor-not-allowed opacity-75 flex items-center gap-2">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            В разработке
+          </div>
+                   <div class="px-6 py-3 rounded-lg border border-neutral-700 bg-neutral-900/50 cursor-not-allowed opacity-75 flex items-center gap-2">
+           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+             <path d="M12 1l-2 2h-.5L9 3.5V6h2V4l1-1 1 1v2h2V3.5L14.5 3H14l-2-2zm0 6C6.48 7 2 11.48 2 17s4.48 10 10 10 10-4.48 10-10S17.52 7 12 7zm-2 13l-5-5 1.41-1.41L10 17.17l7.59-7.59L19 11l-9 9z"/>
+           </svg>
+           Будет открыт позже
+         </div>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <!-- Статус разработки -->
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="grid lg:grid-cols-2 gap-12">
+      <!-- Что готово -->
+      <div>
+        <h2 class="text-3xl font-bold mb-6 text-emerald-400">✅ Основа лаунчера (Завершено)</h2>
+        <div class="space-y-4">
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Авторизация Microsoft/Mojang</h3>
+              <p class="text-neutral-300 text-sm">Полноценная система аутентификации через официальные API</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Загрузка версий Minecraft</h3>
+              <p class="text-neutral-300 text-sm">Автоматическое скачивание и установка ванильных версий</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Управление инстансами</h3>
+              <p class="text-neutral-300 text-sm">Создание, редактирование и удаление игровых профилей</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Clean Architecture</h3>
+              <p class="text-neutral-300 text-sm">Модульная архитектура с разделением ответственности</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Что предстоит -->
+      <div>
+        <h2 class="text-3xl font-bold mb-6 text-blue-400">🚧 Альфа-версия (В процессе)</h2>
+        <div class="space-y-4">
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Windows сборка</h3>
+              <p class="text-neutral-300 text-sm">Первый публичный релиз для операционной системы Windows</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Базовый UI/UX</h3>
+              <p class="text-neutral-300 text-sm">Полировка интерфейса и опыта взаимодействия</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Тестирование</h3>
+              <p class="text-neutral-300 text-sm">Комплексное тестирование на различных конфигурациях</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+            <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Документация</h3>
+              <p class="text-neutral-300 text-sm">Полное руководство пользователя и API</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Будущие этапы -->
+      <div>
+        <h2 class="text-3xl font-bold mb-6 text-purple-400">🔮 Поддержка модов (Планируется)</h2>
+        <div class="space-y-4">
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+            <div class="w-2 h-2 rounded-full border-2 border-purple-500 bg-transparent mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">CurseForge API</h3>
+              <p class="text-neutral-300 text-sm">Интеграция с крупнейшей платформой модов</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+            <div class="w-2 h-2 rounded-full border-2 border-purple-500 bg-transparent mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Modrinth интеграция</h3>
+              <p class="text-neutral-300 text-sm">Поддержка современной открытой платформы</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+            <div class="w-2 h-2 rounded-full border-2 border-purple-500 bg-transparent mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Автообновление модов</h3>
+              <p class="text-neutral-300 text-sm">Автоматическое обновление установленных модов</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
+            <div class="w-2 h-2 rounded-full border-2 border-purple-500 bg-transparent mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Зависимости модов</h3>
+              <p class="text-neutral-300 text-sm">Автоматическое разрешение зависимостей</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Кроссплатформенность -->
+      <div>
+        <h2 class="text-3xl font-bold mb-6 text-orange-400">🌍 Кроссплатформенность (Будущее)</h2>
+        <div class="space-y-4">
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
+            <div class="w-2 h-2 rounded-full border-2 border-orange-500 bg-transparent mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Linux поддержка</h3>
+              <p class="text-neutral-300 text-sm">Полная поддержка основных дистрибутивов</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
+            <div class="w-2 h-2 rounded-full border-2 border-orange-500 bg-transparent mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">AppImage сборки</h3>
+              <p class="text-neutral-300 text-sm">Портабельные сборки для универсальности</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
+            <div class="w-2 h-2 rounded-full border-2 border-orange-500 bg-transparent mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Оптимизация</h3>
+              <p class="text-neutral-300 text-sm">Оптимизация производительности и потребления ресурсов</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="w-full max-w-none">
+      <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-8 hover:border-neutral-700 transition-all duration-300 relative">
+        <!-- Логотип в верхнем левом углу -->
+        <div class="absolute top-6 left-6 w-20 h-20 rounded-xl overflow-hidden z-10">
+          <img 
+            src="https://byteflipper.web.app/images/logo.png" 
+            alt="Логотип ByteFlipper" 
+            class="w-full h-full object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
+          />
+          <!-- Запасной вариант, если изображение не загрузится -->
+          <div class="absolute inset-0 w-20 h-20 rounded-xl grid place-items-center text-2xl font-bold text-neutral-900" style="background:linear-gradient(135deg,#ef116f,#fe6407); display: none;">
+            BF
+          </div>
+        </div>
+        
+        <!-- Основной контент с отступом, чтобы не перекрывать логотип -->
+        <div class="pl-28 pt-4">
+          <div class="text-left">
+            <div class="font-bold text-2xl mb-2 bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">
+              ByteFlipper
+            </div>
+            <div class="text-transparent bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text font-medium mb-4">
+              Ведущий разработчик и создатель проекта
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <a href="https://byteflipper.com" 
+                 class="px-4 py-2 rounded-lg border border-neutral-800 hover:bg-gradient-to-r hover:from-pink-600/20 hover:to-orange-600/20 hover:border-neutral-600 transition-all duration-300 hover:shadow-lg">
+                byteflipper.com
+              </a>
+              <a href="https://github.com/byteflipper-58" 
+                 class="px-4 py-2 rounded-lg border border-neutral-800 hover:bg-gradient-to-r hover:from-pink-600/20 hover:to-orange-600/20 hover:border-neutral-600 transition-all duration-300 hover:shadow-lg">
+                Профиль GitHub
+              </a>
+              <a href="https://github.com/byteflipper-58/sectlauncher" 
+                 class="px-4 py-2 rounded-lg border border-neutral-800 hover:bg-gradient-to-r hover:from-pink-600/20 hover:to-orange-600/20 hover:border-neutral-600 transition-all duration-300 hover:shadow-lg">
+                Репозиторий SectLauncher
+              </a>
+              <a href="https://t.me/byteflipper" 
+                 class="px-4 py-2 rounded-lg border border-blue-600/50 bg-blue-600/10 hover:bg-blue-600/20 hover:border-blue-500 transition-all duration-300 hover:shadow-lg text-blue-300 hover:text-blue-200">
+                Telegram канал
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>
 

@@ -42,7 +42,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { title, description, date, heroImage, tags, tKey, media, author, publishAt, premiere } = post.data;
+const { title, description, date, heroImage, tKey, media, author, publishAt, premiere } = post.data;
 const { Content } = await post.render();
 const locale: 'ru' | 'en' = 'en';
 
@@ -106,7 +106,7 @@ const reading = calcReadingTime(post.body as string);
     <meta property="og:site_name" content="SectLauncher" />
     <meta property="og:locale" content={ogLocale} />
     <meta property="article:published_time" content={publishedISO} />
-    {Array.isArray(tags) && tags.map((t) => (<meta property="article:tag" content={t} />))}
+
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     {description && (<meta name="twitter:description" content={description} />)}
@@ -127,7 +127,7 @@ const reading = calcReadingTime(post.body as string);
     <Breadcrumbs items={[{ href: '/en/', label: 'Home' }, { href: '/en/blog', label: 'Blog' }, { label: title }]} />
   </section>
 
-  <PostBanner title={title} date={date} heroImage={heroImage} tags={tags} locale={locale} readingMinutes={reading.minutes} publishAt={publishAt} premiere={!!premiere} />
+  <PostBanner title={title} date={date} heroImage={heroImage} locale={locale} readingMinutes={reading.minutes} publishAt={publishAt} premiere={!!premiere} />
 
   <MediaViewer items={media} mode="carousel" lightbox={true} />
 

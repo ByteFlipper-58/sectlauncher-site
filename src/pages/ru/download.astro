@@ -10,7 +10,7 @@ const DOWNLOADS = {
 };
 ---
 
-<BaseLayout title="Скачать — SectLauncher" description="Скачайте SectLauncher для Windows, macOS и Linux.">
+<BaseLayout title="Скачать — SectLauncher" description="Скачайте SectLauncher для Windows, macOS и Linux — современный кроссплатформенный лаунчер Minecraft.">
   <Fragment slot="header"><Header /></Fragment>
   <Fragment slot="head">
     <link rel="canonical" href="https://sectlauncher.byteflipper.com/ru/download/" />
@@ -19,103 +19,29 @@ const DOWNLOADS = {
     <meta property="og:url" content="https://sectlauncher.byteflipper.com/ru/download/" />
   </Fragment>
 
-  <section class="mx-auto max-w-6xl px-4 py-12">
-    <h1 class="text-3xl font-extrabold">Скачать</h1>
-    <p class="text-neutral-300 mt-2">Мы определили вашу платформу автоматически. Версия: <span id="version" class="text-neutral-200">—</span></p>
-
-    <div id="cta" class="mt-6 p-4 rounded-lg border border-neutral-800 bg-neutral-900/60">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-        <div>
-          <div class="text-sm text-neutral-400">Рекомендуемая загрузка</div>
-          <div id="cta-label" class="text-lg font-bold">Windows</div>
-          <div id="cta-exts" class="text-xs text-neutral-500">.exe / .msi</div>
+  <!-- Hero секция -->
+  <section class="hero-bg">
+    <div class="mx-auto w-full max-w-[70%] px-4 py-16">
+      <div class="text-center max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
+          Скачать SectLauncher
+        </h1>
+        <p class="text-xl text-neutral-300 mb-4 leading-relaxed">
+          Современный кроссплатформенный лаунчер для Minecraft с поддержкой модов и удобным интерфейсом.
+        </p>
+        <div class="inline-flex items-center px-4 py-2 rounded-lg bg-orange-500/20 border border-orange-500/30 mb-8">
+          <svg class="w-5 h-5 mr-2 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+          <span class="text-orange-300 font-medium">Проект находится в активной разработке</span>
         </div>
-        <a id="cta-link" href={GITHUB_RELEASES} class="px-5 py-3 rounded-md font-semibold text-neutral-900 bg-emerald-500 w-full md:w-auto text-center">Скачать</a>
-      </div>
-    </div>
-
-    <h2 class="text-xl font-bold mt-8">Все платформы</h2>
-    <div class="mt-3 grid md:grid-cols-3 gap-4">
-      <a id="card-win" href={DOWNLOADS.windows.href} class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900">
-        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-emerald-500/20"></span><h3 class="font-bold">{DOWNLOADS.windows.label}</h3></div>
-        <p class="text-neutral-400 text-sm mt-1">{DOWNLOADS.windows.exts}</p>
-      </a>
-      <a id="card-mac" href={DOWNLOADS.mac.href} class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900">
-        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-yellow-500/20"></span><h3 class="font-bold">{DOWNLOADS.mac.label}</h3></div>
-        <p class="text-neutral-400 text-sm mt-1">{DOWNLOADS.mac.exts}</p>
-      </a>
-      <a id="card-linux" href={DOWNLOADS.linux.href} class="rounded-lg border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900">
-        <div class="flex items-center gap-2"><span class="w-5 h-5 rounded bg-blue-500/20"></span><h3 class="font-bold">{DOWNLOADS.linux.label}</h3></div>
-        <p class="text-neutral-400 text-sm mt-1">{DOWNLOADS.linux.exts}</p>
-      </a>
-    </div>
-
-    <div class="mt-10">
-      <div id="os-tabs" class="flex flex-wrap gap-2 text-sm">
-        <button data-os="windows" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60">Windows</button>
-        <button data-os="mac" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60">macOS</button>
-        <button data-os="linux" class="px-3 py-1.5 rounded-md border border-neutral-800 bg-neutral-900/60">Linux</button>
-      </div>
-      <div id="os-content" class="mt-4 rounded-lg border border-neutral-800 bg-neutral-900/40 p-5">
-        <div data-pane="windows">
-          <h3 class="font-bold">Установка на Windows</h3>
-          <ol class="list-decimal list-inside text-neutral-300 space-y-1 mt-2">
-            <li>Скачайте .msi (рекомендуется) или .exe</li>
-            <li>Запустите установщик и следуйте инструкциям</li>
-            <li>Первый запуск может занять время из‑за загрузки компонентов</li>
-          </ol>
-        </div>
-        <div data-pane="mac" hidden>
-          <h3 class="font-bold">Установка на macOS</h3>
-          <ol class="list-decimal list-inside text-neutral-300 space-y-1 mt-2">
-            <li>Скачайте .dmg</li>
-            <li>Перетащите приложение в Applications</li>
-            <li>Если появится предупреждение Gatekeeper — разрешите запуск в Settings → Privacy</li>
-          </ol>
-        </div>
-        <div data-pane="linux" hidden>
-          <h3 class="font-bold">Установка на Linux</h3>
-          <ol class="list-decimal list-inside text-neutral-300 space-y-1 mt-2">
-            <li>Скачайте .AppImage (или .deb для Debian/Ubuntu)</li>
-            <li>Сделайте файл исполняемым: <code class="px-1 py-0.5 rounded bg-neutral-800">chmod +x SectLauncher.AppImage</code></li>
-            <li>Запустите файл</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-
-    <h2 class="text-xl font-bold mt-8">Системные требования</h2>
-    <ul class="mt-2 text-neutral-300 list-disc list-inside space-y-1">
-      <li>Java: JDK 17+</li>
-      <li>RAM: 4 ГБ (рекомендуется 8 ГБ+)</li>
-      <li>Диск: 1 ГБ для лаунчера, 5–20 ГБ для игры/модов</li>
-      <li>Интернет для загрузок и обновлений</li>
-    </ul>
-
-    <div class="mt-8 grid md:grid-cols-2 gap-4">
-      <div class="rounded-lg border border-neutral-800 bg-neutral-900/40 p-4">
-        <h3 class="font-bold">Проверка целостности</h3>
-        <p class="text-neutral-400 text-sm mt-1">Если доступно, сверяйте SHA‑256:</p>
-        <div class="mt-2 flex items-center gap-2">
-          <code id="sha256" class="flex-1 px-2 py-1 rounded bg-neutral-800 text-xs overflow-x-auto">—</code>
-          <button id="copy-hash" class="px-2 py-1 rounded border border-neutral-700 text-xs hover:bg-neutral-800">Копировать</button>
-        </div>
-        <p class="text-neutral-500 text-xs mt-2">Полный список файлов и хешей: <a href={GITHUB_RELEASES} class="underline">релизы GitHub</a>.</p>
-      </div>
-      <div class="rounded-lg border border-neutral-800 bg-neutral-900/40 p-4">
-        <h3 class="font-bold">FAQ</h3>
-        <details class="mt-2"><summary class="cursor-pointer">Windows SmartScreen блокирует установщик</summary><p class="text-neutral-400 text-sm mt-1">Нажмите “More info” → “Run anyway”. Мы работаем над подписью.</p></details>
-        <details class="mt-2"><summary class="cursor-pointer">Нужна ли Java?</summary><p class="text-neutral-400 text-sm mt-1">Рекомендуемая Java будет установлена автоматически.</p></details>
-        <details class="mt-2"><summary class="cursor-pointer">Где старые версии?</summary><p class="text-neutral-400 text-sm mt-1">Смотрите на странице <a href={GITHUB_RELEASES} class="underline">релизов</a>.</p></details>
-      </div>
-    </div>
   </section>
 
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>
 
 <script is:inline>
-  // Скопировано из исходной страницы download.astro
+  // Определение ОС пользователя
   const byOS = () => {
     const ua = navigator.userAgent;
     if (/Windows/i.test(ua)) return 'windows';
@@ -123,100 +49,122 @@ const DOWNLOADS = {
     if (/Linux|X11|Ubuntu|Arch|Fedora|Debian/i.test(ua)) return 'linux';
     return 'windows';
   };
+
   const GITHUB_API = 'https://api.github.com/repos/byteflipper-58/sectlauncher/releases/latest';
   const FALLBACK = 'https://github.com/byteflipper-58/sectlauncher/releases/latest';
-  const map = {
-    windows: { label: 'Windows', exts: '.exe / .msi', href: FALLBACK},
-    mac: { label: 'macOS', exts: '.dmg', href: FALLBACK},
-    linux: { label: 'Linux', exts: '.AppImage / .deb', href: FALLBACK},
+  
+  const platformData = {
+    windows: { 
+      label: 'Windows', 
+      exts: '.exe / .msi', 
+      href: FALLBACK,
+      icon: `<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M3 12V6.75l6-1.32v6.48L3 12zm17-5.25V12l-8-1.07V4.68l8 2.07zM3 13l6-.75v6.48L3 17.25V13zm17 .25L12 14.32v6.36l8-1.43V13.25z"/>
+      </svg>`,
+      gradient: 'from-blue-500 to-blue-600'
+    },
+    linux: { 
+      label: 'Linux', 
+      exts: '.AppImage / .deb', 
+      href: FALLBACK,
+      icon: `<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.896 4.73-.769 1.98-.44 2.734.904 2.734z"/>
+      </svg>`,
+      gradient: 'from-orange-500 to-red-600'
+    },
+    mac: { 
+      label: 'macOS', 
+      exts: 'не поддерживается', 
+      href: '#',
+      icon: `<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+      </svg>`,
+      gradient: 'from-red-500 to-red-600'
+    }
   };
+
   const os = byOS();
   const ctaLabel = document.getElementById('cta-label');
   const ctaExts = document.getElementById('cta-exts');
   const ctaLink = document.getElementById('cta-link');
+  const platformIcon = document.getElementById('platform-icon');
   const versionEl = document.getElementById('version');
-  const data = map[os];
+  
+  // Инициализация интерфейса
+  const data = platformData[os];
   if (data) {
     ctaLabel.textContent = data.label;
     ctaExts.textContent = data.exts;
-    ctaLink.href = data.href;
+    // Все платформы показывают статус разработки
+    const ctaElement = document.querySelector('#cta .w-full');
+    if (os === 'mac') {
+      ctaElement.innerHTML = '<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>К сожалению, не поддерживается';
+      ctaElement.className = 'w-full inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold text-red-900 bg-gradient-to-r from-red-500 to-red-600 cursor-not-allowed';
+    } else {
+      ctaElement.innerHTML = '<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>В разработке';
+      ctaElement.className = 'w-full inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold text-orange-900 bg-gradient-to-r from-orange-500 to-orange-600 cursor-not-allowed';
+    }
+    platformIcon.innerHTML = data.icon;
+    platformIcon.className = `w-12 h-12 rounded-xl bg-gradient-to-br ${data.gradient} flex items-center justify-center`;
   }
 
-  function activatePane(nextOs){
+  // Функции управления интерфейсом
+  function activatePane(nextOs) {
     document.querySelectorAll('#os-content [data-pane]').forEach(el => {
       el.hidden = el.getAttribute('data-pane') !== nextOs;
     });
+    // Обновляем активную кнопку
+    document.querySelectorAll('#os-tabs button').forEach(btn => {
+      if (btn.dataset.os === nextOs) {
+        btn.classList.add('bg-emerald-500', 'text-white');
+        btn.classList.remove('bg-neutral-900/60', 'hover:bg-neutral-800');
+      } else {
+        btn.classList.remove('bg-emerald-500', 'text-white');
+        btn.classList.add('bg-neutral-900/60', 'hover:bg-neutral-800');
+      }
+    });
   }
+
+  function updatePlatform(nextOs) {
+    const data = platformData[nextOs];
+    if (!data) return;
+    
+    ctaLabel.textContent = data.label;
+    ctaExts.textContent = data.exts;
+    ctaLink.href = data.href;
+    platformIcon.innerHTML = data.icon;
+    platformIcon.className = `w-12 h-12 rounded-xl bg-gradient-to-br ${data.gradient} flex items-center justify-center`;
+    
+    activatePane(nextOs);
+  }
+
+  // Обработчик переключения платформ
   document.getElementById('os-tabs')?.addEventListener('click', (e) => {
     const btn = e.target.closest('button');
     if (!btn) return;
-    const next = btn.dataset.os;
-    if (!next) return;
-    ctaLabel.textContent = map[next].label;
-    ctaExts.textContent = map[next].exts;
-    ctaLink.href = map[next].href;
-    activatePane(next);
+    const nextOs = btn.dataset.os;
+    if (!nextOs) return;
+    updatePlatform(nextOs);
   });
 
-  async function pickAsset(assets, targetOs){
+  // Инициализация активной панели
+  activatePane(os);
+
+  // Функции для работы с GitHub API
+  async function pickAsset(assets, targetOs) {
     const byExt = (name, exts) => exts.some(ext => name.toLowerCase().endsWith(ext));
-    if (targetOs === 'windows'){
-      let a = assets.find(a => byExt(a.name, ['.msi'])) || assets.find(a => byExt(a.name, ['.exe']));
-      return a;
+    if (targetOs === 'windows') {
+      return assets.find(a => byExt(a.name, ['.msi'])) || assets.find(a => byExt(a.name, ['.exe']));
     }
-    if (targetOs === 'mac'){
+    if (targetOs === 'mac') {
       return assets.find(a => byExt(a.name, ['.dmg']));
     }
-    if (targetOs === 'linux'){
-      return assets.find(a => byExt(a.name, ['.AppImage'.toLowerCase()])) || assets.find(a => byExt(a.name, ['.deb']));
+    if (targetOs === 'linux') {
+      return assets.find(a => byExt(a.name, ['.appimage'])) || assets.find(a => byExt(a.name, ['.deb']));
     }
     return null;
   }
 
-  async function tryFetchLatest(){
-    try {
-      const res = await fetch(GITHUB_API, { headers: { 'Accept': 'application/vnd.github+json' } });
-      if (!res.ok) return;
-      const json = await res.json();
-      if (json.tag_name) versionEl.textContent = json.tag_name;
-      const assets = Array.isArray(json.assets) ? json.assets : [];
-      // Update cards and CTA links per OS
-      for (const key of ['windows','mac','linux']){
-        const sel = await pickAsset(assets, key);
-        if (sel && sel.browser_download_url){
-          map[key].href = sel.browser_download_url;
-          const cardId = key === 'windows' ? 'card-win' : key === 'mac' ? 'card-mac' : 'card-linux';
-          const card = document.getElementById(cardId);
-          if (card) card.setAttribute('href', sel.browser_download_url);
-          if (key === os) ctaLink.href = sel.browser_download_url;
-        }
-      }
-      // Try to get checksum file
-      const hashAsset = assets.find(a => /sha256/i.test(a.name));
-      if (hashAsset){
-        const hr = await fetch(hashAsset.browser_download_url);
-        if (hr.ok){
-          const text = await hr.text();
-          // try to find hash for selected OS asset
-          const selectedUrl = map[os].href;
-          const parts = selectedUrl.split('/');
-          const fname = parts[parts.length - 1];
-          let line = text.split(/\r?\n/).find(l => l.includes(fname));
-          if (!line) line = text.split(/\r?\n/)[0];
-          const hash = (line || '').trim().split(/\s+/)[0] || '—';
-          const shaEl = document.getElementById('sha256');
-          if (shaEl) shaEl.textContent = hash;
-        }
-      }
-    } catch (e) {
-      // ignore network errors
-    }
-  }
-  tryFetchLatest();
-
-  document.getElementById('copy-hash')?.addEventListener('click', async () => {
-    const v = document.getElementById('sha256')?.textContent || '';
-    try { await navigator.clipboard.writeText(v); } catch {}
-  });
+  // Убираем загрузку релизов, так как проект в разработке
 </script>
 

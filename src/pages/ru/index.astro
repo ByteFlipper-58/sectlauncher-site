@@ -19,28 +19,31 @@ import Footer from "../../components/Footer.astro";
     <div class="mx-auto max-w-6xl px-4 pt-16 pb-14 grid md:grid-cols-2 gap-10 items-center">
       <div>
         <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
-          SectLauncher — лёгкий лаунчер Minecraft
+          SectLauncher — современный Minecraft лаунчер
         </h1>
         <p class="mt-4 text-neutral-300 text-lg">
-          Моды, профили и авто‑обновления в один клик. Больше игры — меньше настройки.
+          Управляй модами, создавай профили и обновляй игру одной кнопкой. Просто запускай — всё остальное за тебя.
         </p>
+        <div class="mt-4 inline-flex items-center px-3 py-2 rounded-lg bg-orange-500/20 border border-orange-500/30">
+          <svg class="w-4 h-4 mr-2 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+          <span class="text-orange-300 font-medium text-sm">Проект в активной разработке</span>
+        </div>
         <div class="mt-6 flex flex-wrap items-center gap-3">
-          <a href="/ru/download" class="px-5 py-3 rounded-md font-semibold text-neutral-900 bg-emerald-500">
-            Скачать для Windows
-          </a>
+          <div class="px-5 py-3 rounded-md font-semibold text-orange-900 bg-orange-500 cursor-not-allowed opacity-75">
+            В разработке
+          </div>
           <a href="https://github.com/byteflipper-58/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">GitHub</a>
-          <a href="https://discord.gg/" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">Discord</a>
+          <a href="https://t.me/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">Telegram</a>
         </div>
         <div class="mt-3 text-xs text-neutral-400">
-          Версия v0.1.0 · SHA‑256: —
+          Скоро будет доступно для скачивания
         </div>
       </div>
       <div class="relative">
-        <div class="aspect-video rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden">
-          <div class="w-full h-full grid place-items-center text-neutral-500">Скриншот лаунчера</div>
-        </div>
-        <div class="absolute -bottom-4 -left-4 px-3 py-1 rounded-md text-xs border border-neutral-700 bg-neutral-900">
-          Безопасные обновления
+        <div class="rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden" style="aspect-ratio: 1024/640;">
+          <img src="/images/launcher_screenshot.png" alt="Интерфейс SectLauncher" class="w-full h-full object-cover" />
         </div>
       </div>
     </div>
@@ -51,71 +54,285 @@ import Footer from "../../components/Footer.astro";
     </div>
   </div>
 
-  <section id="features" class="mx-auto max-w-6xl px-4 py-12">
-    <h2 class="text-2xl font-bold mb-6">Почему SectLauncher</h2>
-    <div class="grid md:grid-cols-3 gap-4">
-      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
-        <div class="w-10 h-10 rounded-md grid place-items-center bg-emerald-500/10 text-emerald-400">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M21 7 9 19l-6-6 1.5-1.5L9 16l10.5-10.5L21 7Z"/></svg>
+  <!-- Ключевые особенности -->
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Современный подход к запуску Minecraft</h2>
+      <p class="text-neutral-300 text-lg max-w-2xl mx-auto">Всё что нужно для комфортной игры — в одном приложении</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20 6L9 17l-5-5 1.41-1.41L9 14.17l9.59-9.59L20 6z"/>
+          </svg>
         </div>
-        <h3 class="font-bold mt-3">Моды без боли</h3>
-        <p class="text-neutral-400 mt-1">Подборки, авто‑установка и проверка совместимости (Fabric/Forge/Quilt).</p>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Управление модами</h3>
+          <p class="text-neutral-400">Интеграция с CurseForge и Modrinth для простой установки и обновления модов</p>
+        </div>
+        <div class="flex items-center text-sm text-emerald-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2"></span>
+          Скоро в релизе
+        </div>
       </div>
-      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
-        <div class="w-10 h-10 rounded-md grid place-items-center bg-yellow-500/10 text-yellow-400">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M7 3h10v2H7V3Zm12 6H5v2h14V9Zm-2 6H7v2h10v-2Z"/></svg>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+          </svg>
         </div>
-        <h3 class="font-bold mt-3">Профили</h3>
-        <p class="text-neutral-400 mt-1">Версии, JVM‑параметры, модпаки и пути ресурсов — отдельными наборами.</p>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Безопасная авторизация</h3>
+          <p class="text-neutral-400">Официальная авторизация Microsoft/Mojang без сторонних сервисов</p>
+        </div>
+        <div class="flex items-center text-sm text-blue-400">
+          <span class="w-2 h-2 rounded-full bg-blue-400 mr-2"></span>
+          Готово
+        </div>
       </div>
-      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
-        <div class="w-10 h-10 rounded-md grid place-items-center bg-blue-500/10 text-blue-400">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/></svg>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
+          </svg>
         </div>
-        <h3 class="font-bold mt-3">Авто‑обновления</h3>
-        <p class="text-neutral-400 mt-1">Дифф‑патчи, контроль хешей и откат версий для стабильности.</p>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Профили и инстансы</h3>
+          <p class="text-neutral-400">Создавайте отдельные конфигурации для разных версий и модпаков</p>
+        </div>
+        <div class="flex items-center text-sm text-purple-400">
+          <span class="w-2 h-2 rounded-full bg-purple-400 mr-2"></span>
+          В разработке
+        </div>
       </div>
-      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
-        <div class="w-10 h-10 rounded-md grid place-items-center bg-purple-500/10 text-purple-400">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M3 13h8V3H3v10Zm0 8h8v-6H3v6Zm10 0h8V11h-8v10Zm0-18v6h8V3h-8Z"/></svg>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+          </svg>
         </div>
-        <h3 class="font-bold mt-3">Производительность</h3>
-        <p class="text-neutral-400 mt-1">Оптимальные пресеты и авто‑настройка памяти под вашу систему.</p>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Быстрые загрузки</h3>
+          <p class="text-neutral-400">Параллельное скачивание и умное кеширование для максимальной скорости</p>
+        </div>
+        <div class="flex items-center text-sm text-orange-400">
+          <span class="w-2 h-2 rounded-full bg-orange-400 mr-2"></span>
+          Готово
+        </div>
       </div>
-      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
-        <div class="w-10 h-10 rounded-md grid place-items-center bg-teal-500/10 text-teal-400">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M5 3h14a2 2 0 0 1 2 2v6h-2V5H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm14.59 12L22 17.41 17.41 22 15 19.59 16.41 18l1 1L20.59 15 19 13.41 20.41 12 22 13.59 19.59 16Z"/></svg>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-teal-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
         </div>
-        <h3 class="font-bold mt-3">Кроссплатформенность</h3>
-        <p class="text-neutral-400 mt-1">Windows, Linux и macOS — по мере выхода релизов и тестов.</p>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Аватары игроков</h3>
+          <p class="text-neutral-400">Интеграция с Mineatar API для отображения скинов в интерфейсе</p>
+        </div>
+        <div class="flex items-center text-sm text-teal-400">
+          <span class="w-2 h-2 rounded-full bg-teal-400 mr-2"></span>
+          Готово
+        </div>
       </div>
-      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
-        <div class="w-10 h-10 rounded-md grid place-items-center bg-neutral-500/10 text-neutral-300">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4Zm0 2.18L19 6v5c0 4.58-2.94 9.03-7 10.38C7.94 20.03 5 15.58 5 11V6l7-2.82ZM7 10h10v2H7v-2Z"/></svg>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-green-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
         </div>
-        <h3 class="font-bold mt-3">Прозрачность</h3>
-        <p class="text-neutral-400 mt-1">Открытый код, проверяемые хеши релизов и детальный changelog.</p>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Clean Architecture</h3>
+          <p class="text-neutral-400">Современная архитектура с разделением слоёв для стабильности и производительности</p>
+        </div>
+        <div class="flex items-center text-sm text-green-400">
+          <span class="w-2 h-2 rounded-full bg-green-400 mr-2"></span>
+          Основа готова
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="how" class="mx-auto max-w-6xl px-4 py-6">
-    <h2 class="text-2xl font-bold mb-4">Как это работает</h2>
-    <div class="grid md:grid-cols-3 gap-4">
-      <div class="rounded-xl border border-neutral-800 p-5 bg-neutral-900/40">
-        <div class="w-8 h-8 rounded-full grid place-items-center bg-neutral-800 text-neutral-200 font-bold">1</div>
-        <div class="mt-3 font-semibold">Скачай и установи SectLauncher</div>
-        <p class="text-neutral-400 mt-1">Доступно на Windows; macOS/Linux — в планах (см. блог).</p>
+  <!-- Статистика разработки -->
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="text-center p-6 rounded-2xl border border-neutral-800 bg-neutral-900/40">
+        <div class="text-3xl font-bold text-orange-400 mb-2">Скоро</div>
+        <div class="text-neutral-300 font-medium">Open Source</div>
+        <div class="text-neutral-500 text-sm mt-1">Будет открыт позже</div>
       </div>
-      <div class="rounded-xl border border-neutral-800 p-5 bg-neutral-900/40">
-        <div class="w-8 h-8 rounded-full grid place-items-center bg-neutral-800 text-neutral-200 font-bold">2</div>
-        <div class="mt-3 font-semibold">Выбери версию и мод‑профиль</div>
-        <p class="text-neutral-400 mt-1">Fabric/Forge/Quilt, JVM‑параметры и ресурсы — в пару кликов.</p>
+      <div class="text-center p-6 rounded-2xl border border-neutral-800 bg-neutral-900/40">
+        <div class="text-3xl font-bold text-blue-400 mb-2">Kotlin</div>
+        <div class="text-neutral-300 font-medium">Multiplatform</div>
+        <div class="text-neutral-500 text-sm mt-1">Современный стек</div>
       </div>
-      <div class="rounded-xl border border-neutral-800 p-5 bg-neutral-900/40">
-        <div class="w-8 х-8 rounded-full grid place-items-center bg-neutral-800 text-neutral-200 font-bold">3</div>
-        <div class="mt-3 font-semibold">Жми “Играть”</div>
-        <p class="text-neutral-400 mt-1">Авто‑обновления и откаты, чтобы не терять время на настройку.</p>
+      <div class="text-center p-6 rounded-2xl border border-neutral-800 bg-neutral-900/40">
+        <div class="text-3xl font-bold text-purple-400 mb-2">TBD</div>
+        <div class="text-neutral-300 font-medium">Лицензия</div>
+        <div class="text-neutral-500 text-sm mt-1">Будет определена позже</div>
+      </div>
+      <div class="text-center p-6 rounded-2xl border border-neutral-800 bg-neutral-900/40">
+        <div class="text-3xl font-bold text-emerald-400 mb-2">2025</div>
+        <div class="text-neutral-300 font-medium">Релиз</div>
+        <div class="text-neutral-500 text-sm mt-1">Первая стабильная версия</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Дорожная карта</h2>
+      <p class="text-neutral-300 text-lg max-w-2xl mx-auto">План развития проекта на ближайшие месяцы</p>
+    </div>
+    
+    <div class="relative">
+      <!-- Вертикальная линия -->
+      <div class="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-emerald-500 via-blue-500 to-orange-500"></div>
+      
+      <div class="space-y-8">
+        <!-- Этап 1 -->
+        <div class="relative flex items-start gap-6">
+          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center relative z-10">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="flex-1 pb-8">
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-xl font-bold text-white">Основа лаунчера</h3>
+              <span class="px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Завершено</span>
+            </div>
+            <p class="text-neutral-400 mb-3">Базовая функциональность, авторизация, управление профилями</p>
+            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Авторизация Microsoft/Mojang
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Загрузка версий Minecraft
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Управление инстансами
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Clean Architecture
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Этап 2 -->
+        <div class="relative flex items-start gap-6">
+          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center relative z-10">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+          </div>
+          <div class="flex-1 pb-8">
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-xl font-bold text-white">Альфа-версия</h3>
+              <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">В процессе</span>
+            </div>
+            <p class="text-neutral-400 mb-3">Первый публичный релиз с базовой функциональностью</p>
+            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Windows сборка
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Базовый UI/UX
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Тестирование
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Документация
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Этап 3 -->
+        <div class="relative flex items-start gap-6">
+          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center relative z-10">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L2 7v10l10 5 10-5V7l-10-5z"/>
+            </svg>
+          </div>
+          <div class="flex-1 pb-8">
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-xl font-bold text-white">Поддержка модов</h3>
+              <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400 border border-purple-500/30">Планируется</span>
+            </div>
+            <p class="text-neutral-400 mb-3">Интеграция с популярными платформами модов</p>
+            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-purple-400/50"></div>
+                CurseForge API
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-purple-400/50"></div>
+                Modrinth интеграция
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-purple-400/50"></div>
+                Автообновление модов
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-purple-400/50"></div>
+                Зависимости модов
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Этап 4 -->
+        <div class="relative flex items-start gap-6">
+          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center relative z-10">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M5 3h14a2 2 0 0 1 2 2v6h-2V5H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-xl font-bold text-white">Кроссплатформенность</h3>
+              <span class="px-3 py-1 rounded-full text-xs font-medium bg-orange-500/20 text-orange-400 border border-orange-500/30">Будущее</span>
+            </div>
+            <p class="text-neutral-400 mb-3">Расширение поддержки на другие операционные системы</p>
+            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-orange-400/50"></div>
+                Linux поддержка
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-orange-400/50"></div>
+                macOS версия
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-orange-400/50"></div>
+                Единый код
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-orange-400/50"></div>
+                Автоапдейтер
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>

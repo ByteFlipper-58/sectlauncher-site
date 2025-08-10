@@ -1,6 +1,5 @@
 User-agent: *
-Disallow: /
+Allow: /
 
-# Подготовка к продакшену: оставляем карту сайта для проверки, индексация отключена директивой выше и заголовком X-Robots-Tag
 Sitemap: https://sectlauncher.byteflipper.com/sitemap.xml
 

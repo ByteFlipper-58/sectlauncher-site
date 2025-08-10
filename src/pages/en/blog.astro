@@ -20,17 +20,8 @@ const allPosts = (await getCollection('blog')).filter(p => {
 });
 const sortedPosts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
-// Получаем параметр тега из URL
-const url = new URL(Astro.request.url);
-const selectedTag = url.searchParams.get('tag');
-
-// Фильтруем посты по тегу, если он указан
-const posts = selectedTag 
-  ? sortedPosts.filter(post => post.data.tags?.includes(selectedTag))
-  : sortedPosts;
-
-// Получаем все уникальные теги для отображения
-const allTags = [...new Set(allPosts.flatMap(post => post.data.tags || []))].sort();
+// Все посты без фильтрации по тегам
+const posts = sortedPosts;
 ---
 
 <BaseLayout title="Blog — SectLauncher" description="News and updates.">
@@ -47,25 +38,11 @@ const allTags = [...new Set(allPosts.flatMap(post => post.data.tags || []))].sor
     <div class="mb-8">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
         <h1 class="text-3xl md:text-4xl font-black bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
-          {selectedTag ? `Posts tagged "${selectedTag}"` : 'Blog'}
+          Blog
         </h1>
-        {selectedTag && (
-          <a 
-            href="/en/blog" 
-            class="inline-flex items-center gap-2 px-4 py-2 text-sm text-neutral-300 hover:text-white transition-all duration-200 border border-neutral-700 rounded-lg hover:border-blue-500 hover:bg-blue-500/10 backdrop-blur-sm"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-            </svg>
-            All posts
-          </a>
-        )}
-      </div>
-
-      <!-- Search and Tags Row -->
-      <div class="flex flex-col md:flex-row gap-4 mb-6">
-        <!-- Search bar - 30% on desktop, full width on mobile -->
-        <div class="relative w-full md:w-[30%] h-[60px] flex items-center">
+        
+        <!-- Search bar -->
+        <div class="relative w-full md:w-[350px] h-[50px] flex items-center">
           <input 
             type="search" 
             id="searchInput"
@@ -78,56 +55,6 @@ const allTags = [...new Set(allPosts.flatMap(post => post.data.tags || []))].sor
             </svg>
           </div>
         </div>
-
-        <!-- Tags filter - 69% on desktop, full width on mobile -->
-        {allTags.length > 0 && (
-          <div class="w-full md:w-[69%] h-[60px] flex flex-col bg-neutral-900/30 border border-neutral-800/50 rounded-xl backdrop-blur-sm">
-            <div class="flex items-center justify-between px-4 pt-2 pb-1 min-h-0">
-              <h3 class="text-xs font-medium text-neutral-400 flex items-center gap-1">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-                </svg>
-                Tags
-              </h3>
-              {selectedTag && (
-                <a 
-                  href="/en/blog" 
-                  class="text-xs text-blue-400 hover:text-blue-300 transition-colors whitespace-nowrap"
-                >
-                  Clear
-                </a>
-              )}
-            </div>
-            <div class="flex gap-1.5 overflow-x-auto scrollbar-hide px-4 pb-2 flex-1 items-center">
-              <a 
-                href="/en/blog"
-                class={`px-2.5 py-1 rounded-md text-xs font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
-                  !selectedTag 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-300'
-                }`}
-              >
-                All ({allPosts.length})
-              </a>
-              {allTags.map((tag) => {
-                const tagPostCount = allPosts.filter(post => post.data.tags?.includes(tag)).length;
-                return (
-                  <a 
-                    href={`/en/blog?tag=${encodeURIComponent(tag)}`}
-                    class={`px-2.5 py-1 rounded-md text-xs font-medium transition-all duration-200 whitespace-nowrap flex-shrink-0 ${
-                      selectedTag === tag 
-                        ? 'bg-blue-600 text-white' 
-                        : 'bg-neutral-800/50 text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-300'
-                    }`}
-                    title={`${tagPostCount} posts tagged with ${tag}`}
-                  >
-                    #{tag} ({tagPostCount})
-                  </a>
-                );
-              })}
-            </div>
-          </div>
-        )}
       </div>
 
       <!-- Search Results -->
@@ -146,7 +73,7 @@ const allTags = [...new Set(allPosts.flatMap(post => post.data.tags || []))].sor
             title={post.data.title ?? 'Untitled'}
             description={post.data.description}
             date={post.data.date}
-            tags={post.data.tags}
+            tags={[]}
             heroImage={post.data.heroImage}
             locale="en"
             premiere={!!post.data.premiere && (!!post.data.publishAt ? new Date(post.data.publishAt).getTime() > Date.now() : true)}
@@ -168,87 +95,56 @@ const allTags = [...new Set(allPosts.flatMap(post => post.data.tags || []))].sor
     const searchResults = document.getElementById('searchResults');
     const resultCount = document.getElementById('resultCount');
     const totalCount = document.getElementById('totalCount');
-
+    
     if (!searchInput || !postsGrid || !searchResults || !resultCount || !totalCount) return;
-
-    const allPosts = Array.from(postsGrid.children);
-    let currentQuery = '';
-
-    function normalizeText(text: string): string {
-      return text.toLowerCase().trim();
+    
+    const posts = Array.from(postsGrid.children);
+    let isSearchActive = false;
+    
+    function updateResultsDisplay(filteredCount: number) {
+      if (resultCount && totalCount) {
+        resultCount.textContent = filteredCount.toString();
+        totalCount.textContent = posts.length.toString();
+      }
     }
-
-    function searchPosts(query: string) {
-      currentQuery = normalizeText(query);
-      let visibleCount = 0;
-
-      allPosts.forEach((post) => {
-        const title = post.querySelector('h2')?.textContent || '';
-        const description = post.querySelector('p')?.textContent || '';
-        const tags = Array.from(post.querySelectorAll('[data-tag-val]'))
-          .map(el => el.getAttribute('data-tag-val') || '').join(' ');
-
-        const searchableText = normalizeText(`${title} ${description} ${tags}`);
-        const matches = !currentQuery || searchableText.includes(currentQuery);
-
-        if (matches) {
+    
+    function performSearch() {
+      const query = searchInput.value.toLowerCase().trim();
+      
+      if (query === '') {
+        // Show all posts
+        posts.forEach(post => {
           (post as HTMLElement).style.display = '';
+        });
+        searchResults.classList.add('hidden');
+        isSearchActive = false;
+        return;
+      }
+      
+      isSearchActive = true;
+      searchResults.classList.remove('hidden');
+      
+      let visibleCount = 0;
+      
+      posts.forEach(post => {
+        const postElement = post as HTMLElement;
+        const title = postElement.querySelector('h2')?.textContent?.toLowerCase() || '';
+        const description = postElement.querySelector('p')?.textContent?.toLowerCase() || '';
+        
+        const matches = title.includes(query) || description.includes(query);
+        
+        if (matches) {
+          postElement.style.display = '';
           visibleCount++;
         } else {
-          (post as HTMLElement).style.display = 'none';
+          postElement.style.display = 'none';
         }
       });
-
-      // Update search results
-      if (resultCount) resultCount.textContent = visibleCount.toString();
-      if (currentQuery) {
-        searchResults?.classList.remove('hidden');
-      } else {
-        searchResults?.classList.add('hidden');
-      }
-
-      // Handle no results
-      const noResultsMessage = document.getElementById('noResults');
-      if (visibleCount === 0 && currentQuery) {
-        if (!noResultsMessage && postsGrid) {
-          const message = document.createElement('div');
-          message.id = 'noResults';
-          message.className = 'col-span-full text-center py-12';
-          message.innerHTML = `
-            <div class="text-neutral-500 mb-4">
-              <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-              </svg>
-              <p class="text-lg font-medium">No posts found</p>
-              <p class="text-sm">Try adjusting your search terms</p>
-            </div>
-          `;
-          postsGrid.appendChild(message);
-        }
-      } else if (noResultsMessage) {
-        noResultsMessage.remove();
-      }
+      
+      updateResultsDisplay(visibleCount);
     }
-
-    // Debounced search
-    let searchTimeout: ReturnType<typeof setTimeout>;
-    searchInput.addEventListener('input', (e) => {
-      clearTimeout(searchTimeout);
-      searchTimeout = setTimeout(() => {
-        searchPosts((e.target as HTMLInputElement).value);
-      }, 300);
-    });
-
-    // Clear search on Escape
-    searchInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        searchInput.value = '';
-        searchPosts('');
-      }
-    });
-
-    // Initialize
-    if (totalCount) totalCount.textContent = allPosts.length.toString();
+    
+    searchInput.addEventListener('input', performSearch);
+    searchInput.addEventListener('keyup', performSearch);
   });
 </script>
-

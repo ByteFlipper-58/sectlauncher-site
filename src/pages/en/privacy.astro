@@ -1,32 +1,350 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import Header from "../../components/Header.astro";
-import Footer from "../../components/Footer.astro";
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Privacy Policy - SectLauncher';
+const description = 'SectLauncher Privacy Policy. Information about how we protect your data and ensure privacy.';
 ---
 
-<BaseLayout title="Privacy Policy — SectLauncher" description="How we process user data.">
-  <Fragment slot="header"><Header /></Fragment>
-  <Fragment slot="head">
-    <link rel="canonical" href="https://sectlauncher.byteflipper.com/en/privacy/" />
-    <link rel="alternate" hreflang="ru" href="https://sectlauncher.byteflipper.com/ru/privacy/" />
-    <link rel="alternate" hreflang="x-default" href="https://sectlauncher.byteflipper.com/ru/privacy/" />
-    <meta property="og:url" content="https://sectlauncher.byteflipper.com/en/privacy/" />
-  </Fragment>
+<BaseLayout title={title} description={description}>
+  <main class="min-h-screen bg-neutral-950 text-neutral-100">
+    <div class="mx-auto max-w-4xl px-4 py-16">
+      <!-- Navigation -->
+      <div class="mb-8">
+        <a href="/en" class="inline-flex items-center gap-2 text-neutral-400 hover:text-orange-400 transition-colors group">
+          <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+          </svg>
+          Back to Home
+        </a>
+      </div>
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+          Privacy Policy
+        </h1>
+        <p class="text-neutral-400 text-lg">
+          Last updated: {new Date().toLocaleDateString('en-US')}
+        </p>
+      </div>
 
-  <section class="mx-auto max-w-6xl px-4 py-12">
-    <div class="mx-auto max-w-3xl prose prose-invert">
-      <h1>Privacy Policy</h1>
-      <p>We collect minimal data. The site may collect anonymous visit statistics (e.g., via Plausible/Umami). The launcher does not send personal data without explicit consent.</p>
-      <h2>Data collected</h2>
-      <ul>
-        <li>Anonymous site metrics</li>
-        <li>Error reports with user consent</li>
-      </ul>
-      <h2>Contact</h2>
-      <p>For privacy questions: <a href="mailto:support@sectlauncher.app">support@sectlauncher.app</a></p>
+      <!-- Main content -->
+      <div class="prose prose-invert prose-orange max-w-none">
+        <div class="bg-orange-500/10 border border-orange-500/20 rounded-lg p-6 mb-8">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-orange-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+            </svg>
+            <div>
+              <h3 class="text-lg font-semibold text-orange-300 mb-2">Summary</h3>
+              <p class="text-orange-200/90 text-sm leading-relaxed">
+                SectLauncher is designed with privacy in mind. We use minimal analytics only for product improvement and debugging. All data is encrypted, we don't collect personal information and don't share data with third parties.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">1. General Provisions</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-4 text-neutral-300">
+              This Privacy Policy describes how SectLauncher ("we", "us", "our") collects, uses and protects information when using our website sectlauncher.com and the SectLauncher application (collectively referred to as "Service").
+            </p>
+            <p class="text-neutral-300">
+              By using our Service, you agree to the collection and use of information in accordance with this policy. We are committed to protecting your privacy and ensuring the security of your data.
+            </p>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">2. Information We Collect</h2>
+          <div class="space-y-4">
+            <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+              <h3 class="text-xl font-semibold mb-3 text-orange-300">2.1 Automatically Collected Information</h3>
+              <p class="mb-3 text-neutral-300">When using our Service, we may automatically collect the following technical information:</p>
+              <ul class="list-disc pl-6 space-y-2 text-neutral-300">
+                <li>Operating system type and version</li>
+                <li>Browser type and version</li>
+                <li>IP address (in anonymized form)</li>
+                <li>Visit time and session duration</li>
+                <li>Pages you visit</li>
+                <li>Device information (screen resolution, time zone)</li>
+                <li>Referral source</li>
+              </ul>
+            </div>
+
+            <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+              <h3 class="text-xl font-semibold mb-3 text-orange-300">2.2 Error and Performance Information</h3>
+              <p class="mb-3 text-neutral-300">To improve product quality, we collect:</p>
+              <ul class="list-disc pl-6 space-y-2 text-neutral-300">
+                <li>Error messages and crash reports</li>
+                <li>Application performance metrics</li>
+                <li>Debug logs (not containing personal information)</li>
+                <li>System configuration information</li>
+              </ul>
+            </div>
+
+            <div class="bg-green-500/10 border border-green-500/20 rounded-lg p-6">
+              <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-green-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 11l-9 9z"/>
+                </svg>
+                <div>
+                  <h3 class="text-lg font-semibold text-green-300 mb-2">What we DON'T collect</h3>
+                  <ul class="list-disc pl-6 space-y-1 text-green-200 text-sm">
+                    <li>Personal data (name, email, phone)</li>
+                    <li>Passwords or authentication data</li>
+                    <li>Game files or mods</li>
+                    <li>Chat content or messages</li>
+                    <li>Financial information</li>
+                    <li>Biometric data</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">3. How We Use Information</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-4 text-neutral-300">Collected information is used exclusively for the following purposes:</p>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 class="font-semibold text-orange-300">Product improvement</h4>
+                    <p class="text-sm text-neutral-400">Usage analysis to optimize interface and features</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 class="font-semibold text-orange-300">Debugging and error fixing</h4>
+                    <p class="text-sm text-neutral-400">Identifying and fixing technical issues</p>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                  <div class="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 class="font-semibold text-orange-300">Performance monitoring</h4>
+                    <p class="text-sm text-neutral-400">Ensuring stable service operation</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <div class="w-2 h-2 bg-orange-400 rounded-full mt-2 flex-shrink-0"></div>
+                  <div>
+                    <h4 class="font-semibold text-orange-300">Trend analysis</h4>
+                    <p class="text-sm text-neutral-400">Understanding user needs</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">4. Firebase Analytics & Google Services</h2>
+          <div class="space-y-4">
+            <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+              <h3 class="text-xl font-semibold mb-3 text-orange-300">4.1 Services Used</h3>
+              <p class="mb-3 text-neutral-300">We use the following Google/Firebase services:</p>
+              <ul class="list-disc pl-6 space-y-2 text-neutral-300">
+                <li><strong>Firebase Analytics</strong> - for collecting anonymous usage analytics</li>
+                <li><strong>Firebase Crashlytics</strong> - for tracking application crashes</li>
+                <li><strong>Firebase Performance Monitoring</strong> - for performance monitoring</li>
+                <li><strong>Firebase Remote Config</strong> - for remote feature configuration</li>
+              </ul>
+            </div>
+
+            <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+              <h3 class="text-xl font-semibold mb-3 text-orange-300">4.2 Privacy Configuration</h3>
+              <p class="mb-3 text-neutral-300">Firebase is configured with maximum privacy settings:</p>
+              <ul class="list-disc pl-6 space-y-2 text-neutral-300">
+                <li>IP address anonymization enabled</li>
+                <li>Advertising identifier collection disabled</li>
+                <li>Personalized advertising disabled</li>
+                <li>Data not used to improve other Google products</li>
+                <li>Automatic data deletion after 14 months</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">5. Security and Encryption</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-4 text-neutral-300">We apply modern data protection methods:</p>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <h4 class="font-semibold text-orange-300 mb-2">Encryption</h4>
+                <ul class="list-disc pl-6 space-y-1 text-neutral-400 text-sm">
+                  <li>TLS 1.3 for data transmission</li>
+                  <li>AES-256 for storage</li>
+                  <li>End-to-end encryption for critical data</li>
+                </ul>
+              </div>
+              <div>
+                <h4 class="font-semibold text-orange-300 mb-2">Security measures</h4>
+                <ul class="list-disc pl-6 space-y-1 text-neutral-400 text-sm">
+                  <li>Regular security audits</li>
+                  <li>Limited data access</li>
+                  <li>Suspicious activity monitoring</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">6. Third Party Data Sharing</h2>
+          <div class="bg-red-500/10 border border-red-500/20 rounded-lg p-6">
+            <div class="flex items-start gap-3">
+              <svg class="w-6 h-6 text-red-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 11l-9 9z"/>
+              </svg>
+              <div>
+                <h3 class="text-lg font-semibold text-red-300 mb-2">Important: We DON'T share data</h3>
+                <p class="text-red-200 text-sm leading-relaxed mb-3">
+                  SectLauncher does not sell, transfer or provide access to user data to third parties, except as required by law.
+                </p>
+                <p class="text-red-200/80 text-xs">
+                  The only exception: anonymous analytics data processed by Firebase in accordance with their privacy policy.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">7. Your Rights and Data Control</h2>
+          <div class="space-y-4">
+            <div class="bg-orange-500/10 border border-orange-500/20 rounded-lg p-6">
+              <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-orange-400 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                </svg>
+                <div>
+                  <h3 class="text-lg font-semibold text-orange-300 mb-2">Important Information About Your Rights</h3>
+                  <p class="text-orange-200/90 text-sm leading-relaxed">
+                    We only collect anonymous technical analytics through Firebase. Since the data is completely anonymous and not linked to specific users, many traditional data rights do not apply.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+              <h3 class="text-xl font-semibold mb-3 text-orange-300">7.1 Available Rights</h3>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <h4 class="font-semibold text-green-300 mb-2">✅ What you can do:</h4>
+                  <ul class="list-disc pl-6 space-y-2 text-neutral-300">
+                    <li>Disable analytics collection in the app</li>
+                    <li>Block cookies in your browser</li>
+                    <li>File a complaint with supervisory authority</li>
+                    <li>Withdraw consent for processing</li>
+                    <li>Request information about types of data collected</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-red-300 mb-2">❌ What's not available:</h4>
+                  <ul class="list-disc pl-6 space-y-2 text-neutral-300">
+                    <li>Access to your personal data*</li>
+                    <li>Data correction*</li>
+                    <li>Data portability*</li>
+                    <li>Deletion of specific records*</li>
+                  </ul>
+                  <p class="text-neutral-400 text-xs mt-2">*Because we don't collect personal data</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+              <h3 class="text-xl font-semibold mb-3 text-orange-300">7.2 How to Control Data Collection</h3>
+              <div class="space-y-4">
+                <div class="bg-neutral-800/50 rounded-lg p-4">
+                  <h4 class="font-semibold text-orange-300 mb-2">In SectLauncher app:</h4>
+                  <p class="text-neutral-300 text-sm">Settings → Privacy → Disable telemetry</p>
+                </div>
+                <div class="bg-neutral-800/50 rounded-lg p-4">
+                  <h4 class="font-semibold text-orange-300 mb-2">In browser:</h4>
+                  <p class="text-neutral-300 text-sm">Block cookies from sectlauncher.com domain in browser settings</p>
+                </div>
+                <div class="bg-neutral-800/50 rounded-lg p-4">
+                  <h4 class="font-semibold text-orange-300 mb-2">Contact us:</h4>
+                  <p class="text-neutral-300">📧 <strong>Email:</strong> byteflipper.business@gmail.com</p>
+                  <p class="text-neutral-300">💬 <strong>Telegram:</strong> <a href="https://t.me/sectlauncher" class="text-orange-400 hover:text-orange-300">@sectlauncher</a></p>
+                  <p class="text-neutral-400 text-sm mt-2">We will respond within 30 days</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">8. Changes to Policy</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-3 text-neutral-300">
+              We reserve the right to modify or replace this Privacy Policy at any time. Material changes will be notified in advance.
+            </p>
+            <div class="space-y-2 text-sm text-neutral-400">
+              <p>• Notifications on the website</p>
+              <p>• Messages in Telegram channel</p>
+              <p>• App updates</p>
+            </div>
+            <p class="mt-4 text-neutral-400 text-sm">
+              Continued use of the Service after changes means acceptance of the new version of the policy.
+            </p>
+          </div>
+        </section>
+
+        <section class="mb-8">
+          <h2 class="text-2xl font-bold mb-4 text-white">9. Contact Information</h2>
+          <div class="bg-neutral-900/50 rounded-lg p-6 border border-neutral-800">
+            <p class="mb-4 text-neutral-300">
+              For privacy-related questions, contact us:
+            </p>
+            <div class="space-y-3">
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                </svg>
+                <span class="text-neutral-300">byteflipper.business@gmail.com</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.820 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                </svg>
+                <a href="https://t.me/sectlauncher" class="text-orange-400 hover:text-orange-300">@sectlauncher</a>
+              </div>
+              <div class="flex items-center gap-3">
+                <svg class="w-5 h-5 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.87 3.16 9 7.55 10.45.55.1.75-.25.75-.55v-2c-3.07.67-3.72-1.3-3.72-1.3-.52-1.32-1.27-1.67-1.27-1.67-1.04-.7.07-.68.07-.68 1.14.08 1.74 1.17 1.74 1.17 1.02 1.73 2.68 1.23 3.33.94.1-.74.4-1.23.72-1.51-2.45-.28-5.02-1.22-5.02-5.42 0-1.2.43-2.18 1.14-2.95-.12-.28-.5-1.42.1-2.96 0 0 .95-.3 3.1 1.13.9-.25 1.86-.37 2.82-.37.96 0 1.92.12 2.82.37 2.15-1.43 3.1-1.13 3.1-1.13.6 1.54.22 2.68.1 2.96.7.77 1.14 1.75 1.14 2.95 0 4.21-2.58 5.14-5.03 5.41.42.36.78 1.08.78 2.19v3.25c0 .3.2.65.76.54 4.38-1.46 7.54-5.58 7.54-10.45C23.1 5.33 18.27.5 12 .5Z"/>
+                </svg>
+                <a href="https://github.com/byteflipper-58/sectlauncher" class="text-orange-400 hover:text-orange-300">GitHub</a>
+              </div>
+            </div>
+            <div class="mt-6 p-4 bg-orange-500/10 border border-orange-500/20 rounded-lg">
+              <p class="text-orange-200 text-sm">
+                <strong>Service Owner:</strong> SectLauncher Development Team<br/>
+                <strong>Data Processing:</strong> Google Firebase (anonymous analytics)<br/>
+                <strong>Data Access:</strong> Only aggregated statistics (device type, OS, region)
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div class="text-center py-8 border-t border-neutral-800">
+          <p class="text-neutral-400 text-sm">
+            This privacy policy is effective from {new Date().toLocaleDateString('en-US')}.
+          </p>
+          <p class="text-neutral-500 text-xs mt-2">
+            Version 1.0 | SectLauncher © 2025
+          </p>
+        </div>
+      </div>
     </div>
-  </section>
-
-  <Fragment slot="footer"><Footer /></Fragment>
+  </main>
 </BaseLayout>
-

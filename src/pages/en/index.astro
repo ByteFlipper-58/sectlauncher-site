@@ -16,20 +16,27 @@ import Footer from "../../components/Footer.astro";
   <section class="hero-bg">
     <div class="mx-auto max-w-6xl px-4 pt-16 pb-14 grid md:grid-cols-2 gap-10 items-center">
       <div>
-        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">SectLauncher — a lightweight Minecraft launcher</h1>
-        <p class="mt-4 text-neutral-300 text-lg">Mods, profiles and auto‑updates in one click. More play — less setup.</p>
-        <div class="mt-6 flex flex-wrap items-center gap-3">
-          <a href="/en/download" class="px-5 py-3 rounded-md font-semibold text-neutral-900 bg-emerald-500">Download for Windows</a>
-          <a href="https://github.com/byteflipper-58/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">GitHub</a>
-          <a href="https://discord.gg/" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">Discord</a>
+        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">SectLauncher — modern Minecraft launcher</h1>
+        <p class="mt-4 text-neutral-300 text-lg">Manage mods, create profiles and update games with one button. Just launch — we handle the rest.</p>
+        <div class="mt-4 inline-flex items-center px-3 py-2 rounded-lg bg-orange-500/20 border border-orange-500/30">
+          <svg class="w-4 h-4 mr-2 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+          </svg>
+          <span class="text-orange-300 font-medium text-sm">Project in active development</span>
         </div>
-        <div class="mt-3 text-xs text-neutral-400">Version v0.1.0 · SHA‑256: —</div>
+        <div class="mt-6 flex flex-wrap items-center gap-3">
+          <div class="px-5 py-3 rounded-md font-semibold text-orange-900 bg-orange-500 cursor-not-allowed opacity-75">
+            In Development
+          </div>
+          <a href="https://github.com/byteflipper-58/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">GitHub</a>
+          <a href="https://t.me/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">Telegram</a>
+        </div>
+        <div class="mt-3 text-xs text-neutral-400">Coming soon for download</div>
       </div>
       <div class="relative">
-        <div class="aspect-video rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden">
-          <div class="w-full h-full grid place-items-center text-neutral-500">Launcher screenshot</div>
+        <div class="rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden" style="aspect-ratio: 1024/640;">
+          <img src="/images/launcher_screenshot.png" alt="SectLauncher Interface" class="w-full h-full object-cover" />
         </div>
-        <div class="absolute -bottom-4 -left-4 px-3 py-1 rounded-md text-xs border border-neutral-700 bg-neutral-900">Safe updates</div>
       </div>
     </div>
   </section>
@@ -40,50 +47,285 @@ import Footer from "../../components/Footer.astro";
     </div>
   </div>
 
-  <section id="features" class="mx-auto max-w-6xl px-4 py-12">
-    <h2 class="text-2xl font-bold mb-6">Why SectLauncher</h2>
-    <div class="grid md:grid-cols-3 gap-4">
-      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
-        <div class="w-10 h-10 rounded-md grid place-items-center bg-emerald-500/10 text-emerald-400">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M21 7 9 19l-6-6 1.5-1.5L9 16l10.5-10.5L21 7Z"/></svg>
+  <!-- Key Features -->
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Modern Approach to Minecraft Launch</h2>
+      <p class="text-neutral-300 text-lg max-w-2xl mx-auto">Everything you need for comfortable gaming — in one application</p>
+    </div>
+    
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20 6L9 17l-5-5 1.41-1.41L9 14.17l9.59-9.59L20 6z"/>
+          </svg>
         </div>
-        <h3 class="font-bold mt-3">Mods without pain</h3>
-        <p class="text-neutral-400 mt-1">Presets, auto‑install and compatibility checks (Fabric/Forge/Quilt).</p>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Mod Management</h3>
+          <p class="text-neutral-400">CurseForge and Modrinth integration for easy mod installation and updates</p>
+        </div>
+        <div class="flex items-center text-sm text-emerald-400">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 mr-2"></span>
+          Coming in release
+        </div>
       </div>
-      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
-        <div class="w-10 h-10 rounded-md grid place-items-center bg-yellow-500/10 text-yellow-400">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M7 3h10v2H7V3Zm12 6H5v2h14V9Zm-2 6H7v2h10v-2Z"/></svg>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-blue-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/>
+          </svg>
         </div>
-        <h3 class="font-bold mt-3">Profiles</h3>
-        <p class="text-neutral-400 mt-1">Versions, JVM args, modpacks and resources as separate sets.</p>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Secure Authentication</h3>
+          <p class="text-neutral-400">Official Microsoft/Mojang authentication without third-party services</p>
+        </div>
+        <div class="flex items-center text-sm text-blue-400">
+          <span class="w-2 h-2 rounded-full bg-blue-400 mr-2"></span>
+          Ready
+        </div>
       </div>
-      <div class="group rounded-xl border border-neutral-800 p-5 bg-neutral-900/40 hover:bg-neutral-900 transition">
-        <div class="w-10 h-10 rounded-md grid place-items-center bg-blue-500/10 text-blue-400">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2Zm1 15h-2v-2h2Zm0-4h-2V7h2Z"/></svg>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z"/>
+          </svg>
         </div>
-        <h3 class="font-bold mt-3">Auto updates</h3>
-        <p class="text-neutral-400 mt-1">Diff patches, checksums and rollback for stability.</p>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Profiles & Instances</h3>
+          <p class="text-neutral-400">Create separate configurations for different versions and modpacks</p>
+        </div>
+        <div class="flex items-center text-sm text-purple-400">
+          <span class="w-2 h-2 rounded-full bg-purple-400 mr-2"></span>
+          In Development
+        </div>
+      </div>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500/20 to-orange-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+          </svg>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Fast Downloads</h3>
+          <p class="text-neutral-400">Parallel downloading and smart caching for maximum speed</p>
+        </div>
+        <div class="flex items-center text-sm text-orange-400">
+          <span class="w-2 h-2 rounded-full bg-orange-400 mr-2"></span>
+          Ready
+        </div>
+      </div>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-teal-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Player Avatars</h3>
+          <p class="text-neutral-400">Mineatar API integration for displaying skins in the interface</p>
+        </div>
+        <div class="flex items-center text-sm text-teal-400">
+          <span class="w-2 h-2 rounded-full bg-teal-400 mr-2"></span>
+          Ready
+        </div>
+      </div>
+
+      <div class="group relative p-6 rounded-2xl border border-neutral-800 bg-gradient-to-br from-neutral-900/60 to-neutral-900/30 hover:from-neutral-900/80 hover:to-neutral-900/50 transition-all duration-300 hover:scale-105">
+        <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-green-600/20 flex items-center justify-center">
+          <svg class="w-6 h-6 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold text-white mb-2">Clean Architecture</h3>
+          <p class="text-neutral-400">Modern architecture with layer separation for stability and performance</p>
+        </div>
+        <div class="flex items-center text-sm text-green-400">
+          <span class="w-2 h-2 rounded-full bg-green-400 mr-2"></span>
+          Foundation ready
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="how" class="mx-auto max-w-6xl px-4 py-6">
-    <h2 class="text-2xl font-bold mb-4">How it works</h2>
-    <div class="grid md:grid-cols-3 gap-4">
-      <div class="rounded-xl border border-neutral-800 p-5 bg-neutral-900/40">
-        <div class="w-8 h-8 rounded-full grid place-items-center bg-neutral-800 text-neutral-200 font-bold">1</div>
-        <div class="mt-3 font-semibold">Download & install</div>
-        <p class="text-neutral-400 mt-1">Windows available; macOS/Linux planned.</p>
+  <!-- Development Statistics -->
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="grid md:grid-cols-4 gap-6">
+      <div class="text-center p-6 rounded-2xl border border-neutral-800 bg-neutral-900/40">
+        <div class="text-3xl font-bold text-orange-400 mb-2">Soon</div>
+        <div class="text-neutral-300 font-medium">Open Source</div>
+        <div class="text-neutral-500 text-sm mt-1">Will be open later</div>
       </div>
-      <div class="rounded-xl border border-neutral-800 p-5 bg-neutral-900/40">
-        <div class="w-8 h-8 rounded-full grid place-items-center bg-neutral-800 text-neutral-200 font-bold">2</div>
-        <div class="mt-3 font-semibold">Choose version & mod profile</div>
-        <p class="text-neutral-400 mt-1">Fabric/Forge/Quilt, JVM args and resources in a few clicks.</p>
+      <div class="text-center p-6 rounded-2xl border border-neutral-800 bg-neutral-900/40">
+        <div class="text-3xl font-bold text-blue-400 mb-2">Kotlin</div>
+        <div class="text-neutral-300 font-medium">Multiplatform</div>
+        <div class="text-neutral-500 text-sm mt-1">Modern technology stack</div>
       </div>
-      <div class="rounded-xl border border-neutral-800 p-5 bg-neutral-900/40">
-        <div class="w-8 h-8 rounded-full grid place-items-center bg-neutral-800 text-neutral-200 font-bold">3</div>
-        <div class="mt-3 font-semibold">Press “Play”</div>
-        <p class="text-neutral-400 mt-1">Auto updates and rollbacks to avoid wasting time.</p>
+      <div class="text-center p-6 rounded-2xl border border-neutral-800 bg-neutral-900/40">
+        <div class="text-3xl font-bold text-purple-400 mb-2">TBD</div>
+        <div class="text-neutral-300 font-medium">License</div>
+        <div class="text-neutral-500 text-sm mt-1">To be determined later</div>
+      </div>
+      <div class="text-center p-6 rounded-2xl border border-neutral-800 bg-neutral-900/40">
+        <div class="text-3xl font-bold text-emerald-400 mb-2">2025</div>
+        <div class="text-neutral-300 font-medium">Release</div>
+        <div class="text-neutral-500 text-sm mt-1">First stable version</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roadmap -->
+  <section class="mx-auto max-w-6xl px-4 py-16">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Development Roadmap</h2>
+      <p class="text-neutral-300 text-lg max-w-2xl mx-auto">Project development plan for the coming months</p>
+    </div>
+    
+    <div class="relative">
+      <!-- Vertical line -->
+      <div class="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-emerald-500 via-blue-500 to-orange-500"></div>
+      
+      <div class="space-y-8">
+        <!-- Stage 1 -->
+        <div class="relative flex items-start gap-6">
+          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center relative z-10">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="flex-1 pb-8">
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-xl font-bold text-white">Launcher Foundation</h3>
+              <span class="px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Completed</span>
+            </div>
+            <p class="text-neutral-400 mb-3">Basic functionality, authentication, profile management</p>
+            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Microsoft/Mojang authentication
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Minecraft version downloads
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Instance management
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                Clean Architecture
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="relative flex items-start gap-6">
+          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center relative z-10">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+          </div>
+          <div class="flex-1 pb-8">
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-xl font-bold text-white">Alpha Version</h3>
+              <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">In Progress</span>
+            </div>
+            <p class="text-neutral-400 mb-3">First public release with basic functionality</p>
+            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Windows build
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Basic UI/UX
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Testing
+              </div>
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+                Documentation
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="relative flex items-start gap-6">
+          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center relative z-10">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L2 7v10l10 5 10-5V7l-10-5z"/>
+            </svg>
+          </div>
+          <div class="flex-1 pb-8">
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-xl font-bold text-white">Mod Support</h3>
+              <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400 border border-purple-500/30">Planned</span>
+            </div>
+            <p class="text-neutral-400 mb-3">Integration with popular mod platforms</p>
+            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-purple-400/50"></div>
+                CurseForge API
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-purple-400/50"></div>
+                Modrinth integration
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-purple-400/50"></div>
+                Auto-update mods
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-purple-400/50"></div>
+                Mod dependencies
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="relative flex items-start gap-6">
+          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center relative z-10">
+            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M5 3h14a2 2 0 0 1 2 2v6h-2V5H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center gap-3 mb-2">
+              <h3 class="text-xl font-bold text-white">Cross-platform</h3>
+              <span class="px-3 py-1 rounded-full text-xs font-medium bg-orange-500/20 text-orange-400 border border-orange-500/30">Future</span>
+            </div>
+            <p class="text-neutral-400 mb-3">Expanding support to other operating systems</p>
+            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-orange-400/50"></div>
+                Linux support
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-orange-400/50"></div>
+                macOS version
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-orange-400/50"></div>
+                Unified codebase
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-4 h-4 rounded-full border-2 border-orange-400/50"></div>
+                Auto-updater
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
