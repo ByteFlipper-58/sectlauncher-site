@@ -11,6 +11,7 @@ import Footer from "../../components/Footer.astro";
     <link rel="alternate" hreflang="ru" href="https://sectlauncher.byteflipper.com/ru/" />
     <link rel="alternate" hreflang="x-default" href="https://sectlauncher.byteflipper.com/ru/" />
     <meta property="og:url" content="https://sectlauncher.byteflipper.com/en/" />
+    <link rel="preload" as="image" href="/images/launcher_screenshot.png" />
   </Fragment>
 
   <section class="hero-bg">
@@ -35,7 +36,15 @@ import Footer from "../../components/Footer.astro";
       </div>
       <div class="relative">
         <div class="rounded-xl border border-neutral-800 bg-neutral-900 overflow-hidden" style="aspect-ratio: 1024/640;">
-          <img src="/images/launcher_screenshot.png" alt="SectLauncher Interface" class="w-full h-full object-cover" />
+          <img
+            src="/images/launcher_screenshot.png"
+            alt="SectLauncher Interface"
+            width="1024"
+            height="640"
+            fetchpriority="high"
+            decoding="async"
+            class="w-full h-full object-cover"
+          />
         </div>
       </div>
     </div>
@@ -180,7 +189,7 @@ import Footer from "../../components/Footer.astro";
   </section>
 
   <!-- Roadmap -->
-  <section class="mx-auto max-w-6xl px-4 py-16">
+  <section class="mx-auto max-w-6xl px-4 py-16 overflow-hidden">
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">Development Roadmap</h2>
       <p class="text-neutral-300 text-lg max-w-2xl mx-auto">Project development plan for the coming months</p>
@@ -188,23 +197,23 @@ import Footer from "../../components/Footer.astro";
     
     <div class="relative">
       <!-- Vertical line -->
-      <div class="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-emerald-500 via-blue-500 to-orange-500"></div>
+      <div class="absolute left-[23px] md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-emerald-500 via-blue-500 to-orange-500"></div>
       
-      <div class="space-y-8">
+      <div class="space-y-6 md:space-y-8">
         <!-- Stage 1 -->
-        <div class="relative flex items-start gap-6">
-          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center relative z-10">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <div class="relative flex items-start gap-3 md:gap-6">
+          <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center relative z-10">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
           </div>
-          <div class="flex-1 pb-8">
-            <div class="flex items-center gap-3 mb-2">
-              <h3 class="text-xl font-bold text-white">Launcher Foundation</h3>
-              <span class="px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Completed</span>
+          <div class="flex-1 pb-6 md:pb-8 min-w-0">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+              <h3 class="text-lg md:text-xl font-bold text-white">Launcher Foundation</h3>
+              <span class="px-2 py-1 md:px-3 md:py-1 rounded-full text-xs font-medium bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 w-fit">Completed</span>
             </div>
-            <p class="text-neutral-400 mb-3">Basic functionality, authentication, profile management</p>
-            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+            <p class="text-neutral-400 mb-3 text-sm md:text-base">Basic functionality, authentication, profile management</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-neutral-500">
               <div class="flex items-center gap-2">
                 <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 Microsoft/Mojang authentication
@@ -226,19 +235,19 @@ import Footer from "../../components/Footer.astro";
         </div>
 
         <!-- Stage 2 -->
-        <div class="relative flex items-start gap-6">
-          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center relative z-10">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <div class="relative flex items-start gap-3 md:gap-6">
+          <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center relative z-10">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
             </svg>
           </div>
-          <div class="flex-1 pb-8">
-            <div class="flex items-center gap-3 mb-2">
-              <h3 class="text-xl font-bold text-white">Alpha Version</h3>
-              <span class="px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30">In Progress</span>
+          <div class="flex-1 pb-6 md:pb-8 min-w-0">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+              <h3 class="text-lg md:text-xl font-bold text-white">Alpha Version</h3>
+              <span class="px-2 py-1 md:px-3 md:py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-400 border border-blue-500/30 w-fit">In Progress</span>
             </div>
-            <p class="text-neutral-400 mb-3">First public release with basic functionality</p>
-            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+            <p class="text-neutral-400 mb-3 text-sm md:text-base">First public release with basic functionality</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-neutral-500">
               <div class="flex items-center gap-2">
                 <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
                 Windows build
@@ -260,19 +269,19 @@ import Footer from "../../components/Footer.astro";
         </div>
 
         <!-- Stage 3 -->
-        <div class="relative flex items-start gap-6">
-          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center relative z-10">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <div class="relative flex items-start gap-3 md:gap-6">
+          <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center relative z-10">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2L2 7v10l10 5 10-5V7l-10-5z"/>
             </svg>
           </div>
-          <div class="flex-1 pb-8">
-            <div class="flex items-center gap-3 mb-2">
-              <h3 class="text-xl font-bold text-white">Mod Support</h3>
-              <span class="px-3 py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400 border border-purple-500/30">Planned</span>
+          <div class="flex-1 pb-6 md:pb-8 min-w-0">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+              <h3 class="text-lg md:text-xl font-bold text-white">Mod Support</h3>
+              <span class="px-2 py-1 md:px-3 md:py-1 rounded-full text-xs font-medium bg-purple-500/20 text-purple-400 border border-purple-500/30 w-fit">Planned</span>
             </div>
-            <p class="text-neutral-400 mb-3">Integration with popular mod platforms</p>
-            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+            <p class="text-neutral-400 mb-3 text-sm md:text-base">Integration with popular mod platforms</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-neutral-500">
               <div class="flex items-center gap-2">
                 <div class="w-4 h-4 rounded-full border-2 border-purple-400/50"></div>
                 CurseForge API
@@ -294,19 +303,19 @@ import Footer from "../../components/Footer.astro";
         </div>
 
         <!-- Stage 4 -->
-        <div class="relative flex items-start gap-6">
-          <div class="flex-shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center relative z-10">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <div class="relative flex items-start gap-3 md:gap-6">
+          <div class="flex-shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center relative z-10">
+            <svg class="w-6 h-6 md:w-8 md:h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M5 3h14a2 2 0 0 1 2 2v6h-2V5H5v14h6v2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/>
             </svg>
           </div>
-          <div class="flex-1">
-            <div class="flex items-center gap-3 mb-2">
-              <h3 class="text-xl font-bold text-white">Cross-platform</h3>
-              <span class="px-3 py-1 rounded-full text-xs font-medium bg-orange-500/20 text-orange-400 border border-orange-500/30">Future</span>
+          <div class="flex-1 min-w-0">
+            <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-2">
+              <h3 class="text-lg md:text-xl font-bold text-white">Cross-platform</h3>
+              <span class="px-2 py-1 md:px-3 md:py-1 rounded-full text-xs font-medium bg-orange-500/20 text-orange-400 border border-orange-500/30 w-fit">Future</span>
             </div>
-            <p class="text-neutral-400 mb-3">Expanding support to other operating systems</p>
-            <div class="grid md:grid-cols-2 gap-2 text-sm text-neutral-500">
+            <p class="text-neutral-400 mb-3 text-sm md:text-base">Expanding support to other operating systems</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-neutral-500">
               <div class="flex items-center gap-2">
                 <div class="w-4 h-4 rounded-full border-2 border-orange-400/50"></div>
                 Linux support

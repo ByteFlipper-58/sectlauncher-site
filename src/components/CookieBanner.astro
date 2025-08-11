@@ -93,15 +93,11 @@ const { locale } = Astro.props;
       banner.style.transform = 'translateY(100%)';
       
       // Initialize analytics if accepted
-      if (window.enableAnalytics) {
-        window.enableAnalytics();
-        
-        // Setup event listeners after analytics is enabled
-        setTimeout(() => {
-          // Re-run bootstrap to setup event listeners
-          window.location.reload();
-        }, 100);
+      if ((window as any).enableAnalytics) {
+        await (window as any).enableAnalytics();
       }
+      // Всегда перезагружаем страницу после принятия
+      window.location.reload();
     });
     
     // Decline cookies
@@ -110,8 +106,8 @@ const { locale } = Astro.props;
       banner.style.transform = 'translateY(100%)';
       
       // Disable analytics if declined
-      if (window.disableAnalytics) {
-        window.disableAnalytics();
+      if ((window as any).disableAnalytics) {
+        (window as any).disableAnalytics();
       }
     });
   }

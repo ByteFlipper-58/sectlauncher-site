@@ -74,7 +74,13 @@ const ogImage = toAbsoluteUrl(heroImage) ?? toAbsoluteUrl('/web-app-manifest-512
 // Build prev/next within same locale and not draft
 const allPosts = await getCollection('blog');
 const sameLocalePosts = allPosts
-  .filter((p) => (p.data.lang ?? 'ru') === locale && !p.data.draft)
+  .filter((p) => {
+    const sameLocale = (p.data.lang ?? 'ru') === locale;
+    const notDraft = !p.data.draft;
+    const isProd = import.meta.env.MODE === 'production';
+    const notPrivateInProd = !isProd || !p.data.private;
+    return sameLocale && notDraft && notPrivateInProd;
+  })
   .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 const index = sameLocalePosts.findIndex((p) => p.slug.split('/').pop() === slugBase);
 const prev = index > 0 ? sameLocalePosts[index - 1] : undefined;
