@@ -29,15 +29,16 @@ const navAria = locale === 'en' ? 'Main navigation' : 'Главная навиг
     <nav class="hidden md:flex items-center gap-1 text-sm rounded-lg bg-neutral-900/40 px-1.5 py-1" aria-label={navAria}>
       {links.map((l) => (
         <a href={l.href} aria-current={isActive(l.href) ? 'page' : undefined}
-          class={`px-3 py-1.5 rounded-md transition-all ${isActive(l.href) ? 'bg-emerald-500/10 text-emerald-400 font-medium' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white'}`}>{l.label}</a>
+          class={`px-3 py-1.5 rounded-md transition-all ${isActive(l.href) ? 'bg-emerald-500/10 text-emerald-400 font-medium' : 'text-neutral-300 hover:bg-neutral-800/60 hover:text-white'}`}
+          data-nav-link>{l.label}</a>
       ))}
     </nav>
 
     <div class="flex items-center gap-2">
       <div class="hidden md:flex items-center gap-1 text-xs rounded-lg bg-neutral-900/40 p-0.5">
-        <a href={switchPath('ru')} class={`px-2.5 py-1 rounded-md transition-all ${locale === 'ru' ? 'bg-neutral-800 text-white' : 'hover:bg-neutral-800'}`}>RU</a>
+        <a href={switchPath('ru')} class={`px-2.5 py-1 rounded-md transition-all ${locale === 'ru' ? 'bg-neutral-800 text-white' : 'hover:bg-neutral-800'}`} data-lang-switch="ru">RU</a>
         <span class="text-neutral-600">/</span>
-        <a href={switchPath('en')} class={`px-2.5 py-1 rounded-md transition-all ${locale === 'en' ? 'bg-neutral-800 text-white' : 'hover:bg-neutral-800'}`}>EN</a>
+        <a href={switchPath('en')} class={`px-2.5 py-1 rounded-md transition-all ${locale === 'en' ? 'bg-neutral-800 text-white' : 'hover:bg-neutral-800'}`} data-lang-switch="en">EN</a>
       </div>
       <div class="hidden md:inline-flex items-center px-4 py-1.5 rounded-lg text-orange-900 font-semibold bg-gradient-to-r from-orange-500 to-orange-600 cursor-not-allowed opacity-80">
         <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24">
@@ -135,6 +136,35 @@ const navAria = locale === 'en' ? 'Main navigation' : 'Главная навиг
   };
   document.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+  
+  // Отслеживание навигации
+  document.addEventListener('click', async (e) => {
+    const link = e.target.closest('[data-nav-link], [data-lang-switch]');
+    if (!link) return;
+    
+    try {
+      const { trackEvent } = await import('/src/utils/analytics.ts');
+      const href = link.getAttribute('href');
+      const currentPath = window.location.pathname;
+      
+      if (link.hasAttribute('data-lang-switch')) {
+        const targetLang = link.getAttribute('data-lang-switch');
+        await trackEvent('language_switch', {
+          from_language: currentPath.startsWith('/en/') ? 'en' : 'ru',
+          to_language: targetLang,
+          current_page: currentPath,
+          event_category: 'navigation',
+        });
+      } else if (link.hasAttribute('data-nav-link')) {
+        await trackEvent('navigation_click', {
+          link_text: link.textContent?.trim(),
+          link_url: href,
+          current_page: currentPath,
+          event_category: 'navigation',
+        });
+      }
+    } catch {}
+  });
 </script>
 
 

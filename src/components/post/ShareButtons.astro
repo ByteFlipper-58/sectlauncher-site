@@ -110,6 +110,12 @@ const reddit = `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=$
       
       wsBtn.addEventListener('click', async () => {
         try {
+          // Отслеживаем попытку поделиться
+          try {
+            const { trackSocialShare } = await import('/src/utils/analytics.ts');
+            await trackSocialShare('native_share', url);
+          } catch {}
+          
           const shareData = { 
             url: url, 
             title: title, 
@@ -193,6 +199,25 @@ const reddit = `https://reddit.com/submit?url=${encodeURIComponent(url)}&title=$
             }, 2000);
           }
         }
+      });
+      
+      // Добавляем отслеживание для других социальных кнопок
+      const socialLinks = document.querySelectorAll('a[href*="t.me"], a[href*="twitter.com"], a[href*="wa.me"], a[href*="reddit.com"]');
+      socialLinks.forEach(link => {
+        link.addEventListener('click', async () => {
+          try {
+            const { trackSocialShare } = await import('/src/utils/analytics.ts');
+            const href = link.getAttribute('href') || '';
+            let platform = 'unknown';
+            
+            if (href.includes('t.me')) platform = 'telegram';
+            else if (href.includes('twitter.com')) platform = 'twitter';
+            else if (href.includes('wa.me')) platform = 'whatsapp';
+            else if (href.includes('reddit.com')) platform = 'reddit';
+            
+            await trackSocialShare(platform, url);
+          } catch {}
+        });
       });
     });
   </script>

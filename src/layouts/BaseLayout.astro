@@ -1,10 +1,7 @@
 ---
 import "../styles/global.css";
 import CookieBanner from "../components/CookieBanner.astro";
-// Firebase Analytics подключим через CDN, инициализация после согласия
-// Скрипт аналитики подключим отдельным тегом внизу, чтобы он выполнялся только в браузере
 const { title = "SectLauncher", description = "Кроссплатформенный лаунчер Minecraft" } = Astro.props;
-// Разрешаем индексацию поисковиками
 const allowIndexing = true;
 const currentLocale = Astro.currentLocale ?? 'ru';
 const ogLocale = currentLocale === 'ru' ? 'ru_RU' : 'en_US';
@@ -43,69 +40,23 @@ const defaultOgImage = toAbsoluteUrl('/web-app-manifest-512x512.png');
       .hero-bg{background:radial-gradient(1200px 600px at 20% 0%, rgba(46,204,113,.25), transparent 60%),radial-gradient(900px 500px at 80% 10%, rgba(241,196,15,.18), transparent 60%)}
     </style>
     <slot name="head" />
-    <!-- Firebase Analytics (CDN) с отложенной инициализацией до согласия -->
-    <script type="module">
-      const firebaseConfig = {
-        apiKey: 'AIzaSyDGE3JNXJp8c_4EmpXTw9rMES4V2LBLA60',
-        authDomain: 'sectlauncher.firebaseapp.com',
-        projectId: 'sectlauncher',
-        storageBucket: 'sectlauncher.firebasestorage.app',
-        messagingSenderId: '200769669419',
-        appId: '1:200769669419:web:2a9b7ae31ffd00bb4d5d6e',
-        measurementId: 'G-7Z4ZT6HVE5'
-      };
-
-      async function initAnalyticsCdn() {
-        try {
-          const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js');
-          const { getAnalytics, isSupported, setAnalyticsCollectionEnabled, logEvent } = await import('https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js');
-          const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-          if (await isSupported()) {
-            const analytics = getAnalytics(app);
-            try { setAnalyticsCollectionEnabled(analytics, true); } catch {}
-            try { logEvent(analytics, 'page_view', { debug_mode: true }); } catch {}
-            // eslint-disable-next-line no-console
-            console.log('[Analytics CDN] initialized');
-          }
-        } catch (e) {
-          // eslint-disable-next-line no-console
-          console.warn('[Analytics CDN] init failed', e);
-        }
-      }
-
-      window.enableAnalytics = async () => {
-        try { localStorage.setItem('cookie-consent', 'accepted'); } catch {}
-        await initAnalyticsCdn();
-        // eslint-disable-next-line no-console
-        console.log('[Analytics CDN] enabled by user consent');
-      };
-      window.disableAnalytics = () => {
-        try { localStorage.setItem('cookie-consent', 'declined'); } catch {}
-        (async () => {
-          try {
-            const { initializeApp, getApps, getApp } = await import('https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js');
-            const { getAnalytics, setAnalyticsCollectionEnabled } = await import('https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js');
-            const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
-            try { setAnalyticsCollectionEnabled(analytics, false); } catch {}
-          } catch {}
-        })();
-        // eslint-disable-next-line no-console
-        console.log('[Analytics CDN] disabled by user');
-      };
-
-      // Автовключение, если ранее уже принято
-      try {
-        if (localStorage.getItem('cookie-consent') === 'accepted') {
-          initAnalyticsCdn();
-        }
-      } catch {}
-    </script>
     <script is:inline>
       try { localStorage.setItem('pref_locale', (Astro.currentLocale ?? 'ru')); } catch {}
     </script>
   </head>
   <body class="antialiased min-h-screen flex flex-col">
+    <!-- Инициализация аналитики -->
+    <script type="module">
+      import { initAnalytics } from '/src/utils/analytics.ts';
+      
+      // Инициализируем аналитику при загрузке страницы
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        initAnalytics();
+      } else {
+        document.addEventListener('DOMContentLoaded', () => initAnalytics());
+      }
+    </script>
+    
     <slot name="header" />
     <main class="flex-1"><slot /></main>
     <slot name="footer" />

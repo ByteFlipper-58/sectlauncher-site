@@ -92,12 +92,13 @@ const { locale } = Astro.props;
       localStorage.setItem('cookie-consent', 'accepted');
       banner.style.transform = 'translateY(100%)';
       
-      // Initialize analytics if accepted
-      if ((window as any).enableAnalytics) {
-        await (window as any).enableAnalytics();
+      // Динамически импортируем и включаем аналитику
+      try {
+        const { enableAnalytics } = await import('/src/utils/analytics.ts');
+        await enableAnalytics();
+      } catch (error) {
+        console.error('[CookieBanner] Failed to enable analytics:', error);
       }
-      // Всегда перезагружаем страницу после принятия
-      window.location.reload();
     });
     
     // Decline cookies
@@ -105,9 +106,13 @@ const { locale } = Astro.props;
       localStorage.setItem('cookie-consent', 'declined');
       banner.style.transform = 'translateY(100%)';
       
-      // Disable analytics if declined
-      if ((window as any).disableAnalytics) {
-        (window as any).disableAnalytics();
+      // Динамически импортируем и отключаем аналитику
+      try {
+        import('/src/utils/analytics.ts').then(({ disableAnalytics }) => {
+          disableAnalytics();
+        });
+      } catch (error) {
+        console.error('[CookieBanner] Failed to disable analytics:', error);
       }
     });
   }

@@ -56,7 +56,7 @@ export default defineConfig({
         let changefreq = undefined;
         let priority = 0.6;
 
-        if (path === '/ru/' || path === '/en/') {
+        if (path === '/ru/' || path === '/en/' || path === '/') {
           changefreq = /** @type {import('sitemap').EnumChangefreq} */ ('daily');
           priority = 1.0;
         } else if (/\/(ru|en)\/blog\/?$/.test(path)) {
@@ -84,6 +84,11 @@ export default defineConfig({
           links.push({ url: item.url.replace('/en/', '/ru/'), lang: 'ru' });
           links.push({ url: item.url, lang: 'en' });
           links.push({ url: item.url.replace('/en/', '/ru/'), lang: 'x-default' });
+        } else if (path === '/') {
+          // Для корневой страницы добавляем ссылки на локализованные версии
+          links.push({ url: item.url.replace('/', '/ru/'), lang: 'ru' });
+          links.push({ url: item.url.replace('/', '/en/'), lang: 'en' });
+          links.push({ url: item.url.replace('/', '/ru/'), lang: 'x-default' });
         }
 
         // В продакшн не включаем приватные и отложенные посты в sitemap: фильтруем по эвристикам путей

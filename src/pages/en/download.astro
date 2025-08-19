@@ -150,10 +150,31 @@ const DOWNLOADS = {
     const nextOs = btn.dataset.os;
     if (!nextOs) return;
     updatePlatform(nextOs);
+    
+    // Отслеживаем переключение платформы
+    try {
+      import('/src/utils/analytics.ts').then(({ trackEvent }) => {
+        trackEvent('platform_switch', {
+          platform: nextOs,
+          event_category: 'engagement',
+        });
+      });
+    } catch {}
   });
 
   // Initialize active panel
   activatePane(os);
+  
+  // Отслеживаем автоопределение ОС
+  try {
+    import('/src/utils/analytics.ts').then(({ trackEvent }) => {
+      trackEvent('os_detected', {
+        detected_os: os,
+        user_agent: navigator.userAgent,
+        event_category: 'system_info',
+      });
+    });
+  } catch {}
 
   // GitHub API functions
   async function pickAsset(assets, targetOs) {
@@ -168,4 +189,16 @@ const DOWNLOADS = {
   }
 
   // Removed release loading since project is in development
+  
+  // Отслеживаем клики по кнопкам скачивания
+  document.addEventListener('click', async (e) => {
+    const downloadBtn = e.target.closest('a[href*="github.com"], a[href*="releases"]');
+    if (downloadBtn) {
+      try {
+        const { trackDownload } = await import('/src/utils/analytics.ts');
+        const platform = document.getElementById('cta-label')?.textContent || 'unknown';
+        await trackDownload(platform.toLowerCase());
+      } catch {}
+    }
+  });
 </script>

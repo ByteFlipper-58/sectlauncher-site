@@ -152,6 +152,15 @@ const posts = sortedPosts;
       } else if (noResultsMessage) {
         noResultsMessage.remove();
       }
+
+      // Отслеживаем поиск в аналитике
+      if (currentQuery.length > 2) {
+        try {
+          import('/src/utils/analytics.ts').then(({ trackBlogSearch }) => {
+            trackBlogSearch(currentQuery, visibleCount);
+          });
+        } catch {}
+      }
     }
 
     // Debounced search
@@ -175,4 +184,3 @@ const posts = sortedPosts;
     if (totalCount) totalCount.textContent = allPosts.length.toString();
   });
 </script>
-
