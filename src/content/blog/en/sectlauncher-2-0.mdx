@@ -1,0 +1,53 @@
+---
+title: "SectLauncher 2.0"
+description: "Details about the transition to a new engine, Forge support, and other launcher updates."
+date: 2026-03-05
+heroImage: "/blog/sectlauncher-2-0/launcher_home.png"
+author:
+  name: "Sect Team"
+  avatar: "/favicon.svg"
+lang: en
+tKey: sectlauncher-2-0
+---
+
+import MediaViewer from "../../../components/post/MediaViewer.astro";
+
+SectLauncher 2.0 is a new chapter for the project. We decided not to release the previous version and instead completely rebuilt the launcher from scratch on a new engine, fixing old issues and building a solid foundation.
+
+## What's Changed
+
+### Transition to Rust and Tauri
+We used to use Compose Multiplatform, but now we've completely switched to **Rust + Tauri v2**.
+- The launcher is now much lighter.
+- The interface works faster and smoother, like a regular system application.
+- You no longer need a heavy Java (JVM) just to display windows and buttons.
+
+### Forge Support
+We’ve added **Forge** support. Now the launcher works correctly not only with Fabric but also with all popular mods and heavy Forge-based modpacks.
+
+### Discord Integration
+SectLauncher now supports **Discord Rich Presence**. Your game activity will automatically be displayed in your Discord profile — your friends will see that you are in the game.
+
+### Microsoft Authorization
+We’ve developed our own plugin for **Microsoft** account authorization. This allows you to log in to any official servers without issues and play with your usual skin and progress.
+
+### Design and Themes
+We've updated the look of the launcher, making it more calm. Most importantly — now you decide how it looks:
+- You can choose a ready-made theme or set your own colors.
+- You can put any of your own images on the home screen background.
+
+Below you can see the screenshots of the new interface:
+
+<MediaViewer 
+  mode="carousel" 
+  items={[
+    { type: 'image', src: '/blog/sectlauncher-2-0/launcher_home.png', alt: 'Launcher Home Screen' },
+    { type: 'image', src: '/blog/sectlauncher-2-0/launcher_instances.png', alt: 'Instances List' },
+    { type: 'image', src: '/blog/sectlauncher-2-0/launcher_personalization.png', alt: 'Personalization Settings' }
+  ]} 
+/>
+
+## What’s Next
+We continue to work on integration with CurseForge and Modrinth, as well as improved isolation of game versions from each other. The stable release is scheduled for **Q2 2026**.
+
+Thanks for following the project!

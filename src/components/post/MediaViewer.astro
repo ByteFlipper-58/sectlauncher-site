@@ -104,7 +104,7 @@ const spacingClass = spacing === 'tight' ? 'gap-2' : spacing === 'loose' ? 'gap-
       <div class="relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900 h-[60vh] min-h-[400px] max-h-[80vh]">
         <div class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide h-full" id="carousel-container">
           {items.map((item, idx) => (
-            <div class="min-w-full snap-center flex flex-col items-center justify-center p-4 h-full">
+            <div class="min-w-full snap-center flex flex-col items-center justify-center p-12 h-full">
               <div class="flex flex-col items-center justify-center max-h-[90%] w-full">
                 {item.type === 'image' ? (
                   <img 
@@ -672,8 +672,8 @@ const spacingClass = spacing === 'tight' ? 'gap-2' : spacing === 'loose' ? 'gap-
         function resizeCarouselContent() {
           const viewportWidth = window.innerWidth;
           const viewportHeight = window.innerHeight;
-          const maxWidth = viewportWidth * 0.85;
-          const maxHeight = viewportHeight * 0.72; // 80% * 90% = 72% от высоты экрана
+          const maxWidth = viewportWidth * 0.8;
+          const maxHeight = viewportHeight * 0.65; // Уменьшаем, чтобы было больше места для границ
           
           Array.from(container.children).forEach(slide => {
             const media = slide.querySelector('img, video');

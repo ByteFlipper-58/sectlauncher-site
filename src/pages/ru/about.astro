@@ -4,7 +4,7 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 ---
 
-<BaseLayout title="О проекте — SectLauncher" description="SectLauncher — кроссплатформенный лаунчер для Minecraft на Kotlin Multiplatform с Clean Architecture.">
+<BaseLayout title="О проекте — SectLauncher" description="SectLauncher — современный лаунчер для Minecraft на Rust + Tauri v2 с Clean Architecture.">
   <Fragment slot="header"><Header /></Fragment>
   <Fragment slot="head">
     <link rel="canonical" href="https://sectlauncher.byteflipper.com/ru/about/" />
@@ -22,7 +22,7 @@ import Footer from "../../components/Footer.astro";
           <span class="block text-2xl md:text-3xl text-emerald-400 mt-2">Инженерный подход к лаунчерам</span>
         </h1>
         <p class="text-xl text-neutral-300 mb-6 leading-relaxed">
-          Кроссплатформенный лаунчер для Minecraft на Kotlin Multiplatform с UI на Jetpack Compose Desktop, построенный по принципам Clean Architecture. Цель — удобная, модульная и расширяемая оболочка для игры с поддержкой ванильных и модифицированных клиентов.
+          Современный лаунчер для Minecraft на Rust + Tauri v2, построенный по принципам Clean Architecture. Цель — удобная, производительная и безопасная оболочка для игры с поддержкой ванильных и модифицированных клиентов.
         </p>
         
         <div class="inline-flex items-center px-4 py-3 rounded-lg bg-orange-500/20 border border-orange-500/30 mb-8">
@@ -31,7 +31,7 @@ import Footer from "../../components/Footer.astro";
           </svg>
           <div>
             <div class="text-orange-300 font-medium text-base">Проект в активной разработке</div>
-            <div class="text-orange-400 text-sm">Код будет открыт позже</div>
+            <div class="text-orange-400 text-sm">Следите за новостями в Telegram</div>
           </div>
         </div>
         <div class="flex flex-wrap justify-center gap-4">
@@ -41,12 +41,6 @@ import Footer from "../../components/Footer.astro";
             </svg>
             В разработке
           </div>
-                   <div class="px-6 py-3 rounded-lg border border-neutral-700 bg-neutral-900/50 cursor-not-allowed opacity-75 flex items-center gap-2">
-           <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-             <path d="M12 1l-2 2h-.5L9 3.5V6h2V4l1-1 1 1v2h2V3.5L14.5 3H14l-2-2zm0 6C6.48 7 2 11.48 2 17s4.48 10 10 10 10-4.48 10-10S17.52 7 12 7zm-2 13l-5-5 1.41-1.41L10 17.17l7.59-7.59L19 11l-9 9z"/>
-           </svg>
-           Будет открыт позже
-         </div>
         </div>
       </div>
     </div>
@@ -57,7 +51,7 @@ import Footer from "../../components/Footer.astro";
     <div class="grid lg:grid-cols-2 gap-12">
       <!-- Что готово -->
       <div>
-        <h2 class="text-3xl font-bold mb-6 text-emerald-400">✅ Основа лаунчера (Завершено)</h2>
+        <h2 class="text-3xl font-bold mb-6 text-emerald-400">✅ Реализовано</h2>
         <div class="space-y-4">
           <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
             <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
@@ -66,134 +60,52 @@ import Footer from "../../components/Footer.astro";
               <p class="text-neutral-300 text-sm">Полноценная система аутентификации через официальные API</p>
             </div>
           </div>
-          
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Загрузка версий Minecraft</h3>
-              <p class="text-neutral-300 text-sm">Автоматическое скачивание и установка ванильных версий</p>
-            </div>
-          </div>
 
           <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
             <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
             <div>
-              <h3 class="font-semibold">Управление инстансами</h3>
-              <p class="text-neutral-300 text-sm">Создание, редактирование и удаление игровых профилей</p>
+              <h3 class="font-semibold">Загрузка Minecraft</h3>
+              <p class="text-neutral-300 text-sm">Автоматическое скачивание и установка Vanilla, Fabric и Forge версий</p>
             </div>
           </div>
 
           <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
             <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
             <div>
-              <h3 class="font-semibold">Clean Architecture</h3>
-              <p class="text-neutral-300 text-sm">Модульная архитектура с разделением ответственности</p>
+              <h3 class="font-semibold">OTA-Обновления</h3>
+              <p class="text-neutral-300 text-sm">Автоматическое обновление лаунчера без участия пользователя</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
+            <div>
+              <h3 class="font-semibold">Кроссплатформенность</h3>
+              <p class="text-neutral-300 text-sm">Полная поддержка Windows 10/11, macOS и Linux</p>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Что предстоит -->
-      <div>
-        <h2 class="text-3xl font-bold mb-6 text-blue-400">🚧 Альфа-версия (В процессе)</h2>
-        <div class="space-y-4">
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-            <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Windows сборка</h3>
-              <p class="text-neutral-300 text-sm">Первый публичный релиз для операционной системы Windows</p>
+      <!-- В процессе и планы -->
+      <div class="space-y-12">
+        <div>
+          <h2 class="text-3xl font-bold mb-6 text-blue-400">🚧 В процессе</h2>
+          <div class="space-y-4">
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+              <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
+              <div>
+                <h3 class="font-semibold">Интеграция Modrinth и CurseForge</h3>
+                <p class="text-neutral-300 text-sm">Удобный поиск и автоматическая установка модов из популярных сервисов</p>
+              </div>
             </div>
-          </div>
-          
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-            <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Базовый UI/UX</h3>
-              <p class="text-neutral-300 text-sm">Полировка интерфейса и опыта взаимодействия</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-            <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Тестирование</h3>
-              <p class="text-neutral-300 text-sm">Комплексное тестирование на различных конфигурациях</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-            <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Документация</h3>
-              <p class="text-neutral-300 text-sm">Полное руководство пользователя и API</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Будущие этапы -->
-      <div>
-        <h2 class="text-3xl font-bold mb-6 text-purple-400">🔮 Поддержка модов (Планируется)</h2>
-        <div class="space-y-4">
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
-            <div class="w-2 h-2 rounded-full border-2 border-purple-500 bg-transparent mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">CurseForge API</h3>
-              <p class="text-neutral-300 text-sm">Интеграция с крупнейшей платформой модов</p>
-            </div>
-          </div>
-          
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
-            <div class="w-2 h-2 rounded-full border-2 border-purple-500 bg-transparent mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Modrinth интеграция</h3>
-              <p class="text-neutral-300 text-sm">Поддержка современной открытой платформы</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
-            <div class="w-2 h-2 rounded-full border-2 border-purple-500 bg-transparent mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Автообновление модов</h3>
-              <p class="text-neutral-300 text-sm">Автоматическое обновление установленных модов</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
-            <div class="w-2 h-2 rounded-full border-2 border-purple-500 bg-transparent mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Зависимости модов</h3>
-              <p class="text-neutral-300 text-sm">Автоматическое разрешение зависимостей</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Кроссплатформенность -->
-      <div>
-        <h2 class="text-3xl font-bold mb-6 text-orange-400">🌍 Кроссплатформенность (Будущее)</h2>
-        <div class="space-y-4">
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-            <div class="w-2 h-2 rounded-full border-2 border-orange-500 bg-transparent mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Linux поддержка</h3>
-              <p class="text-neutral-300 text-sm">Полная поддержка основных дистрибутивов</p>
-            </div>
-          </div>
-          
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-            <div class="w-2 h-2 rounded-full border-2 border-orange-500 bg-transparent mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">AppImage сборки</h3>
-              <p class="text-neutral-300 text-sm">Портабельные сборки для универсальности</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
-            <div class="w-2 h-2 rounded-full border-2 border-orange-500 bg-transparent mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Оптимизация</h3>
-              <p class="text-neutral-300 text-sm">Оптимизация производительности и потребления ресурсов</p>
+            
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+              <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
+              <div>
+                <h3 class="font-semibold">Полировка UI/UX</h3>
+                <p class="text-neutral-300 text-sm">Доведение интерфейса до идеала перед публичным релизом</p>
+              </div>
             </div>
           </div>
         </div>

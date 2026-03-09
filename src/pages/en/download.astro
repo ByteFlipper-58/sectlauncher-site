@@ -10,7 +10,7 @@ const DOWNLOADS = {
 };
 ---
 
-<BaseLayout title="Download — SectLauncher" description="Download SectLauncher for Windows and Linux — modern cross-platform Minecraft launcher.">
+<BaseLayout title="Download — SectLauncher" description="Download SectLauncher for Windows — modern and fast Minecraft launcher built with Rust.">
   <Fragment slot="header"><Header /></Fragment>
   <Fragment slot="head">
     <link rel="canonical" href="https://sectlauncher.byteflipper.com/en/download/" />
@@ -27,7 +27,7 @@ const DOWNLOADS = {
           Download SectLauncher
         </h1>
         <p class="text-xl text-neutral-300 mb-4 leading-relaxed">
-          Modern cross-platform Minecraft launcher with mod support and user-friendly interface.
+          Modern Minecraft launcher built with Rust + Tauri v2 with mod support and user-friendly interface.
         </p>
         <div class="inline-flex items-center px-4 py-2 rounded-lg bg-orange-500/20 border border-orange-500/30 mb-8">
           <svg class="w-5 h-5 mr-2 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
@@ -35,7 +35,9 @@ const DOWNLOADS = {
           </svg>
           <span class="text-orange-300 font-medium">Project is in active development</span>
         </div>
+    </div>
   </section>
+
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>
 
@@ -49,7 +51,6 @@ const DOWNLOADS = {
     return 'windows';
   };
 
-  const GITHUB_API = 'https://api.github.com/repos/byteflipper-58/sectlauncher/releases/latest';
   const FALLBACK = 'https://github.com/byteflipper-58/sectlauncher/releases/latest';
   
   const platformData = {
@@ -73,8 +74,8 @@ const DOWNLOADS = {
     },
     mac: { 
       label: 'macOS', 
-      exts: 'not supported', 
-      href: '#',
+      exts: '.dmg', 
+      href: FALLBACK,
       icon: `<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
         <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
       </svg>`,
@@ -92,17 +93,12 @@ const DOWNLOADS = {
   // Interface initialization
   const data = platformData[os];
   if (data) {
-    ctaLabel.textContent = data.label;
-    ctaExts.textContent = data.exts;
-    if (os === 'mac') {
-      ctaLink.textContent = 'Unfortunately, not supported';
-      ctaLink.href = '#';
-      ctaLink.className = 'w-full inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold text-red-900 bg-gradient-to-r from-red-500 to-red-600 cursor-not-allowed';
-    } else {
-      ctaLink.href = data.href;
-    }
-    platformIcon.innerHTML = data.icon;
-    platformIcon.className = `w-12 h-12 rounded-xl bg-gradient-to-br ${data.gradient} flex items-center justify-center`;
+    // The static cards replace the need for these dynamic elements
+    // ctaLabel.textContent = data.label;
+    // ctaExts.textContent = data.exts;
+    // ctaLink.href = data.href;
+    // platformIcon.innerHTML = data.icon;
+    // platformIcon.className = `w-12 h-12 rounded-xl bg-gradient-to-br ${data.gradient} flex items-center justify-center`;
   }
 
   // Interface management functions
