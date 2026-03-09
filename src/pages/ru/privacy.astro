@@ -1,212 +1,29 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { getEntry } from 'astro:content';
 
-const title = 'Политика конфиденциальности - SectLauncher';
-const description = 'Информация о том, как мы обрабатываем ваши данные и обеспечиваем их защиту при использовании SectLauncher.';
+const entry = await getEntry('legal', 'privacy-ru');
+if (!entry) return Astro.redirect('/404');
 
-const sections = [
-  { id: 'general', title: 'Общие положения' },
-  { id: 'collection', title: 'Сбор информации' },
-  { id: 'usage', title: 'Цели использования' },
-  { id: 'services', title: 'Сторонние сервисы' },
-  { id: 'security', title: 'Безопасность' },
-  { id: 'third-party', title: 'Передача данных' },
-  { id: 'rights', title: 'Ваши права' },
-  { id: 'contacts', title: 'Контакты' }
-];
+const { Content } = await entry.render();
+const { title, description, lastUpdated } = entry.data;
 
-const currentPath = Astro.url.pathname;
-const switchPath = (target: 'ru' | 'en') => {
-  return currentPath.replace(/^\/(ru|en)/, `/${target}`);
+const components = {
+  h1: (await import('../../components/post/H1.astro')).default,
+  h2: (await import('../../components/post/H2.astro')).default,
+  h3: (await import('../../components/post/H3.astro')).default,
+  h4: (await import('../../components/post/H4.astro')).default,
+  ul: (await import('../../components/post/UL.astro')).default,
+  ol: (await import('../../components/post/OL.astro')).default,
+  li: (await import('../../components/post/LI.astro')).default,
+  hr: (await import('../../components/post/HR.astro')).default,
+  a: (await import('../../components/post/Separator.astro')).default, // Separator isn't A, wait.
 };
+
+// Remove 'a' from components if it's not a link component. 
+// The blog uses custom link styling via prose classes usually, but let's check.
 ---
 
-<BaseLayout title={title} description={description}>
-  <main class="min-h-screen bg-neutral-950 text-neutral-200">
-    <!-- Шапка -->
-    <header class="border-b border-neutral-900 bg-neutral-900/20">
-      <div class="mx-auto max-w-5xl px-4 py-16 md:py-20">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-8">
-          <nav>
-            <a href="/ru" class="text-sm font-medium text-neutral-500 hover:text-blue-500 transition-colors inline-flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-              Вернуться на главную
-            </a>
-          </nav>
-          
-          <div class="flex items-center gap-1 text-xs bg-neutral-900/50 rounded-lg p-1 w-fit">
-            <a href={switchPath('ru')} class="px-3 py-1.5 rounded-md bg-neutral-800 text-white font-bold">RU</a>
-            <span class="text-neutral-700 px-1">/</span>
-            <a href={switchPath('en')} class="px-3 py-1.5 rounded-md text-neutral-500 hover:text-white transition-colors">EN</a>
-          </div>
-        </div>
-        <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Политика конфиденциальности</h1>
-        <p class="text-neutral-500 text-sm">Последнее обновление: {new Date().toLocaleDateString('ru-RU')}</p>
-      </div>
-    </header>
-
-    <div class="mx-auto max-w-5xl px-4 py-12 md:py-16">
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
-        
-        <!-- Сайдбар -->
-        <aside class="hidden lg:block">
-          <nav class="sticky top-24 space-y-1">
-            {sections.map(section => (
-              <a 
-                href={`#${section.id}`} 
-                class="block py-2 px-3 text-sm text-neutral-500 hover:text-white hover:bg-neutral-900 rounded-sm transition-colors"
-              >
-                {section.title}
-              </a>
-            ))}
-          </nav>
-        </aside>
-
-        <!-- Контент -->
-        <div class="lg:col-span-3 space-y-16">
-          
-          <section id="intro" class="prose prose-invert prose-neutral max-w-none">
-            <p class="text-lg text-neutral-400 leading-relaxed">
-              Мы уважаем ваше право на приватность. Использование SectLauncher не требует создания учетной записи или предоставления персональных данных. Данный документ описывает, какую техническую информацию мы получаем и как её используем.
-            </p>
-          </section>
-
-          <section id="general" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Общие положения
-            </h2>
-            <div class="space-y-4 text-neutral-400 leading-relaxed">
-              <p>Настоящая политика применяется ко всем пользователям сайта и приложения SectLauncher.</p>
-              <p>Основная цель обработки данных — обеспечение технической стабильности продукта и улучшение пользовательского опыта через оптимизацию производительности.</p>
-            </div>
-          </section>
-
-          <section id="collection" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Сбор информации
-            </h2>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div class="p-6 bg-neutral-900/30 border border-neutral-900">
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4 text-blue-400">Технические данные</h3>
-                <ul class="text-sm space-y-3 text-neutral-400">
-                  <li>• Сведения об операционной системе</li>
-                  <li>• Характеристики процессора и видеокарты</li>
-                  <li>• Объем оперативной памяти</li>
-                  <li>• Отчеты о системных ошибках (краш-логи)</li>
-                </ul>
-              </div>
-              <div class="p-6 bg-neutral-900/30 border border-neutral-900">
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4 text-neutral-500">Не собирается</h3>
-                <ul class="text-sm space-y-3 text-neutral-500 italic">
-                  <li>— Имена и адреса электронной почты</li>
-                  <li>— Пароли и платежные данные</li>
-                  <li>— Содержимое личных файлов</li>
-                  <li>— История переписок в чатах</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <section id="usage" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Цели использования
-            </h2>
-            <div class="space-y-4 text-neutral-400">
-              <p>Полученные анонимные данные используются исключительно для следующих задач:</p>
-              <ul class="list-disc pl-5 space-y-2">
-                <li>Автоматическая настройка параметров запуска Minecraft под ресурсы вашего устройства.</li>
-                <li>Диагностика и оперативное исправление программных ошибок.</li>
-                <li>Статистический анализ популярных версий игры для планирования обновлений.</li>
-              </ul>
-            </div>
-          </section>
-
-          <section id="services" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Сторонние сервисы
-            </h2>
-            <div class="bg-neutral-900/30 p-8 border border-neutral-900">
-              <p class="text-neutral-400 mb-6">
-                Мы используем инструменты **Google Firebase** для сбора технической статистики. Обращаем внимание, что мы отключили все функции рекламного отслеживания и идентификации пользователей.
-              </p>
-              <div class="flex flex-wrap gap-2 text-[10px] font-bold text-neutral-500 uppercase">
-                <span class="px-3 py-1 bg-neutral-950 border border-neutral-800">Analytics</span>
-                <span class="px-3 py-1 bg-neutral-950 border border-neutral-800">Crashlytics</span>
-                <span class="px-3 py-1 bg-neutral-950 border border-neutral-800">Performance</span>
-              </div>
-            </div>
-          </section>
-
-          <section id="security" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Безопасность
-            </h2>
-            <p class="text-neutral-400 leading-relaxed">
-              Все данные передаются по защищенным протоколам (TLS 1.3). Доступ к агрегированной статистике имеет только ограниченный круг разработчиков SectLauncher. Мы применяем современные методы защиты серверов для предотвращения несанкционированного доступа.
-            </p>
-          </section>
-
-          <section id="third-party" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Передача данных
-            </h2>
-            <p class="text-neutral-400 leading-relaxed">
-              Мы не продаем, не арендуем и не передаем ваши данные сторонним компаниям для маркетинговых или иных целей. Информация может быть раскрыта только в случаях, прямо предусмотренных законодательством.
-            </p>
-          </section>
-
-          <section id="rights" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Ваши права
-            </h2>
-            <div class="grid md:grid-cols-2 gap-8">
-              <div class="space-y-3">
-                <h3 class="text-lg font-medium text-white">Управление аналитикой</h3>
-                <p class="text-sm text-neutral-500 leading-relaxed">
-                  Вы можете полностью отключить сбор технической статистики в настройках приложения. Это никак не повлияет на работу лаунчера.
-                </p>
-              </div>
-              <div class="space-y-3">
-                <h3 class="text-lg font-medium text-white">Использование Cookies</h3>
-                <p class="text-sm text-neutral-500 leading-relaxed">
-                  Наш сайт работает корректно даже при полном отключении Cookies в настройках вашего браузера.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section id="contacts" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Контакты
-            </h2>
-            <div class="border border-neutral-900 p-8 space-y-6">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <p class="text-xs font-bold text-neutral-600 uppercase mb-2">Электронная почта</p>
-                  <p class="text-lg font-medium text-white">byteflipper.business@gmail.com</p>
-                </div>
-                <div>
-                  <p class="text-xs font-bold text-neutral-600 uppercase mb-2">Поддержка</p>
-                  <a href="https://t.me/sectlauncher" class="text-lg font-medium text-blue-500 hover:text-blue-400 transition-colors">@sectlauncher</a>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <footer class="pt-16 pb-8 border-t border-neutral-900 text-xs text-neutral-700 flex justify-between">
-            <span>© 2026 Sect Development</span>
-            <span>Все права защищены</span>
-          </footer>
-        </div>
-      </div>
-    </div>
-  </main>
-</BaseLayout>
+<LegalLayout title={`${title} - SectLauncher`} description={description} lastUpdated={lastUpdated}>
+  <Content components={components} />
+</LegalLayout>

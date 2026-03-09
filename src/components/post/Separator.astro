@@ -116,9 +116,9 @@ const spacingClass = spacingConfig[variant];
     background-image: linear-gradient(
       to right,
       transparent,
-      theme('colors.blue.400'),
-      theme('colors.purple.400'),
-      theme('colors.blue.400'),
+      var(--color-blue-400),
+      var(--color-purple-400),
+      var(--color-blue-400),
       transparent
     );
   }
@@ -139,7 +139,7 @@ const spacingClass = spacingConfig[variant];
     background: linear-gradient(
       to right,
       transparent,
-      theme('colors.blue.400'),
+      var(--color-blue-400),
       transparent
     );
     animation: shimmer 3s infinite;
@@ -172,7 +172,7 @@ const spacingClass = spacingConfig[variant];
   }
 
   .separator-wrapper:hover .w-1 {
-    background-color: theme('colors.blue.400');
+    background-color: var(--color-blue-400);
     transform: scale(1.3);
   }
 

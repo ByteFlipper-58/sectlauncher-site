@@ -2,15 +2,23 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-const GITHUB_RELEASES = 'https://github.com/byteflipper-58/sectlauncher/releases/latest';
-const DOWNLOADS = {
-  windows: { label: 'Windows', exts: '.exe / .msi', href: GITHUB_RELEASES },
-  mac: { label: 'macOS', exts: '.dmg', href: GITHUB_RELEASES },
-  linux: { label: 'Linux', exts: '.AppImage / .deb', href: GITHUB_RELEASES },
-};
+import latest from "../../../public/latest.json";
+
+const isDev = import.meta.env.DEV;
+const { version, platforms } = latest;
+const FALLBACK_URL = 'https://github.com/ByteFlipper-58/sectlauncher/releases/latest';
+
+const winUrl = platforms['windows-x86_64']?.url || FALLBACK_URL;
+const winNsisUrl = platforms['windows-x86_64-nsis']?.url || FALLBACK_URL;
+const macSiliconUrl = platforms['darwin-aarch64-app']?.url || platforms['darwin-aarch64']?.url || FALLBACK_URL;
+const macIntelUrl = platforms['darwin-x86_64-app']?.url || platforms['darwin-x86_64']?.url || FALLBACK_URL;
+const macTarUrl = platforms['darwin-aarch64']?.url || FALLBACK_URL;
+const appImgUrl = platforms['linux-x86_64-appimage']?.url || platforms['linux-x86_64']?.url || FALLBACK_URL;
+const debUrl = platforms['linux-x86_64-deb']?.url || FALLBACK_URL;
+const rpmUrl = platforms['linux-x86_64-rpm']?.url || FALLBACK_URL;
 ---
 
-<BaseLayout title="Download — SectLauncher" description="Download SectLauncher for Windows — modern and fast Minecraft launcher built with Rust.">
+<BaseLayout title="Download — SectLauncher" description="Download SectLauncher for Windows, macOS, and Linux.">
   <Fragment slot="header"><Header /></Fragment>
   <Fragment slot="head">
     <link rel="canonical" href="https://sectlauncher.byteflipper.com/en/download/" />
@@ -19,181 +27,202 @@ const DOWNLOADS = {
     <meta property="og:url" content="https://sectlauncher.byteflipper.com/en/download/" />
   </Fragment>
 
-  <!-- Hero Section -->
-  <section class="hero-bg">
-    <div class="mx-auto w-full max-w-[70%] px-4 py-16">
-      <div class="text-center max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
-          Download SectLauncher
-        </h1>
+  <section class="hero-bg min-h-[80vh] flex flex-col items-center justify-center">
+    <div class="mx-auto w-full max-w-6xl px-4 py-16">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-6">Download SectLauncher</h1>
         <p class="text-xl text-neutral-300 mb-4 leading-relaxed">
-          Modern Minecraft launcher built with Rust + Tauri v2 with mod support and user-friendly interface.
+          Modern Minecraft launcher. Install the version for your operating system.
         </p>
-        <div class="inline-flex items-center px-4 py-2 rounded-lg bg-orange-500/20 border border-orange-500/30 mb-8">
-          <svg class="w-5 h-5 mr-2 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-          </svg>
-          <span class="text-orange-300 font-medium">Project is in active development</span>
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900 border border-neutral-800">
+          <div class="w-2 h-2 rounded-full bg-emerald-500"></div>
+          <span class="text-neutral-300 text-sm font-medium" id="version-display">Version: {version}</span>
         </div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto" id="os-cards">
+        <!-- Windows -->
+        <div class="bg-neutral-900 border border-neutral-800 p-8 flex flex-col items-center text-center transition-all hover:bg-neutral-800/50 group rounded-none">
+          <div class="w-20 h-20 bg-neutral-950 border border-neutral-800 flex items-center justify-center mb-8 p-4 rounded-none group-hover:border-blue-500/50 transition-colors">
+            <img src="/windows-11.svg" alt="Windows" class="w-full h-full object-contain brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity" />
+          </div>
+          <h2 class="text-xl font-bold uppercase tracking-widest mb-2">Windows</h2>
+          <p class="text-neutral-500 text-xs uppercase tracking-wider mb-10 flex-grow">Windows 10 / 11 (64-bit)</p>
+          
+          <div class="relative w-full flex isolate">
+            <a href={winUrl} id="btn-win" class="flex-grow py-4 px-6 font-bold uppercase tracking-[0.2em] text-[10px] text-neutral-950 bg-white hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2 rounded-none">
+              <span>Download .exe</span>
+            </a>
+            <button type="button" class="px-4 border-l border-neutral-200 bg-white hover:bg-neutral-200 text-neutral-950 transition-colors rounded-none" data-dropdown-btn="windows">
+              <svg class="w-4 h-4 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+            </button>
+            <div class="absolute top-full right-0 mt-1 w-full bg-neutral-950 border border-neutral-800 shadow-2xl z-20 hidden text-left rounded-none" data-dropdown-menu="windows">
+              <a href={winNsisUrl} id="btn-win-nsis" class="block w-full px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors border-b border-neutral-800/50">Setup (.exe NSIS)</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- macOS -->
+        <div class="bg-neutral-900 border border-neutral-800 p-8 flex flex-col items-center text-center transition-all hover:bg-neutral-800/50 group rounded-none">
+          <div class="w-20 h-20 bg-neutral-950 border border-neutral-800 flex items-center justify-center mb-8 p-4 rounded-none group-hover:border-neutral-500/50 transition-colors">
+            <svg class="w-full h-full text-white opacity-70 group-hover:opacity-100 transition-opacity" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+          </div>
+          <h2 class="text-xl font-bold uppercase tracking-widest mb-2">macOS</h2>
+          <p class="text-neutral-500 text-xs uppercase tracking-wider mb-10 flex-grow">Apple Silicon & Intel</p>
+          
+          <div class="relative w-full flex isolate">
+            <a href={macSiliconUrl} id="btn-mac" class="flex-grow py-4 px-6 font-bold uppercase tracking-[0.2em] text-[10px] text-neutral-950 bg-white hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2 rounded-none">
+              <span>Apple Silicon (.app)</span>
+            </a>
+            <button type="button" class="px-4 border-l border-neutral-200 bg-white hover:bg-neutral-200 text-neutral-950 transition-colors rounded-none" data-dropdown-btn="mac">
+              <svg class="w-4 h-4 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+            </button>
+            <div class="absolute top-full right-0 mt-1 w-full bg-neutral-950 border border-neutral-800 shadow-2xl z-20 hidden text-left rounded-none" data-dropdown-menu="mac">
+              <a href={macIntelUrl} id="btn-mac-intel" class="block w-full px-6 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors border-b border-neutral-800/50">Intel (.app.tar.gz)</a>
+              <a href={macTarUrl} id="btn-mac-tar" class="block w-full px-6 py-4 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors">Universal (.tar.gz)</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Linux -->
+        <div class="bg-neutral-900 border border-neutral-800 p-8 flex flex-col items-center text-center transition-all hover:bg-neutral-800/50 group rounded-none">
+          <div class="w-20 h-20 bg-neutral-950 border border-neutral-800 flex items-center justify-center mb-8 p-4 rounded-none group-hover:border-orange-500/50 transition-colors">
+            <img src="/os-linux.svg" alt="Linux" class="w-full h-full object-contain brightness-0 invert opacity-70 group-hover:opacity-100 transition-opacity" />
+          </div>
+          <h2 class="text-xl font-bold uppercase tracking-widest mb-2">Linux</h2>
+          <p class="text-neutral-500 text-xs uppercase tracking-wider mb-10 flex-grow">AppImage / .deb / .rpm</p>
+          
+          <div class="relative w-full flex isolate">
+            <a href={appImgUrl} id="btn-linux-appimage" class="flex-grow py-4 px-6 font-bold uppercase tracking-[0.2em] text-[10px] text-neutral-950 bg-white hover:bg-neutral-200 transition-colors flex items-center justify-center gap-2 rounded-none">
+              <span>AppImage</span>
+            </a>
+            <button type="button" class="px-4 border-l border-neutral-200 bg-white hover:bg-neutral-200 text-neutral-950 transition-colors rounded-none" data-dropdown-btn="linux">
+              <svg class="w-4 h-4 pointer-events-none" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+            </button>
+            <div class="absolute top-full right-0 mt-1 w-full bg-neutral-950 border border-neutral-800 shadow-2xl z-20 hidden text-left rounded-none" data-dropdown-menu="linux">
+              <a href={debUrl} id="btn-linux-deb" class="block w-full px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors border-b border-neutral-800/50">Debian / Ubuntu (.deb)</a>
+              <a href={rpmUrl} id="btn-linux-rpm" class="block w-full px-6 py-4 text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors">Fedora / RHEL (.rpm)</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>
 
-<script is:inline>
-  // OS detection
-  const byOS = () => {
-    const ua = navigator.userAgent;
-    if (/Windows/i.test(ua)) return 'windows';
-    if (/Macintosh|Mac OS X/i.test(ua)) return 'mac';
-    if (/Linux|X11|Ubuntu|Arch|Fedora|Debian/i.test(ua)) return 'linux';
-    return 'windows';
-  };
+<script define:vars={{ isDev }}>
+  const JSON_URL = isDev 
+    ? '/latest.json' 
+    : 'https://github.com/ByteFlipper-58/sectlauncher/releases/latest/download/latest.json';
 
-  const FALLBACK = 'https://github.com/byteflipper-58/sectlauncher/releases/latest';
-  
-  const platformData = {
-    windows: { 
-      label: 'Windows', 
-      exts: '.exe / .msi', 
-      href: FALLBACK,
-      icon: `<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M3 12V6.75l6-1.32v6.48L3 12zm17-5.25V12l-8-1.07V4.68l8 2.07zM3 13l6-.75v6.48L3 17.25V13zm17 .25L12 14.32v6.36l8-1.43V13.25z"/>
-      </svg>`,
-      gradient: 'from-blue-500 to-blue-600'
-    },
-    linux: { 
-      label: 'Linux', 
-      exts: '.AppImage / .deb', 
-      href: FALLBACK,
-      icon: `<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.896 4.73-.769 1.98-.44 2.734.904 2.734z"/>
-      </svg>`,
-      gradient: 'from-orange-500 to-red-600'
-    },
-    mac: { 
-      label: 'macOS', 
-      exts: '.dmg', 
-      href: FALLBACK,
-      icon: `<svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-      </svg>`,
-      gradient: 'from-red-500 to-red-600'
-    }
-  };
+  const FALLBACK_URL = 'https://github.com/ByteFlipper-58/sectlauncher/releases/latest';
 
-  const os = byOS();
-  const ctaLabel = document.getElementById('cta-label');
-  const ctaExts = document.getElementById('cta-exts');
-  const ctaLink = document.getElementById('cta-link');
-  const platformIcon = document.getElementById('platform-icon');
-  const versionEl = document.getElementById('version');
-  
-  // Interface initialization
-  const data = platformData[os];
-  if (data) {
-    // The static cards replace the need for these dynamic elements
-    // ctaLabel.textContent = data.label;
-    // ctaExts.textContent = data.exts;
-    // ctaLink.href = data.href;
-    // platformIcon.innerHTML = data.icon;
-    // platformIcon.className = `w-12 h-12 rounded-xl bg-gradient-to-br ${data.gradient} flex items-center justify-center`;
-  }
+  const versionEl = document.getElementById('version-display');
+  const btnWin = document.getElementById('btn-win');
+  const btnWinNsis = document.getElementById('btn-win-nsis');
+  const btnMac = document.getElementById('btn-mac');
+  const btnMacIntel = document.getElementById('btn-mac-intel');
+  const btnMacTar = document.getElementById('btn-mac-tar');
+  const btnLinAppImg = document.getElementById('btn-linux-appimage');
+  const btnLinDeb = document.getElementById('btn-linux-deb');
+  const btnLinRpm = document.getElementById('btn-linux-rpm');
 
-  // Interface management functions
-  function activatePane(nextOs) {
-    document.querySelectorAll('#os-content [data-pane]').forEach(el => {
-      el.hidden = el.getAttribute('data-pane') !== nextOs;
-    });
-    // Update active button
-    document.querySelectorAll('#os-tabs button').forEach(btn => {
-      if (btn.dataset.os === nextOs) {
-        btn.classList.add('bg-emerald-500', 'text-white');
-        btn.classList.remove('bg-neutral-900/60', 'hover:bg-neutral-800');
-      } else {
-        btn.classList.remove('bg-emerald-500', 'text-white');
-        btn.classList.add('bg-neutral-900/60', 'hover:bg-neutral-800');
-      }
-    });
-  }
-
-  function updatePlatform(nextOs) {
-    const data = platformData[nextOs];
-    if (!data) return;
-    
-    ctaLabel.textContent = data.label;
-    ctaExts.textContent = data.exts;
-    if (nextOs === 'mac') {
-      ctaLink.textContent = 'Unfortunately, not supported';
-      ctaLink.href = '#';
-      ctaLink.className = 'w-full inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold text-red-900 bg-gradient-to-r from-red-500 to-red-600 cursor-not-allowed';
-    } else {
-      ctaLink.href = data.href;
-      ctaLink.className = 'w-full inline-flex items-center justify-center px-8 py-4 rounded-xl font-semibold text-neutral-900 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 transition-all shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-105';
-      ctaLink.innerHTML = '<svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>Download for Free';
-    }
-    platformIcon.innerHTML = data.icon;
-    platformIcon.className = `w-12 h-12 rounded-xl bg-gradient-to-br ${data.gradient} flex items-center justify-center`;
-    
-    activatePane(nextOs);
-  }
-
-  // Platform switching handler
-  document.getElementById('os-tabs')?.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
+  function enableBtn(btn, url) {
     if (!btn) return;
-    const nextOs = btn.dataset.os;
-    if (!nextOs) return;
-    updatePlatform(nextOs);
-    
-    // Отслеживаем переключение платформы
-    try {
-      import('/src/utils/analytics.ts').then(({ trackEvent }) => {
-        trackEvent('platform_switch', {
-          platform: nextOs,
-          event_category: 'engagement',
-        });
-      });
-    } catch {}
-  });
-
-  // Initialize active panel
-  activatePane(os);
-  
-  // Отслеживаем автоопределение ОС
-  try {
-    import('/src/utils/analytics.ts').then(({ trackEvent }) => {
-      trackEvent('os_detected', {
-        detected_os: os,
-        user_agent: navigator.userAgent,
-        event_category: 'system_info',
-      });
-    });
-  } catch {}
-
-  // GitHub API functions
-  async function pickAsset(assets, targetOs) {
-    const byExt = (name, exts) => exts.some(ext => name.toLowerCase().endsWith(ext));
-    if (targetOs === 'windows') {
-      return assets.find(a => byExt(a.name, ['.msi'])) || assets.find(a => byExt(a.name, ['.exe']));
-    }
-    if (targetOs === 'linux') {
-      return assets.find(a => byExt(a.name, ['.appimage'])) || assets.find(a => byExt(a.name, ['.deb']));
-    }
-    return null;
+    btn.href = url;
+    btn.classList.remove('opacity-50', 'cursor-not-allowed');
   }
 
-  // Removed release loading since project is in development
-  
-  // Отслеживаем клики по кнопкам скачивания
+  async function fetchVersion() {
+    try {
+      const res = await fetch(JSON_URL);
+      if (!res.ok) throw new Error('Failed to fetch');
+      const data = await res.json();
+      
+      versionEl.textContent = `Latest version: ${data.version}`;
+
+      // Win
+      const winUrl = data.platforms?.['windows-x86_64']?.url || FALLBACK_URL;
+      const winNsisUrl = data.platforms?.['windows-x86_64-nsis']?.url || FALLBACK_URL;
+      enableBtn(btnWin, winUrl);
+      enableBtn(btnWinNsis, winNsisUrl);
+      
+      // Mac
+      const macSiliconUrl = data.platforms?.['darwin-aarch64-app']?.url || data.platforms?.['darwin-aarch64']?.url || FALLBACK_URL;
+      const macIntelUrl = data.platforms?.['darwin-x86_64-app']?.url || data.platforms?.['darwin-x86_64']?.url || FALLBACK_URL;
+      const macTarUrl = data.platforms?.['darwin-aarch64']?.url || FALLBACK_URL;
+
+      enableBtn(btnMac, macSiliconUrl);
+      enableBtn(btnMacIntel, macIntelUrl);
+      enableBtn(btnMacTar, macTarUrl);
+
+      // Linux
+      const appImgUrl = data.platforms?.['linux-x86_64-appimage']?.url || data.platforms?.['linux-x86_64']?.url || FALLBACK_URL;
+      const debUrl = data.platforms?.['linux-x86_64-deb']?.url || FALLBACK_URL;
+      const rpmUrl = data.platforms?.['linux-x86_64-rpm']?.url || FALLBACK_URL;
+      
+      enableBtn(btnLinAppImg, appImgUrl);
+      enableBtn(btnLinDeb, debUrl);
+      enableBtn(btnLinRpm, rpmUrl);
+
+      // Enable dropdown buttons (just in case)
+      ['windows', 'mac', 'linux'].forEach(os => {
+        document.querySelector(`[data-dropdown-btn="${os}"]`)?.classList.remove('opacity-50', 'cursor-not-allowed');
+      });
+
+    } catch (err) {
+      console.error(err);
+      versionEl.textContent = 'Version unknown';
+      enableBtn(btnWin, FALLBACK_URL);
+      enableBtn(btnWinNsis, FALLBACK_URL);
+      enableBtn(btnMac, FALLBACK_URL);
+      enableBtn(btnMacIntel, FALLBACK_URL);
+      enableBtn(btnMacTar, FALLBACK_URL);
+      enableBtn(btnLinAppImg, FALLBACK_URL);
+      enableBtn(btnLinDeb, FALLBACK_URL);
+      enableBtn(btnLinRpm, FALLBACK_URL);
+    }
+  }
+
+  fetchVersion();
+</script>
+
+<script is:inline>
+  // Dropdown Logic
+  document.addEventListener('click', (e) => {
+    const isDropdownBtn = e.target.closest('[data-dropdown-btn]');
+    const openMenu = document.querySelector('[data-dropdown-menu]:not(.hidden)');
+
+    // Toggle logic
+    if (isDropdownBtn) {
+      const type = isDropdownBtn.getAttribute('data-dropdown-btn');
+      const menu = document.querySelector(`[data-dropdown-menu="${type}"]`);
+      
+      if (menu) {
+        menu.classList.toggle('hidden');
+        if (openMenu && openMenu !== menu) openMenu.classList.add('hidden');
+      }
+      return;
+    }
+
+    // Close on outside click
+    if (openMenu && !e.target.closest('[data-dropdown-menu]')) {
+      openMenu.classList.add('hidden');
+    }
+  });
+  // Track download button clicks
   document.addEventListener('click', async (e) => {
     const downloadBtn = e.target.closest('a[href*="github.com"], a[href*="releases"]');
     if (downloadBtn) {
       try {
         const { trackDownload } = await import('/src/utils/analytics.ts');
-        const platform = document.getElementById('cta-label')?.textContent || 'unknown';
-        await trackDownload(platform.toLowerCase());
+        const osMatch = downloadBtn.id?.match(/btn-(windows|mac|linux)/);
+        const platform = osMatch ? osMatch[1] : 'unknown';
+        await trackDownload(platform);
       } catch {}
     }
   });

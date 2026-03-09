@@ -26,22 +26,17 @@ import Footer from "../../components/Footer.astro";
           Modern Minecraft launcher built with Rust + Tauri v2, following Clean Architecture principles. Designed to be a convenient, high-performance, and secure wrapper for the game with support for vanilla and modded clients.
         </p>
         
-        <div class="inline-flex items-center px-4 py-3 rounded-lg bg-orange-500/20 border border-orange-500/30 mb-8">
-          <svg class="w-5 h-5 mr-3 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-          </svg>
-          <div>
-            <div class="text-orange-300 font-medium text-base">Project in active development</div>
-            <div class="text-orange-400 text-sm">Follow us on Telegram for updates</div>
-          </div>
+        <div class="inline-flex items-center px-4 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-8">
+          <span class="text-emerald-400 font-medium text-sm flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+            New version available
+          </span>
         </div>
         <div class="flex flex-wrap justify-center gap-4">
-          <div class="px-6 py-3 rounded-lg font-semibold text-orange-900 bg-orange-500 cursor-not-allowed opacity-75 flex items-center gap-2">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-            </svg>
-            In Development
-          </div>
+          <a href="/en/download" class="px-6 py-3 rounded-lg font-semibold text-emerald-900 bg-emerald-500 hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Download Launcher
+          </a>
         </div>
       </div>
     </div>

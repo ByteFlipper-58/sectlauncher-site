@@ -41,7 +41,18 @@ const blog = defineCollection({
   }),
 });
 
+const legal = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    lastUpdated: z.string(),
+    lang: z.enum(['ru', 'en']).default('ru'),
+  }),
+});
+
 export const collections = {
   blog,
+  legal,
 };
 

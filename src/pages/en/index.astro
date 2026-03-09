@@ -19,20 +19,21 @@ import Footer from "../../components/Footer.astro";
       <div>
         <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">SectLauncher — modern Minecraft launcher</h1>
         <p class="mt-4 text-neutral-300 text-lg">Manage mods, create profiles and update games with one button. Just launch — we handle the rest.</p>
-        <div class="mt-4 inline-flex items-center px-3 py-2 rounded-lg bg-orange-500/20 border border-orange-500/30">
-          <svg class="w-4 h-4 mr-2 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-          </svg>
-          <span class="text-orange-300 font-medium text-sm">Project in active development</span>
+        <div class="mt-4 inline-flex items-center px-3 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+          <span class="text-emerald-400 font-medium text-sm flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+            New version available
+          </span>
         </div>
         <div class="mt-6 flex flex-wrap items-center gap-3">
-          <div class="px-5 py-3 rounded-md font-semibold text-orange-900 bg-orange-500 cursor-not-allowed opacity-75">
-            In Development
-          </div>
-          <a href="https://github.com/byteflipper-58/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">GitHub</a>
-          <a href="https://t.me/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800">Telegram</a>
+          <a href="/en/download" class="px-5 py-3 rounded-md font-semibold text-emerald-900 bg-emerald-500 hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+            Download Launcher
+          </a>
+          <a href="https://github.com/byteflipper-58/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800 transition-colors">GitHub</a>
+          <a href="https://t.me/sectlauncher" class="px-5 py-3 rounded-md border border-neutral-700 hover:bg-neutral-800 transition-colors">Telegram</a>
         </div>
-        <div class="mt-3 text-xs text-neutral-400">Coming soon for download</div>
+        <div class="mt-3 text-xs text-neutral-400">Available for Windows, macOS and Linux</div>
       </div>
       <div class="relative">
         <img

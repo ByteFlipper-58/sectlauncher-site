@@ -1,18 +1,17 @@
 # CONTINUITY.md
 
-- Goal (incl. success criteria): Редизайн страницы Privacy Policy в "High-Tech Premium" стиле, соответствующем общему стилю сайта, но с более компактными размерами (не "огромными").
+- Goal (incl. success criteria): Обновление карточек загрузки: добавление поддержки множественных форматов файлов, редизайн в строгом стиле (острые углы, отсутствие свечений).
 - Constraints/Assumptions: 
-    - Острые углы (sharp corners) - глобальное требование.
-    - Стиль сайта: шрифты Hero ~5xl, обычные заголовки ~4xl, сетки и технические акценты.
+    - Острые углы (sharp corners), High-Tech стиль.
+    - Никаких свечений и градиентов.
     - Две языковые версии (RU/EN).
 - Key decisions:
-    - Уменьшить `text-8xl/9xl` до `text-4xl/5xl`.
-    - Сократить вертикальные отступы (`py-24` -> `py-12`, `space-y-32` -> `space-y-16`).
-    - Сделать декоративные элементы тише.
-- State: В процессе оптимизации размеров.
-- Done: Базовая структура, High-Tech элементы.
-- Now: Оптимизация RU версии.
-- Next: Оплимизация EN версии.
+    - Перейти на `rounded-none` для всех элементов карточки.
+    - Использовать `bg-neutral-900` и `bg-neutral-950` для чистых фонов.
+    - Сохранить функционал split-buttons для форматов.
+- State: Адаптация под новый формат `latest.json` завершена. Прямые ссылки на скачивание работают.
+- Done: Базовая страница загрузки, dropdowns, иконки, редизайн по новым требованиям, премиальная типографика (Outfit), обновление всех юридических страниц (RU/EN), адаптация под новый JSON формат и пре-филлинг ссылок на стороне сервера.
+- Now: Готов к новым задачам.
+- Next: 
 - Open questions (UNCONFIRMED if needed): 
-    - Должны ли углы быть ВЕЗДЕ острыми на сайте, или только на этой странице? (Уже было сказано "глобально с острыми углами", так что следуем этому).
-- Working set (files/ids/commands): [privacy.astro](file:///c:/Users/ibrag/Documents/GitHub/sectlauncher-site/src/pages/ru/privacy.astro), [en/privacy.astro](file:///c:/Users/ibrag/Documents/GitHub/sectlauncher-site/src/pages/en/privacy.astro)
+- Working set (files/ids/commands): [download.astro (RU)](file:///c:/Users/ibrag/Documents/GitHub/sectlauncher-site/src/pages/ru/download.astro), [download.astro (EN)](file:///c:/Users/ibrag/Documents/GitHub/sectlauncher-site/src/pages/en/download.astro)

@@ -1,212 +1,25 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import { getEntry } from 'astro:content';
 
-const title = 'Privacy Policy - SectLauncher';
-const description = 'Information on how we handle your data and ensure protection when using SectLauncher.';
+const entry = await getEntry('legal', 'privacy-en');
+if (!entry) return Astro.redirect('/404');
 
-const sections = [
-  { id: 'general', title: 'General Provisions' },
-  { id: 'collection', title: 'Data Collection' },
-  { id: 'usage', title: 'Purpose of Usage' },
-  { id: 'services', title: 'External Services' },
-  { id: 'security', title: 'Security' },
-  { id: 'third-party', title: 'Data Transfer' },
-  { id: 'rights', title: 'Your Rights' },
-  { id: 'contacts', title: 'Contacts' }
-];
+const { Content } = await entry.render();
+const { title, description, lastUpdated } = entry.data;
 
-const currentPath = Astro.url.pathname;
-const switchPath = (target: 'ru' | 'en') => {
-  return currentPath.replace(/^\/(ru|en)/, `/${target}`);
+const components = {
+  h1: (await import('../../components/post/H1.astro')).default,
+  h2: (await import('../../components/post/H2.astro')).default,
+  h3: (await import('../../components/post/H3.astro')).default,
+  h4: (await import('../../components/post/H4.astro')).default,
+  ul: (await import('../../components/post/UL.astro')).default,
+  ol: (await import('../../components/post/OL.astro')).default,
+  li: (await import('../../components/post/LI.astro')).default,
+  hr: (await import('../../components/post/HR.astro')).default,
 };
 ---
 
-<BaseLayout title={title} description={description}>
-  <main class="min-h-screen bg-neutral-950 text-neutral-200">
-    <!-- Header -->
-    <header class="border-b border-neutral-900 bg-neutral-900/20">
-      <div class="mx-auto max-w-5xl px-4 py-16 md:py-20">
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 mb-8">
-          <nav>
-            <a href="/en" class="text-sm font-medium text-neutral-500 hover:text-blue-500 transition-colors inline-flex items-center gap-2">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
-              Back to Home
-            </a>
-          </nav>
-
-          <div class="flex items-center gap-1 text-xs bg-neutral-900/50 rounded-lg p-1 w-fit">
-            <a href={switchPath('ru')} class="px-3 py-1.5 rounded-md text-neutral-500 hover:text-white transition-colors">RU</a>
-            <span class="text-neutral-700 px-1">/</span>
-            <a href={switchPath('en')} class="px-3 py-1.5 rounded-md bg-neutral-800 text-white font-bold">EN</a>
-          </div>
-        </div>
-        <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Privacy Policy</h1>
-        <p class="text-neutral-500 text-sm">Last updated: {new Date().toLocaleDateString('en-US')}</p>
-      </div>
-    </header>
-
-    <div class="mx-auto max-w-5xl px-4 py-12 md:py-16">
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
-        
-        <!-- Sidebar -->
-        <aside class="hidden lg:block">
-          <nav class="sticky top-24 space-y-1">
-            {sections.map(section => (
-              <a 
-                href={`#${section.id}`} 
-                class="block py-2 px-3 text-sm text-neutral-500 hover:text-white hover:bg-neutral-900 rounded-sm transition-colors"
-              >
-                {section.title}
-              </a>
-            ))}
-          </nav>
-        </aside>
-
-        <!-- Content -->
-        <div class="lg:col-span-3 space-y-16">
-          
-          <section id="intro" class="prose prose-invert prose-neutral max-w-none">
-            <p class="text-lg text-neutral-400 leading-relaxed">
-              We respect your right to privacy. Using SectLauncher does not require creating an account or providing personal data. This document describes what technical information we receive and how we use it.
-            </p>
-          </section>
-
-          <section id="general" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              General Provisions
-            </h2>
-            <div class="space-y-4 text-neutral-400 leading-relaxed">
-              <p>This policy applies to all users of the SectLauncher website and application.</p>
-              <p>The main goal of data processing is to ensure the technical stability of the product and improve the user experience through performance optimization.</p>
-            </div>
-          </section>
-
-          <section id="collection" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Data Collection
-            </h2>
-            <div class="grid md:grid-cols-2 gap-6">
-              <div class="p-6 bg-neutral-900/30 border border-neutral-900">
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4 text-blue-400">Technical Metrics</h3>
-                <ul class="text-sm space-y-3 text-neutral-400">
-                  <li>• Operating system details</li>
-                  <li>• CPU and GPU specifications</li>
-                  <li>• RAM capacity</li>
-                  <li>• System crash reports (crash logs)</li>
-                </ul>
-              </div>
-              <div class="p-6 bg-neutral-900/30 border border-neutral-900">
-                <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4 text-neutral-500">Not Collected</h3>
-                <ul class="text-sm space-y-3 text-neutral-500 italic">
-                  <li>— Names and Email addresses</li>
-                  <li>— Passwords and payment details</li>
-                  <li>— Content of personal files</li>
-                  <li>— Chat history/messages</li>
-                </ul>
-              </div>
-            </div>
-          </section>
-
-          <section id="usage" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Purpose of Usage
-            </h2>
-            <div class="space-y-4 text-neutral-400">
-              <p>The anonymous data obtained is used exclusively for the following tasks:</p>
-              <ul class="list-disc pl-5 space-y-2">
-                <li>Automatic configuration of Minecraft startup arguments for your hardware resources.</li>
-                <li>Diagnosis and prompt fixing of software errors.</li>
-                <li>Statistical analysis of popular game versions for update planning.</li>
-              </ul>
-            </div>
-          </section>
-
-          <section id="services" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              External Services
-            </h2>
-            <div class="bg-neutral-900/30 p-8 border border-neutral-900">
-              <p class="text-neutral-400 mb-6">
-                We use **Google Firebase** tools to collect technical statistics. Please note that we have disabled all advertising tracking and user identification features.
-              </p>
-              <div class="flex flex-wrap gap-2 text-[10px] font-bold text-neutral-500 uppercase">
-                <span class="px-3 py-1 bg-neutral-950 border border-neutral-800">Analytics</span>
-                <span class="px-3 py-1 bg-neutral-950 border border-neutral-800">Crashlytics</span>
-                <span class="px-3 py-1 bg-neutral-950 border border-neutral-800">Performance</span>
-              </div>
-            </div>
-          </section>
-
-          <section id="security" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Security
-            </h2>
-            <p class="text-neutral-400 leading-relaxed">
-              All data is transmitted via secure protocols (TLS 1.3). Access to aggregated statistics is available only to a limited circle of SectLauncher developers. We use modern server protection methods to prevent unauthorized access.
-            </p>
-          </section>
-
-          <section id="third-party" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Data Transfer
-            </h2>
-            <p class="text-neutral-400 leading-relaxed">
-              We do not sell, rent, or transfer your data to third-party companies for marketing or other purposes. Information may only be disclosed in cases explicitly provided for by law.
-            </p>
-          </section>
-
-          <section id="rights" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Your Rights
-            </h2>
-            <div class="grid md:grid-cols-2 gap-8">
-              <div class="space-y-3">
-                <h3 class="text-lg font-medium text-white">Analytics Control</h3>
-                <p class="text-sm text-neutral-500 leading-relaxed">
-                  You can completely disable the collection of technical statistics in the application settings. This will not affect the launcher's performance.
-                </p>
-              </div>
-              <div class="space-y-3">
-                <h3 class="text-lg font-medium text-white">Cookie Usage</h3>
-                <p class="text-sm text-neutral-500 leading-relaxed">
-                  Our website works correctly even if you completely disable Cookies in your browser settings.
-                </p>
-              </div>
-            </div>
-          </section>
-
-          <section id="contacts" class="scroll-mt-24">
-            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-3">
-              <span class="w-1.5 h-6 bg-blue-600"></span>
-              Contacts
-            </h2>
-            <div class="border border-neutral-900 p-8 space-y-6">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <p class="text-xs font-bold text-neutral-600 uppercase mb-2">Email Address</p>
-                  <p class="text-lg font-medium text-white">byteflipper.business@gmail.com</p>
-                </div>
-                <div>
-                  <p class="text-xs font-bold text-neutral-600 uppercase mb-2">Support</p>
-                  <a href="https://t.me/sectlauncher" class="text-lg font-medium text-blue-500 hover:text-blue-400 transition-colors">@sectlauncher</a>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <footer class="pt-16 pb-8 border-t border-neutral-900 text-xs text-neutral-700 flex justify-between">
-            <span>© 2026 Sect Development</span>
-            <span>All rights reserved</span>
-          </footer>
-        </div>
-      </div>
-    </div>
-  </main>
-</BaseLayout>
+<LegalLayout title={`${title} - SectLauncher`} description={description} lastUpdated={lastUpdated}>
+  <Content components={components} />
+</LegalLayout>
