@@ -11,9 +11,7 @@ import Footer from "../../components/Footer.astro";
   <Fragment slot="head">
     <link rel="canonical" href="https://sectlauncher.byteflipper.com/ru/" />
     <link rel="alternate" hreflang="en" href="https://sectlauncher.byteflipper.com/en/" />
-    <link rel="alternate" hreflang="x-default" href="https://sectlauncher.byteflipper.com/ru/" />
-    <meta property="og:url" content="https://sectlauncher.byteflipper.com/ru/" />
-    <link rel="preload" as="image" href="/blog/sectlauncher-2-0/launcher_home.png" />
+    <link rel="preload" as="image" href="/screenshots/sectlauncher_home.png" />
   </Fragment>
 
   <section class="hero-bg">
@@ -45,7 +43,7 @@ import Footer from "../../components/Footer.astro";
       </div>
       <div class="relative">
         <img
-          src="/blog/sectlauncher-2-0/launcher_home.png"
+          src="/screenshots/sectlauncher_home.png"
           alt="Интерфейс SectLauncher"
           width="1024"
           height="640"
@@ -68,7 +66,7 @@ import Footer from "../../components/Footer.astro";
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div class="order-2 md:order-1">
         <img
-          src="/blog/sectlauncher-2-0/launcher_home.png"
+          src="/screenshots/sectlauncher_home.png"
           alt="Главный экран SectLauncher"
           width="800"
           height="500"
@@ -80,7 +78,7 @@ import Footer from "../../components/Footer.astro";
           Нативная мощь <span class="text-orange-500">Rust</span>
         </h2>
         <p class="text-neutral-400 text-lg leading-relaxed">
-          SectLauncher переписан на Rust с использованием Tauri v2. Это дает молниеносный запуск, минимальное потребление ресурсов и нативную производительность на Windows, Mac и Linux. Никакого лишнего веса — только чистая мощь.
+          SectLauncher переписан на Rust с использованием Tauri v2. Это дает молниеносный запуск, минимальное потребление ресурсов и нативную производительность на Windows, Mac и Linux.
         </p>
         <ul class="space-y-3 text-neutral-300">
           <li class="flex items-center gap-3">
@@ -125,7 +123,7 @@ import Footer from "../../components/Footer.astro";
       </div>
       <div>
         <img
-          src="/blog/sectlauncher-2-0/launcher_instances.png"
+          src="/screenshots/sectlauncher_instances.png"
           alt="Управление инстансами"
           width="800"
           height="500"
@@ -134,11 +132,151 @@ import Footer from "../../components/Footer.astro";
       </div>
     </div>
 
-    <!-- Блок 3: Персонализация -->
+    <!-- Блок 3: Modrinth Integration -->
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div class="order-2 md:order-1">
         <img
-          src="/blog/sectlauncher-2-0/launcher_personalization.png"
+          src="/screenshots/sectlauncher_library.png"
+          alt="Интеграция с Modrinth"
+          width="800"
+          height="500"
+          class="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
+        />
+      </div>
+      <div class="order-1 md:order-2 space-y-6">
+        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-white leading-none">
+          Миллионы модов с <span class="text-green-500">Modrinth</span>
+        </h2>
+        <p class="text-neutral-400 text-lg leading-relaxed">
+          Ищи, скачивай и устанавливай моды прямо в библиотеке. Благодаря глубокой интеграции с Modrinth, управление твоими дополнениями — это удобно и быстро.
+        </p>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-green-500"></div>
+            Поиск по всей базе Modrinth
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-green-500"></div>
+            Установка в один клик
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-green-500"></div>
+            Автоматическая проверка зависимостей
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Блок 4: Детали мода -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-white leading-none">
+          Полный <span class="text-cyan-500">контроль модов</span>
+        </h2>
+        <p class="text-neutral-400 text-lg leading-relaxed">
+          Просматривай детали мода, выбирай любую доступную версию и обновляйся за секунды. Страница деталей дает всю необходимую информацию для тонкой настройки твоей игры.
+        </p>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-cyan-500"></div>
+            Выбор различных версий мода
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-cyan-500"></div>
+            Быстрое обновление до актуальной версии
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-cyan-500"></div>
+            Подробные описания и скриншоты
+          </li>
+        </ul>
+      </div>
+      <div>
+        <img
+          src="/screenshots/sectlauncher_mod_details.png"
+          alt="Страница деталей мода"
+          width="800"
+          height="500"
+          class="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
+        />
+      </div>
+    </div>
+
+    <!-- Блок 5: Авторизация -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="order-2 md:order-1">
+        <img
+          src="/screenshots/sectlauncher_account_profile.png"
+          alt="Добавление аккаунта"
+          width="800"
+          height="500"
+          class="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
+        />
+      </div>
+      <div class="order-1 md:order-2 space-y-6">
+        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-white leading-none">
+          Свобода <span class="text-rose-500">выбора аккаунта</span>
+        </h2>
+        <p class="text-neutral-400 text-lg leading-relaxed">
+          Входи под своей официальной лицензией Microsoft для игры на любых серверах или создавай Offline-профили. Удобный менеджер позволяет легко переключаться между аккаунтами.
+        </p>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-rose-500"></div>
+            Официальная Microsoft-авторизация
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-rose-500"></div>
+            Быстрое создание Offline аккаунтов
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-rose-500"></div>
+            Безопасное хранение данных сессий
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Блок 6: Сборки -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-white leading-none">
+          Готовые <span class="text-yellow-500">Сборки</span>
+        </h2>
+        <p class="text-neutral-400 text-lg leading-relaxed">
+          Создавай свои или устанавливай готовые модпаки. SectLauncher обеспечивает удобное управление каждой деталью твоей сборки, позволяя легко переключаться между ними.
+        </p>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-yellow-500"></div>
+            Поддержка популярных форматов модпаков
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-yellow-500"></div>
+            Простое управление модами в сборке
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-yellow-500"></div>
+            Быстрый импорт и экспорт
+          </li>
+        </ul>
+      </div>
+      <div>
+        <img
+          src="/screenshots/sectlauncher_modpack.png"
+          alt="Управление сборками"
+          width="800"
+          height="500"
+          class="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
+        />
+      </div>
+    </div>
+
+    <!-- Блок 7: Персонализация -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="order-2 md:order-1">
+        <img
+          src="/screenshots/sectlauncher_personalization_settings.png"
           alt="Настройки персонализации"
           width="800"
           height="500"
@@ -170,25 +308,27 @@ import Footer from "../../components/Footer.astro";
     </div>
   </section>
 
-  <!-- Roadmap -->
+  <!-- Roadmap -> Функционал -->
   <section class="mx-auto max-w-6xl px-4 py-16">
     <div class="mb-12 border-l-4 border-blue-600 pl-5">
-      <h2 class="text-4xl font-black tracking-tight uppercase text-white mb-1">Дорожная карта</h2>
-      <p class="text-neutral-500 font-medium uppercase tracking-widest text-xs">Технический вектор развития проекта</p>
+      <h2 class="text-4xl font-black tracking-tight uppercase text-white mb-1">Функционал лаунчера</h2>
+      <p class="text-neutral-500 font-medium uppercase tracking-widest text-xs">Все возможности проекта в одном списке</p>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
-      <!-- Left Column: Реализовано -->
+    <div class="space-y-8">
+      <!-- Реализовано -->
       <div>
         <div class="flex items-center gap-3 mb-8">
           <h3 class="text-xl font-bold text-emerald-500 uppercase tracking-tight">Реализовано</h3>
           <div class="flex-grow h-px bg-emerald-500/10"></div>
         </div>
         
-        <ul class="space-y-5">
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
           {[
             { title: "Ядро Rust & Tauri v2", desc: "Максимальная производительность и безопасность нативного кода." },
             { title: "Поддержка Win / Mac / Linux", desc: "Единый интерфейс и функционал на всех популярных ОС." },
+            { title: "Интеграция Modrinth", desc: "Установка модов, шейдеров и ресурспаков прямо из лаунчера." },
+            { title: "Система сборок", desc: "Создание и управление неограниченным количеством игровых профилей." },
             { title: "Система OTA-обновлений", desc: "Автоматическое получение патчей без переустановки." },
             { title: "Microsoft Auth", desc: "Безопасный вход через официальные сервисы Microsoft." },
             { title: "Fabric / Forge Support", desc: "Нативная поддержка самых популярных загрузчиков модов." },
@@ -205,38 +345,6 @@ import Footer from "../../components/Footer.astro";
             </li>
           ))}
         </ul>
-      </div>
-
-      <!-- Right Column: В планах -->
-      <div>
-        <div class="flex items-center gap-3 mb-8">
-          <h3 class="text-xl font-bold text-blue-500 uppercase tracking-tight">В планах</h3>
-          <div class="flex-grow h-px bg-blue-500/10"></div>
-        </div>
-
-        <ul class="space-y-5">
-          {[
-            { title: "CurseForge / Modrinth", desc: "Прямая интеграция с крупнейшими базами модов." },
-            { title: "Автообновление модпаков", desc: "Автоматическая синхронизация версий в ваших сборках." },
-            { title: "Изоляция инстансов", desc: "Улучшенная песочница для разделения игровых профилей." },
-            { title: "Менеджер ресурсов", desc: "Продвинутое управление памятью и ассетами игры." }
-          ].map((item) => (
-            <li class="group">
-              <div class="flex items-start gap-3 text-neutral-400">
-                <div class="mt-1.5 w-1.5 h-1.5 border border-blue-500 flex-shrink-0"></div>
-                <div>
-                  <h4 class="text-base font-bold text-neutral-300 group-hover:text-blue-400 transition-colors uppercase tracking-tight leading-tight">{item.title}</h4>
-                  <p class="text-neutral-500 text-xs leading-relaxed mt-0.5">{item.desc}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-        </div>
       </div>
     </div>
   </section>

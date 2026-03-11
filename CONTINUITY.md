@@ -1,17 +1,31 @@
 # CONTINUITY.md
 
-- Goal (incl. success criteria): Обновление карточек загрузки: добавление поддержки множественных форматов файлов, редизайн в строгом стиле (острые углы, отсутствие свечений).
-- Constraints/Assumptions: 
-    - Острые углы (sharp corners), High-Tech стиль.
-    - Никаких свечений и градиентов.
-    - Две языковые версии (RU/EN).
-- Key decisions:
-    - Перейти на `rounded-none` для всех элементов карточки.
-    - Использовать `bg-neutral-900` и `bg-neutral-950` для чистых фонов.
-    - Сохранить функционал split-buttons для форматов.
-- State: Адаптация под новый формат `latest.json` завершена. Прямые ссылки на скачивание работают.
-- Done: Базовая страница загрузки, dropdowns, иконки, редизайн по новым требованиям, премиальная типографика (Outfit), обновление всех юридических страниц (RU/EN), адаптация под новый JSON формат и пре-филлинг ссылок на стороне сервера.
-- Now: Готов к новым задачам.
-- Next: 
-- Open questions (UNCONFIRMED if needed): 
-- Working set (files/ids/commands): [download.astro (RU)](file:///c:/Users/ibrag/Documents/GitHub/sectlauncher-site/src/pages/ru/download.astro), [download.astro (EN)](file:///c:/Users/ibrag/Documents/GitHub/sectlauncher-site/src/pages/en/download.astro)
+## Goal (incl. success criteria):
+- Обновить главную страницу сайта SectLauncher (RU и EN версии).
+- Заменить все скриншоты на актуальные из `/screenshots/`.
+- Добавить новые блоки с описанием функций и скриншотами.
+- Заменить раздел Roadmap на список реализованного функционала (учесть, что Modrinth и сборки уже реализованы).
+
+## Constraints/Assumptions:
+- Использовать только изображения из `public/screenshots`.
+- Сохранять стилистику сайта (Tailwind CSS).
+- Обновлять обе версии (RU/EN).
+
+## Key decisions:
+- [x] Использовать `sectlauncher_home.png` для блока "Rust".
+- [x] Использовать `sectlauncher_library.png` для блока "Modrinth".
+- [NEW] Добавить блок "Детали мода" (`sectlauncher_mod_details.png`) с описанием выбора версий и обновлений.
+- [NEW] Добавить блок "Менеджер Аккаунтов" (`sectlauncher_account_profile.png`) с описанием входа через Microsoft и Offline.
+
+## State:
+- Done: Исправлены синтаксические ошибки разметки. Обновлен план.
+- Now: Реализация новых блоков и перестановка скриншотов в RU/EN версиях.
+- Next: Финальное тестирование.
+
+## Open questions (UNCONFIRMED if needed):
+- Какие именно описания добавить к новым скриншотам? (Сформулирую на основе названий файлов).
+
+## Working set (files/ids/commands):
+- `src/pages/ru/index.astro`
+- `src/pages/en/index.astro`
+- `public/screenshots/`

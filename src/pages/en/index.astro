@@ -37,7 +37,7 @@ import Footer from "../../components/Footer.astro";
       </div>
       <div class="relative">
         <img
-          src="/blog/sectlauncher-2-0/launcher_home.png"
+          src="/screenshots/sectlauncher_home.png"
           alt="SectLauncher Interface"
           width="1024"
           height="640"
@@ -61,7 +61,7 @@ import Footer from "../../components/Footer.astro";
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div class="order-2 md:order-1">
         <img
-          src="/blog/sectlauncher-2-0/launcher_home.png"
+          src="/screenshots/sectlauncher_home.png"
           alt="SectLauncher Home Screen"
           width="800"
           height="500"
@@ -73,7 +73,7 @@ import Footer from "../../components/Footer.astro";
           Native <span class="text-orange-500">Rust</span> Power
         </h2>
         <p class="text-neutral-400 text-lg leading-relaxed">
-          SectLauncher is rebuilt in Rust using Tauri v2. This provides lightning-fast startup, minimal resource consumption, and native performance on Windows, Mac, and Linux. No extra weight — just pure power.
+          SectLauncher is rebuilt in Rust using Tauri v2. This provides lightning-fast startup, minimal resource consumption, and native performance on Windows, Mac, and Linux.
         </p>
         <ul class="space-y-3 text-neutral-300">
           <li class="flex items-center gap-3">
@@ -118,7 +118,7 @@ import Footer from "../../components/Footer.astro";
       </div>
       <div>
         <img
-          src="/blog/sectlauncher-2-0/launcher_instances.png"
+          src="/screenshots/sectlauncher_instances.png"
           alt="Instance management"
           width="800"
           height="500"
@@ -127,11 +127,151 @@ import Footer from "../../components/Footer.astro";
       </div>
     </div>
 
-    <!-- Block 3: Personalization -->
+    <!-- Block 3: Modrinth Integration -->
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <div class="order-2 md:order-1">
         <img
-          src="/blog/sectlauncher-2-0/launcher_personalization.png"
+          src="/screenshots/sectlauncher_library.png"
+          alt="Modrinth Integration"
+          width="800"
+          height="500"
+          class="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
+        />
+      </div>
+      <div class="order-1 md:order-2 space-y-6">
+        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-white leading-none">
+          Millions of mods with <span class="text-green-500">Modrinth</span>
+        </h2>
+        <p class="text-neutral-400 text-lg leading-relaxed">
+          Search, download and install mods directly in your library. With deep Modrinth integration, managing your additions is convenient and fast.
+        </p>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-green-500"></div>
+            Search across the entire Modrinth database
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-green-500"></div>
+            One-click installation
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-green-500"></div>
+            Automatic dependency check
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Block 4: Mod Details -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-white leading-none">
+          Full <span class="text-cyan-500">Mod Control</span>
+        </h2>
+        <p class="text-neutral-400 text-lg leading-relaxed">
+          View mod details, choose any available version, and update in seconds. The details page provides all necessary information for fine-tuning your game.
+        </p>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-cyan-500"></div>
+            Choose from various mod versions
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-cyan-500"></div>
+            Quick update to the latest version
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-cyan-500"></div>
+            Detailed descriptions and screenshots
+          </li>
+        </ul>
+      </div>
+      <div>
+        <img
+          src="/screenshots/sectlauncher_mod_details.png"
+          alt="Mod details page"
+          width="800"
+          height="500"
+          class="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
+        />
+      </div>
+    </div>
+
+    <!-- Block 5: Account Management -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="order-2 md:order-1">
+        <img
+          src="/screenshots/sectlauncher_account_profile.png"
+          alt="Account management"
+          width="800"
+          height="500"
+          class="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
+        />
+      </div>
+      <div class="order-1 md:order-2 space-y-6">
+        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-white leading-none">
+          Freedom of <span class="text-rose-500">Account Choice</span>
+        </h2>
+        <p class="text-neutral-400 text-lg leading-relaxed">
+          Log in with your official Microsoft license to play on any server or create Offline profiles. Our convenient manager allows you to easily switch between accounts.
+        </p>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-rose-500"></div>
+            Official Microsoft authentication
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-rose-500"></div>
+            Quick Offline account creation
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-rose-500"></div>
+            Secure session data storage
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Block 6: Modpacks -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <h2 class="text-3xl md:text-4xl font-black uppercase tracking-tight text-white leading-none">
+          Ready <span class="text-yellow-500">Modpacks</span>
+        </h2>
+        <p class="text-neutral-400 text-lg leading-relaxed">
+          Create your own or install pre-made modpacks. SectLauncher provides convenient management for every detail of your build, allowing you to easily switch between them.
+        </p>
+        <ul class="space-y-3 text-neutral-300">
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-yellow-500"></div>
+            Support for popular modpack formats
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-yellow-500"></div>
+            Easy mod management in builds
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-1.5 h-1.5 bg-yellow-500"></div>
+            Quick import and export
+          </li>
+        </ul>
+      </div>
+      <div>
+        <img
+          src="/screenshots/sectlauncher_modpack.png"
+          alt="Modpack management"
+          width="800"
+          height="500"
+          class="w-full h-auto object-contain transition-transform duration-500 hover:scale-[1.02]"
+        />
+      </div>
+    </div>
+
+    <!-- Block 7: Personalization -->
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div class="order-2 md:order-1">
+        <img
+          src="/screenshots/sectlauncher_personalization_settings.png"
           alt="Personalization settings"
           width="800"
           height="500"
@@ -163,25 +303,27 @@ import Footer from "../../components/Footer.astro";
     </div>
   </section>
 
-  <!-- Roadmap -->
+  <!-- Roadmap -> Features -->
   <section class="mx-auto max-w-6xl px-4 py-16">
     <div class="mb-12 border-l-4 border-blue-600 pl-5">
-      <h2 class="text-4xl font-black tracking-tight uppercase text-white mb-1">Roadmap</h2>
-      <p class="text-neutral-500 font-medium uppercase tracking-widest text-xs">Technical project development path</p>
+      <h2 class="text-4xl font-black tracking-tight uppercase text-white mb-1">Launcher Features</h2>
+      <p class="text-neutral-500 font-medium uppercase tracking-widest text-xs">All project capabilities in one list</p>
     </div>
     
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
-      <!-- Left Column: Implemented -->
+    <div class="space-y-8">
+      <!-- Implemented -->
       <div>
         <div class="flex items-center gap-3 mb-8">
           <h3 class="text-xl font-bold text-emerald-500 uppercase tracking-tight">Implemented</h3>
           <div class="flex-grow h-px bg-emerald-500/10"></div>
         </div>
         
-        <ul class="space-y-5">
+        <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
           {[
             { title: "Rust & Tauri v2 Core", desc: "Maximum performance and security of native code." },
             { title: "Win / Mac / Linux Support", desc: "Unified interface and functionality across all popular OS." },
+            { title: "Modrinth Integration", desc: "Install mods, shaders and resource packs directly from the launcher." },
+            { title: "Instance System", desc: "Create and manage unlimited number of game profiles." },
             { title: "OTA Update System", desc: "Automatic patches without reinstallation." },
             { title: "Microsoft Auth", desc: "Secure login through official Microsoft services." },
             { title: "Fabric / Forge Support", desc: "Native support for the most popular mod loaders." },
@@ -198,38 +340,6 @@ import Footer from "../../components/Footer.astro";
             </li>
           ))}
         </ul>
-      </div>
-
-      <!-- Right Column: Planned -->
-      <div>
-        <div class="flex items-center gap-3 mb-8">
-          <h3 class="text-xl font-bold text-blue-500 uppercase tracking-tight">Planned</h3>
-          <div class="flex-grow h-px bg-blue-500/10"></div>
-        </div>
-
-        <ul class="space-y-5">
-          {[
-            { title: "CurseForge / Modrinth", desc: "Direct integration with the largest mod databases." },
-            { title: "Auto-update Modpacks", desc: "Automatic synchronization of mod versions in your builds." },
-            { title: "Instance Isolation", desc: "Enhanced sandbox for separating game profiles." },
-            { title: "Resource Manager", desc: "Advanced memory and game asset management." }
-          ].map((item) => (
-            <li class="group">
-              <div class="flex items-start gap-3 text-neutral-400">
-                <div class="mt-1.5 w-1.5 h-1.5 border border-blue-500 flex-shrink-0"></div>
-                <div>
-                  <h4 class="text-base font-bold text-neutral-300 group-hover:text-blue-400 transition-colors uppercase tracking-tight leading-tight">{item.title}</h4>
-                  <p class="text-neutral-500 text-xs leading-relaxed mt-0.5">{item.desc}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  </section>
-
-        </div>
       </div>
     </div>
   </section>

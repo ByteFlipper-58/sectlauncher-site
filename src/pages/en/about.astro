@@ -4,7 +4,7 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 ---
 
-<BaseLayout title="About — SectLauncher" description="SectLauncher — modern Minecraft launcher built with Rust + Tauri v2 and Clean Architecture.">
+<BaseLayout title="About — SectLauncher" description="SectLauncher — modern Minecraft launcher built with Rust + Tauri v2.">
   <Fragment slot="header"><Header /></Fragment>
   <Fragment slot="head">
     <link rel="canonical" href="https://sectlauncher.byteflipper.com/en/about/" />
@@ -13,123 +13,91 @@ import Footer from "../../components/Footer.astro";
     <meta property="og:url" content="https://sectlauncher.byteflipper.com/en/about/" />
   </Fragment>
 
-  <!-- Hero Section -->
-  <section class="hero-bg">
-    <div class="mx-auto max-w-6xl px-4 py-16">
-      <div class="text-center max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-extrabold mb-6">
-          SectLauncher
-          <span class="block text-2xl md:text-3xl text-emerald-400 mt-2">An engineering approach to launchers</span>
-        </h1>
-        <h2 class="sr-only">About the Project</h2>
-        <p class="text-xl text-neutral-300 mb-6 leading-relaxed">
-          Modern Minecraft launcher built with Rust + Tauri v2, following Clean Architecture principles. Designed to be a convenient, high-performance, and secure wrapper for the game with support for vanilla and modded clients.
-        </p>
-        
-        <div class="inline-flex items-center px-4 py-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 mb-8">
-          <span class="text-emerald-400 font-medium text-sm flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-            New version available
-          </span>
-        </div>
-        <div class="flex flex-wrap justify-center gap-4">
-          <a href="/en/download" class="px-6 py-3 rounded-lg font-semibold text-emerald-900 bg-emerald-500 hover:bg-emerald-400 transition-colors shadow-sm inline-flex items-center gap-2">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-            Download Launcher
-          </a>
-        </div>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div>
+    <div class="mx-auto max-w-5xl px-4 pt-20 pb-12 text-center relative">
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
+        About <span class="text-emerald-500">SectLauncher</span>
+      </h1>
+      <p class="text-neutral-400 text-lg max-w-2xl mx-auto leading-relaxed">
+        A fast and convenient Minecraft launcher. Built with Rust, runs on Windows, macOS, and Linux. Mods, modpacks, accounts — all in one place.
+      </p>
+      <div class="flex flex-wrap justify-center gap-4 mt-8">
+        <a href="/en/download" class="px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider text-emerald-900 bg-emerald-500 hover:bg-emerald-400 transition-colors inline-flex items-center gap-2">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+          Download Launcher
+        </a>
+        <a href="https://github.com/byteflipper-58/sectlauncher" class="px-6 py-3 rounded-lg font-semibold text-sm uppercase tracking-wider border border-neutral-700 hover:border-neutral-500 text-neutral-300 hover:text-white transition-colors inline-flex items-center gap-2">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          GitHub
+        </a>
       </div>
     </div>
   </section>
 
-  <!-- Development Status -->
-  <section class="mx-auto max-w-6xl px-4 py-16">
-    <div class="grid lg:grid-cols-2 gap-12">
-      <!-- What's Ready -->
-      <div>
-        <h2 class="text-3xl font-bold mb-6 text-emerald-400">✅ Implemented</h2>
-        <div class="space-y-4">
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Microsoft/Mojang Authentication</h3>
-              <p class="text-neutral-300 text-sm">Complete authentication system via official APIs</p>
-            </div>
-          </div>
+  <!-- Features -->
+  <section class="mx-auto max-w-5xl px-4 py-16">
+    <div class="mb-10">
+      <h2 class="text-3xl font-bold text-white mb-2">Features</h2>
+      <p class="text-neutral-500 text-sm">Everything already implemented in SectLauncher</p>
+    </div>
 
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Minecraft Downloads</h3>
-              <p class="text-neutral-300 text-sm">Automatic downloading and installation of Vanilla, Fabric and Forge versions</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Instance Management</h3>
-              <p class="text-neutral-300 text-sm">Creating, editing, and deleting game profiles</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Clean Architecture</h3>
-              <p class="text-neutral-300 text-sm">Modular architecture with separation of concerns</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">OTA Updates</h3>
-              <p class="text-neutral-300 text-sm">Automatic launcher updates without user intervention</p>
-            </div>
-          </div>
-
-          <div class="flex items-start gap-3 p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
-            <div class="w-2 h-2 rounded-full bg-emerald-500 mt-2 shrink-0"></div>
-            <div>
-              <h3 class="font-semibold">Cross-platform</h3>
-              <p class="text-neutral-300 text-sm">Full support for Windows 10/11, macOS and Linux</p>
-            </div>
+    <div class="grid sm:grid-cols-2 gap-4">
+      {[
+        { icon: "⚡", title: "Rust + Tauri v2 Core", desc: "Maximum performance, native code security, and minimal install size." },
+        { icon: "🖥️", title: "Cross-platform", desc: "Full support for Windows 10/11, macOS (Silicon & Intel), and Linux." },
+        { icon: "🔐", title: "Authentication", desc: "Microsoft login and Offline account support with a convenient account manager." },
+        { icon: "📦", title: "Modrinth Integration", desc: "Search and install mods, shaders, and resource packs directly from the launcher." },
+        { icon: "🧩", title: "Fabric & Forge", desc: "Native support for popular mod loaders out of the box." },
+        { icon: "🗂️", title: "Instance System", desc: "Create and manage unlimited game profiles. Full modpack support." },
+        { icon: "🔄", title: "OTA Updates", desc: "The launcher updates automatically without reinstallation." },
+        { icon: "🎨", title: "Personalization", desc: "Custom themes, accent colors, and background images." },
+      ].map((item) => (
+        <div class="flex items-start gap-4 p-5 rounded-xl bg-neutral-900/60 border border-neutral-800 hover:border-neutral-700 transition-colors">
+          <span class="text-2xl pt-0.5">{item.icon}</span>
+          <div>
+            <h3 class="font-bold text-white mb-1">{item.title}</h3>
+            <p class="text-neutral-400 text-sm leading-relaxed">{item.desc}</p>
           </div>
         </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Tech Stack -->
+  <section class="mx-auto max-w-5xl px-4 py-16">
+    <div class="mb-10">
+      <h2 class="text-3xl font-bold text-white mb-2">Tech Stack</h2>
+      <p class="text-neutral-500 text-sm">Tools and approaches behind the project</p>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-4">
+      <div class="p-5 rounded-xl bg-neutral-900/60 border border-neutral-800 text-center">
+        <div class="text-3xl mb-3">🦀</div>
+        <h3 class="font-bold text-white mb-1">Rust</h3>
+        <p class="text-neutral-500 text-xs">Backend & game logic</p>
       </div>
-
-      <!-- In Progress & Roadmap -->
-      <div class="space-y-12">
-        <div>
-          <h2 class="text-3xl font-bold mb-6 text-blue-400">🚧 In Progress</h2>
-          <div class="space-y-4">
-            <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-              <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
-              <div>
-                <h3 class="font-semibold">Modrinth & CurseForge Integration</h3>
-                <p class="text-neutral-300 text-sm">Easy search and automatic installation of mods from popular services</p>
-              </div>
-            </div>
-            
-            <div class="flex items-start gap-3 p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-              <div class="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0"></div>
-              <div>
-                <h3 class="font-semibold">UI/UX Polishing</h3>
-                <p class="text-neutral-300 text-sm">Polishing the interface before the public release</p>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="p-5 rounded-xl bg-neutral-900/60 border border-neutral-800 text-center">
+        <div class="text-3xl mb-3">⚛️</div>
+        <h3 class="font-bold text-white mb-1">React + TS</h3>
+        <p class="text-neutral-500 text-xs">User interface</p>
+      </div>
+      <div class="p-5 rounded-xl bg-neutral-900/60 border border-neutral-800 text-center">
+        <div class="text-3xl mb-3">🪟</div>
+        <h3 class="font-bold text-white mb-1">Tauri v2</h3>
+        <p class="text-neutral-500 text-xs">Native wrapper</p>
       </div>
     </div>
   </section>
 
-  <!-- Developer Section -->
-<section class="mx-auto max-w-6xl px-4 py-16">
-  <div class="w-full max-w-none">
+  <!-- Developer -->
+  <section class="mx-auto max-w-5xl px-4 py-16">
+    <div class="mb-10">
+      <h2 class="text-3xl font-bold text-white mb-2">Developer</h2>
+    </div>
+
     <div class="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-8 hover:border-neutral-700 transition-all duration-300 relative">
-      <!-- Logo positioned at top-left -->
       <div class="absolute top-6 left-6 w-20 h-20 rounded-xl overflow-hidden z-10">
         <img 
           src="https://byteflipper.web.app/images/logo.png" 
@@ -137,13 +105,11 @@ import Footer from "../../components/Footer.astro";
           class="w-full h-full object-cover rounded-xl shadow-lg hover:scale-105 transition-transform duration-300"
           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
         />
-        <!-- Fallback if image fails -->
         <div class="absolute inset-0 w-20 h-20 rounded-xl grid place-items-center text-2xl font-bold text-neutral-900" style="background:linear-gradient(135deg,#ef116f,#fe6407); display: none;">
           BF
         </div>
       </div>
       
-      <!-- Main content with padding to avoid logo overlap -->
       <div class="pl-28 pt-4">
         <div class="text-left">
           <div class="font-bold text-2xl mb-2 bg-gradient-to-r from-white to-neutral-300 bg-clip-text text-transparent">
@@ -154,28 +120,26 @@ import Footer from "../../components/Footer.astro";
           </div>
           <div class="flex flex-wrap gap-3">
             <a href="https://byteflipper.com" 
-               class="px-4 py-2 rounded-lg border border-neutral-800 hover:bg-gradient-to-r hover:from-pink-600/20 hover:to-orange-600/20 hover:border-neutral-600 transition-all duration-300 hover:shadow-lg">
+               class="px-4 py-2 rounded-lg border border-neutral-800 hover:bg-gradient-to-r hover:from-pink-600/20 hover:to-orange-600/20 hover:border-neutral-600 transition-all duration-300 hover:shadow-lg text-sm">
               byteflipper.com
             </a>
             <a href="https://github.com/byteflipper-58" 
-               class="px-4 py-2 rounded-lg border border-neutral-800 hover:bg-gradient-to-r hover:from-pink-600/20 hover:to-orange-600/20 hover:border-neutral-600 transition-all duration-300 hover:shadow-lg">
+               class="px-4 py-2 rounded-lg border border-neutral-800 hover:bg-gradient-to-r hover:from-pink-600/20 hover:to-orange-600/20 hover:border-neutral-600 transition-all duration-300 hover:shadow-lg text-sm">
               GitHub Profile
             </a>
             <a href="https://github.com/byteflipper-58/sectlauncher" 
-               class="px-4 py-2 rounded-lg border border-neutral-800 hover:bg-gradient-to-r hover:from-pink-600/20 hover:to-orange-600/20 hover:border-neutral-600 transition-all duration-300 hover:shadow-lg">
+               class="px-4 py-2 rounded-lg border border-neutral-800 hover:bg-gradient-to-r hover:from-pink-600/20 hover:to-orange-600/20 hover:border-neutral-600 transition-all duration-300 hover:shadow-lg text-sm">
               SectLauncher Repository
             </a>
             <a href="https://t.me/byteflipper" 
-               class="px-4 py-2 rounded-lg border border-blue-600/50 bg-blue-600/10 hover:bg-blue-600/20 hover:border-blue-500 transition-all duration-300 hover:shadow-lg text-blue-300 hover:text-blue-200">
+               class="px-4 py-2 rounded-lg border border-blue-600/50 bg-blue-600/10 hover:bg-blue-600/20 hover:border-blue-500 transition-all duration-300 hover:shadow-lg text-blue-300 hover:text-blue-200 text-sm">
               Telegram Channel
             </a>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>
-
