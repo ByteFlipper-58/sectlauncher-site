@@ -2,8 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
+import { RELEASES_FALLBACK_URL } from "../../utils/site";
 
-const FALLBACK_URL = 'https://github.com/ByteFlipper-58/SectLauncher/releases/latest';
+const FALLBACK_URL = RELEASES_FALLBACK_URL;
 
 const winUrl = FALLBACK_URL;
 const macSiliconUrl = FALLBACK_URL;
@@ -29,7 +30,7 @@ const rpmUrl = FALLBACK_URL;
     <div class="mx-auto max-w-5xl px-4 pt-20 pb-12 text-center relative">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
         <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-        <span class="text-emerald-400 text-xs font-semibold uppercase tracking-widest" id="version-display">Загрузка...</span>
+        <span class="text-emerald-400 text-xs font-semibold uppercase tracking-widest" id="version-display" data-version-fallback-label="Последняя">Загрузка...</span>
       </div>
       <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">Скачать <span class="text-emerald-500">SectLauncher</span></h1>
       <p class="text-neutral-400 text-lg max-w-xl mx-auto">Выбери сборку для своей ОС и начни играть за пару минут.</p>
@@ -51,7 +52,7 @@ const rpmUrl = FALLBACK_URL;
           <p class="text-neutral-500 text-[11px] uppercase tracking-widest mb-8 flex-grow">Windows 10 / 11 · 64-bit</p>
 
           <div class="w-full">
-            <a href={winUrl} id="btn-win" class="w-full py-3 rounded-lg font-bold uppercase tracking-widest text-[11px] bg-blue-600 hover:bg-blue-500 text-white transition-colors flex items-center justify-center gap-2">
+            <a href={winUrl} id="btn-win" data-download-platform="windows" class="w-full py-3 rounded-lg font-bold uppercase tracking-widest text-[11px] bg-blue-600 hover:bg-blue-500 text-white transition-colors flex items-center justify-center gap-2">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
               Скачать .exe
             </a>
@@ -72,7 +73,7 @@ const rpmUrl = FALLBACK_URL;
           <p class="text-neutral-500 text-[11px] uppercase tracking-widest mb-8 flex-grow">Apple Silicon & Intel</p>
 
           <div class="w-full space-y-2">
-            <a href={macSiliconUrl} id="btn-mac" class="w-full py-3 rounded-lg font-bold uppercase tracking-widest text-[11px] bg-neutral-100 hover:bg-white text-neutral-900 transition-colors flex items-center justify-center gap-2">
+            <a href={macSiliconUrl} id="btn-mac" data-download-platform="mac" class="w-full py-3 rounded-lg font-bold uppercase tracking-widest text-[11px] bg-neutral-100 hover:bg-white text-neutral-900 transition-colors flex items-center justify-center gap-2">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
               Apple Silicon
             </a>
@@ -82,8 +83,8 @@ const rpmUrl = FALLBACK_URL;
                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
               </button>
               <div class="absolute top-full left-0 right-0 mt-1 bg-neutral-950 border border-neutral-800 rounded-lg shadow-2xl z-20 hidden overflow-hidden" data-dropdown-menu="mac">
-                <a href={macIntelUrl} id="btn-mac-intel" class="block w-full px-5 py-3 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors border-b border-neutral-800/50">Intel (.app.tar.gz)</a>
-                <a href={macTarUrl} id="btn-mac-tar" class="block w-full px-5 py-3 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors">Универсальный (.tar.gz)</a>
+                <a href={macIntelUrl} id="btn-mac-intel" data-download-platform="mac" class="block w-full px-5 py-3 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors border-b border-neutral-800/50">Intel (.app.tar.gz)</a>
+                <a href={macTarUrl} id="btn-mac-tar" data-download-platform="mac" class="block w-full px-5 py-3 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors">Универсальный (.tar.gz)</a>
               </div>
             </div>
           </div>
@@ -101,7 +102,7 @@ const rpmUrl = FALLBACK_URL;
           <p class="text-neutral-500 text-[11px] uppercase tracking-widest mb-8 flex-grow">AppImage · .deb · .rpm</p>
 
           <div class="w-full space-y-2">
-            <a href={appImgUrl} id="btn-linux-appimage" class="w-full py-3 rounded-lg font-bold uppercase tracking-widest text-[11px] bg-orange-600 hover:bg-orange-500 text-white transition-colors flex items-center justify-center gap-2">
+            <a href={appImgUrl} id="btn-linux-appimage" data-download-platform="linux" class="w-full py-3 rounded-lg font-bold uppercase tracking-widest text-[11px] bg-orange-600 hover:bg-orange-500 text-white transition-colors flex items-center justify-center gap-2">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
               AppImage
             </a>
@@ -111,8 +112,8 @@ const rpmUrl = FALLBACK_URL;
                 <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
               </button>
               <div class="absolute top-full left-0 right-0 mt-1 bg-neutral-950 border border-neutral-800 rounded-lg shadow-2xl z-20 hidden overflow-hidden" data-dropdown-menu="linux">
-                <a href={debUrl} id="btn-linux-deb" class="block w-full px-5 py-3 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors border-b border-neutral-800/50">Debian / Ubuntu (.deb)</a>
-                <a href={rpmUrl} id="btn-linux-rpm" class="block w-full px-5 py-3 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors">Fedora / RHEL (.rpm)</a>
+                <a href={debUrl} id="btn-linux-deb" data-download-platform="linux" class="block w-full px-5 py-3 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors border-b border-neutral-800/50">Debian / Ubuntu (.deb)</a>
+                <a href={rpmUrl} id="btn-linux-rpm" data-download-platform="linux" class="block w-full px-5 py-3 text-[10px] font-semibold uppercase tracking-widest text-neutral-400 hover:bg-neutral-900 hover:text-white transition-colors">Fedora / RHEL (.rpm)</a>
               </div>
             </div>
           </div>
@@ -124,83 +125,8 @@ const rpmUrl = FALLBACK_URL;
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>
 
-<script is:inline>
-  (function() {
-    var API_URL = 'https://api.github.com/repos/ByteFlipper-58/SectLauncher/releases/latest';
-    var FALLBACK_URL = 'https://github.com/ByteFlipper-58/SectLauncher/releases/latest';
+<script type="module">
+  import { initDownloadPage } from "../../scripts/download-page";
 
-    var versionEl = document.getElementById('version-display');
-    var btnWin = document.getElementById('btn-win');
-    var btnMac = document.getElementById('btn-mac');
-    var btnMacIntel = document.getElementById('btn-mac-intel');
-    var btnMacTar = document.getElementById('btn-mac-tar');
-    var btnLinAppImg = document.getElementById('btn-linux-appimage');
-    var btnLinDeb = document.getElementById('btn-linux-deb');
-    var btnLinRpm = document.getElementById('btn-linux-rpm');
-
-    function setLink(btn, url) {
-      if (!btn || !url) return;
-      btn.href = url;
-    }
-
-    function findAsset(assets, pattern) {
-      for (var i = 0; i < assets.length; i++) {
-        if (pattern.test(assets[i].name)) return assets[i].browser_download_url;
-      }
-      return null;
-    }
-
-    fetch(API_URL)
-      .then(function(res) { if (!res.ok) throw new Error('fetch failed'); return res.json(); })
-      .then(function(release) {
-        var version = (release.tag_name || '').replace(/^v/, '');
-        if (versionEl) versionEl.textContent = 'v' + version;
-
-        var assets = release.assets || [];
-        setLink(btnWin, findAsset(assets, /x64-setup\.exe$/) || FALLBACK_URL);
-        setLink(btnMac, findAsset(assets, /universal\.app\.tar\.gz$/) || FALLBACK_URL);
-        setLink(btnMacIntel, findAsset(assets, /universal\.app\.tar\.gz$/) || FALLBACK_URL);
-        setLink(btnMacTar, findAsset(assets, /universal\.app\.tar\.gz$/) || FALLBACK_URL);
-        setLink(btnLinAppImg, findAsset(assets, /amd64\.AppImage$/) || FALLBACK_URL);
-        setLink(btnLinDeb, findAsset(assets, /amd64\.deb$/) || FALLBACK_URL);
-        setLink(btnLinRpm, findAsset(assets, /x86_64\.rpm$/) || FALLBACK_URL);
-      })
-      .catch(function() {
-        if (versionEl) versionEl.textContent = 'Последняя';
-      });
-  })();
-</script>
-
-<script is:inline>
-  document.addEventListener('click', (e) => {
-    const isDropdownBtn = e.target.closest('[data-dropdown-btn]');
-    const openMenu = document.querySelector('[data-dropdown-menu]:not(.hidden)');
-
-    if (isDropdownBtn) {
-      const type = isDropdownBtn.getAttribute('data-dropdown-btn');
-      const menu = document.querySelector(`[data-dropdown-menu="${type}"]`);
-      
-      if (menu) {
-        menu.classList.toggle('hidden');
-        if (openMenu && openMenu !== menu) openMenu.classList.add('hidden');
-      }
-      return;
-    }
-
-    if (openMenu && !e.target.closest('[data-dropdown-menu]')) {
-      openMenu.classList.add('hidden');
-    }
-  });
-
-  document.addEventListener('click', async (e) => {
-    const downloadBtn = e.target.closest('a[href*="github.com"], a[href*="releases"]');
-    if (downloadBtn) {
-      try {
-        const { trackDownload } = await import('/src/utils/analytics.ts');
-        const osMatch = downloadBtn.id?.match(/btn-(windows|mac|linux)/);
-        const platform = osMatch ? osMatch[1] : 'unknown';
-        await trackDownload(platform);
-      } catch {}
-    }
-  });
+  initDownloadPage();
 </script>

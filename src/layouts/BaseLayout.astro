@@ -1,12 +1,14 @@
 ---
 import "../styles/global.css";
 import CookieBanner from "../components/CookieBanner.astro";
-const { title = "SectLauncher", description = "Кроссплатформенный лаунчер Minecraft" } = Astro.props;
+import { DEFAULT_LOCALE, SITE_NAME, SITE_URL } from "../utils/site";
+
+const { title = SITE_NAME, description = "Кроссплатформенный лаунчер Minecraft" } = Astro.props;
 const allowIndexing = true;
-const currentLocale = Astro.currentLocale ?? 'ru';
+const currentLocale = Astro.currentLocale ?? DEFAULT_LOCALE;
 const ogLocale = currentLocale === 'ru' ? 'ru_RU' : 'en_US';
 const ogLocaleAlt = currentLocale === 'ru' ? 'en_US' : 'ru_RU';
-const baseHref = Astro.site?.href ?? 'https://sectlauncher.byteflipper.com/';
+const baseHref = Astro.site?.href ?? `${SITE_URL}/`;
 function toAbsoluteUrl(pathOrUrl: string | undefined): string | undefined {
   if (!pathOrUrl) return undefined;
   if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
@@ -16,7 +18,7 @@ function toAbsoluteUrl(pathOrUrl: string | undefined): string | undefined {
 }
 const defaultOgImage = toAbsoluteUrl('/web-app-manifest-512x512.png');
 ---
-<html lang={Astro.currentLocale ?? 'ru'} class="bg-neutral-950 text-neutral-100">
+<html lang={Astro.currentLocale ?? DEFAULT_LOCALE} class="bg-neutral-950 text-neutral-100">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,7 +27,7 @@ const defaultOgImage = toAbsoluteUrl('/web-app-manifest-512x512.png');
     <meta name="robots" content={allowIndexing ? 'index, follow' : 'noindex, nofollow'} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:site_name" content="SectLauncher" />
+    <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:locale" content={ogLocale} />
     <meta property="og:image" content={defaultOgImage} />
     <meta property="og:locale:alternate" content={ogLocaleAlt} />
@@ -37,7 +39,7 @@ const defaultOgImage = toAbsoluteUrl('/web-app-manifest-512x512.png');
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="SectLauncher" />
+    <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
     <link rel="manifest" href="/site.webmanifest" />
     <style>
       .hero-bg{background:radial-gradient(1200px 600px at 20% 0%, rgba(46,204,113,.25), transparent 60%),radial-gradient(900px 500px at 80% 10%, rgba(241,196,15,.18), transparent 60%)}

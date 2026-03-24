@@ -14,76 +14,50 @@ import Table from "../../../components/post/Table.astro";
 import ReadingProgressBar from "../../../components/post/ReadingProgressBar.astro";
 import SubscribeCTA from "../../../components/post/SubscribeCTA.astro";
 import { getCollection } from 'astro:content';
+import {
+  getAdjacentBlogPosts,
+  getAlternateBlogPost,
+  getBlogPostPath,
+  getPostSlugBase,
+  getVisibleBlogPosts,
+  isPremiereLocked,
+} from "../../../utils/blog";
+import { toAbsoluteUrl } from "../../../utils/site";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts
-    .filter((p) => {
-      const isRu = (p.data.lang ?? 'ru') === 'ru';
-      const isDraft = !!p.data.draft;
-      const isPrivate = !!p.data.private;
-      const publishAt = p.data.publishAt ? new Date(p.data.publishAt).getTime() : undefined;
-      const now = Date.now();
-      const isProd = import.meta.env.MODE === 'production';
-      if (!isRu || isDraft) return false;
-      if (!isProd) return true;
-      if (isPrivate) return false;
-      if (publishAt && publishAt > now) return !!p.data.premiere; // генерим только если отмечен как премьера
-      return true;
-    })
-    .map((post) => {
-      const slugBase = post.slug.split('/').pop();
-      return {
-        params: { slug: slugBase },
-        props: { post },
-      };
-    });
+  const posts = getVisibleBlogPosts(await getCollection('blog'), 'ru', {
+    isProduction: import.meta.env.MODE === 'production',
+    now: Date.now(),
+  });
+
+  return posts.map((post) => ({
+    params: { slug: getPostSlugBase(post) },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
 const { title, description, date, heroImage, tKey, media, author, publishAt, premiere } = post.data;
 const { Content } = await post.render();
 const locale: 'ru' | 'en' = 'ru';
-
-// Alt/Canonical helpers
-const baseHref = Astro.site?.href ?? 'https://sectlauncher.byteflipper.com/';
-function toAbsoluteUrl(pathOrUrl: string | undefined): string | undefined {
-  if (!pathOrUrl) return undefined;
-  if (/^https?:\/\//i.test(pathOrUrl)) return pathOrUrl;
-  const base = baseHref.endsWith('/') ? baseHref.slice(0, -1) : baseHref;
-  const path = pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`;
-  return `${base}${path}`;
-}
+const now = Date.now();
+const isProduction = import.meta.env.MODE === 'production';
+const allPosts = await getCollection('blog');
 
 // Find alternate language post by tKey if available
-const allPostsForAlt = await getCollection('blog');
-const altPost = tKey
-  ? allPostsForAlt.find((p) => (p.data.lang ?? 'ru') === 'en' && p.data.tKey === tKey && !p.data.draft)
-  : undefined;
-const slugBase = post.slug.split('/').pop();
-const canonicalPath = `/ru/blog/${slugBase}`;
+const altPost = tKey ? getAlternateBlogPost(allPosts, post, 'en', { isProduction, now }) : undefined;
+const slugBase = getPostSlugBase(post);
+const canonicalPath = getBlogPostPath('ru', slugBase);
 const canonicalUrl = toAbsoluteUrl(canonicalPath);
-const altHrefEn = altPost ? toAbsoluteUrl(`/en/blog/${altPost.slug.split('/').pop()}`) : undefined;
+const altHrefEn = altPost ? toAbsoluteUrl(getBlogPostPath('en', altPost)) : undefined;
+const isLocked = isPremiereLocked(post, now);
 
 // OG/Twitter helpers
 const ogLocale = 'ru_RU';
 const publishedISO = new Date(date).toISOString();
 const ogImage = toAbsoluteUrl(heroImage) ?? toAbsoluteUrl('/web-app-manifest-512x512.png');
 
-// Соседние посты той же локали
-const allPosts = await getCollection('blog');
-const sameLocalePosts = allPosts
-  .filter((p) => {
-    const sameLocale = (p.data.lang ?? 'ru') === locale;
-    const notDraft = !p.data.draft;
-    const isProd = import.meta.env.MODE === 'production';
-    const notPrivateInProd = !isProd || !p.data.private;
-    return sameLocale && notDraft && notPrivateInProd;
-  })
-  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
-const index = sameLocalePosts.findIndex((p) => p.slug.split('/').pop() === slugBase);
-const prev = index > 0 ? sameLocalePosts[index - 1] : undefined;
-const next = index >= 0 && index < sameLocalePosts.length - 1 ? sameLocalePosts[index + 1] : undefined;
+const { prev, next } = getAdjacentBlogPosts(allPosts, post, locale, { isProduction, now });
 
 function calcReadingTime(text: string){
   const words = (text || '').trim().split(/\s+/).filter(Boolean).length;
@@ -119,7 +93,7 @@ const reading = calcReadingTime(post.body as string);
     {canonicalUrl && (
       <SEOJsonLd url={canonicalUrl} title={title} description={description} datePublished={publishedISO} authorName={author?.name} image={ogImage} />
     )}
-    {publishAt && new Date(publishAt).getTime() > Date.now() && (
+    {isLocked && (
       <>
         <meta name="robots" content="noindex, nofollow" />
         <meta name="x-premiere" content="not-ready" />
@@ -136,7 +110,7 @@ const reading = calcReadingTime(post.body as string);
 
   <MediaViewer items={media} mode="carousel" lightbox={true} />
 
-  {publishAt && new Date(publishAt).getTime() > Date.now() ? (
+  {isLocked ? (
     <div class="mx-auto w-full lg:max-w-[70%] px-4 py-16 text-center">
       <h2 class="text-2xl font-bold">Скоро премьера</h2>
       <p class="text-neutral-400 mt-2">Пост будет доступен после премьеры.</p>
@@ -174,9 +148,9 @@ const reading = calcReadingTime(post.body as string);
 
   <PostNav
     locale={locale}
-    prev={prev ? { href: `/ru/blog/${prev.slug.split('/').pop()}`, title: prev.data.title } : undefined}
-    translate={altPost ? { href: `/en/blog/${altPost.slug.split('/').pop()}`, title: altPost.data.title } : undefined}
-    next={next ? { href: `/ru/blog/${next.slug.split('/').pop()}`, title: next.data.title } : undefined}
+    prev={prev ? { href: getBlogPostPath('ru', prev), title: prev.data.title } : undefined}
+    translate={altPost ? { href: getBlogPostPath('en', altPost), title: altPost.data.title } : undefined}
+    next={next ? { href: getBlogPostPath('ru', next), title: next.data.title } : undefined}
   />
 
   <Fragment slot="footer"><Footer /></Fragment>

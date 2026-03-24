@@ -4,24 +4,11 @@ import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { getCollection } from 'astro:content';
 import BlogCard from "../../components/BlogCard.astro";
+import { getBlogPostPath, getPostSlugBase, getVisibleBlogPosts, isPremiereLocked } from "../../utils/blog";
 
-const allPosts = (await getCollection('blog')).filter(p => {
-  const isEn = (p.data.lang ?? 'ru') === 'en';
-  const isDraft = !!p.data.draft;
-  const isPrivate = !!p.data.private;
-  const publishAt = p.data.publishAt ? new Date(p.data.publishAt).getTime() : undefined;
-  const now = Date.now();
-  const isProd = import.meta.env.MODE === 'production';
-  if (!isEn || isDraft) return false;
-  if (!isProd) return true;
-  if (isPrivate) return false;
-  if (publishAt && publishAt > now) return !!p.data.premiere;
-  return true;
-});
-const sortedPosts = allPosts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
-
-// Все посты без фильтрации по тегам
-const posts = sortedPosts;
+const now = Date.now();
+const isProduction = import.meta.env.MODE === 'production';
+const posts = getVisibleBlogPosts(await getCollection('blog'), 'en', { isProduction, now });
 ---
 
 <BaseLayout title="Blog — SectLauncher" description="News and updates.">
@@ -66,19 +53,19 @@ const posts = sortedPosts;
     <!-- Posts grid -->
     <div id="postsGrid" class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
       {posts.map((post) => {
-        const slugBase = post.slug.split('/').pop();
+        const premiereLocked = isPremiereLocked(post, now);
         return (
           <BlogCard
-            href={`/en/blog/${slugBase}`}
+            href={getBlogPostPath('en', getPostSlugBase(post))}
             title={post.data.title ?? 'Untitled'}
             description={post.data.description}
             date={post.data.date}
             tags={[]}
             heroImage={post.data.heroImage}
             locale="en"
-            premiere={!!post.data.premiere && (!!post.data.publishAt ? new Date(post.data.publishAt).getTime() > Date.now() : true)}
+            premiere={premiereLocked}
             premiereAt={post.data.publishAt}
-            disabled={!!post.data.premiere && !!post.data.publishAt && new Date(post.data.publishAt).getTime() > Date.now()}
+            disabled={premiereLocked}
           />
         );
       })}

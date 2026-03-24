@@ -1,6 +1,8 @@
 ---
+import { DEFAULT_LOCALE, GITHUB_REPO_URL, TELEGRAM_URL } from "../utils/site";
+
 const year = new Date().getFullYear();
-const locale = Astro.currentLocale ?? 'ru';
+const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
 const base = locale === 'ru' ? '/ru' : `/${locale}`;
 ---
 
@@ -8,8 +10,8 @@ const base = locale === 'ru' ? '/ru' : `/${locale}`;
   <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-neutral-400 flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
     <div>© {year} SectLauncher</div>
     <div class="flex gap-4">
-      <a href="https://t.me/sectlauncher" class="hover:text-neutral-200">Telegram</a>
-      <a href="https://github.com/byteflipper-58/sectlauncher" class="hover:text-neutral-200">GitHub</a>
+      <a href={TELEGRAM_URL} class="hover:text-neutral-200">Telegram</a>
+      <a href={GITHUB_REPO_URL} class="hover:text-neutral-200">GitHub</a>
       <a href={`${base}/privacy`} class="hover:text-neutral-200">{locale === 'en' ? 'Privacy' : 'Политика'}</a>
       <a href={`${base}/terms`} class="hover:text-neutral-200">{locale === 'en' ? 'Terms' : 'Условия'}</a>
     </div>

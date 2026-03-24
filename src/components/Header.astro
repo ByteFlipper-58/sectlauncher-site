@@ -1,6 +1,8 @@
 ---
+import { DEFAULT_LOCALE, GITHUB_REPO_URL, TELEGRAM_URL } from "../utils/site";
+
 const currentPath = Astro.url.pathname;
-const locale = Astro.currentLocale ?? 'ru';
+const locale = Astro.currentLocale ?? DEFAULT_LOCALE;
 const base = locale === 'ru' ? '/ru' : `/${locale}`;
 const links = [
   { href: `${base}/`, label: locale === 'en' ? 'Home' : 'Главная' },
@@ -46,10 +48,10 @@ const navAria = locale === 'en' ? 'Main navigation' : 'Главная навиг
         </svg>
         {locale === 'en' ? 'Download' : 'Скачать'}
       </a>
-      <a href="https://github.com/byteflipper-58/sectlauncher" class="hidden md:inline-flex p-2 rounded-lg hover:bg-neutral-800 transition-colors" aria-label="GitHub">
+      <a href={GITHUB_REPO_URL} class="hidden md:inline-flex p-2 rounded-lg hover:bg-neutral-800 transition-colors" aria-label="GitHub">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-neutral-300 hover:text-white"><path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.87 3.16 9 7.55 10.45.55.1.75-.25.75-.55v-2c-3.07.67-3.72-1.3-3.72-1.3-.52-1.32-1.27-1.67-1.27-1.67-1.04-.7.07-.68.07-.68 1.14.08 1.74 1.17 1.74 1.17 1.02 1.73 2.68 1.23 3.33.94.1-.74.4-1.23.72-1.51-2.45-.28-5.02-1.22-5.02-5.42 0-1.2.43-2.18 1.14-2.95-.12-.28-.5-1.42.1-2.96 0 0 .95-.3 3.1 1.13.9-.25 1.86-.37 2.82-.37.96 0 1.92.12 2.82.37 2.15-1.43 3.1-1.13 3.1-1.13.6 1.54.22 2.68.1 2.96.7.77 1.14 1.75 1.14 2.95 0 4.21-2.58 5.14-5.03 5.41.42.36.78 1.08.78 2.19v3.25c0 .3.2.65.76.54 4.38-1.46 7.54-5.58 7.54-10.45C23.1 5.33 18.27.5 12 .5Z"/></svg>
       </a>
-      <a href="https://t.me/sectlauncher" class="hidden md:inline-flex p-2 rounded-lg hover:bg-neutral-800 transition-colors" aria-label="Telegram">
+      <a href={TELEGRAM_URL} class="hidden md:inline-flex p-2 rounded-lg hover:bg-neutral-800 transition-colors" aria-label="Telegram">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5 text-neutral-300 hover:text-white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.820 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
       </a>
       <button id="menu-btn" class="md:hidden p-2 rounded-lg hover:bg-neutral-800 text-neutral-200 transition-colors active:scale-95" aria-label="Меню" aria-expanded="false" aria-controls="mobile-menu">
@@ -80,11 +82,11 @@ const navAria = locale === 'en' ? 'Main navigation' : 'Главная навиг
           <span class="text-neutral-600">/</span>
           <a href={switchPath('en')} class={`px-2.5 py-1 rounded-md transition-all ${locale === 'en' ? 'bg-neutral-700 text-white' : 'hover:bg-neutral-700/50'}`}>EN</a>
         </div>
-        <a href="https://github.com/byteflipper-58/sectlauncher" class="flex-1 px-3 py-2 rounded-lg bg-neutral-800/50 text-center hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2">
+        <a href={GITHUB_REPO_URL} class="flex-1 px-3 py-2 rounded-lg bg-neutral-800/50 text-center hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.87 3.16 9 7.55 10.45.55.1.75-.25.75-.55v-2c-3.07.67-3.72-1.3-3.72-1.3-.52-1.32-1.27-1.67-1.27-1.67-1.04-.7.07-.68.07-.68 1.14.08 1.74 1.17 1.74 1.17 1.02 1.73 2.68 1.23 3.33.94.1-.74.4-1.23.72-1.51-2.45-.28-5.02-1.22-5.02-5.42 0-1.2.43-2.18 1.14-2.95-.12-.28-.5-1.42.1-2.96 0 0 .95-.3 3.1 1.13.9-.25 1.86-.37 2.82-.37.96 0 1.92.12 2.82.37 2.15-1.43 3.1-1.13 3.1-1.13.6 1.54.22 2.68.1 2.96.7.77 1.14 1.75 1.14 2.95 0 4.21-2.58 5.14-5.03 5.41.42.36.78 1.08.78 2.19v3.25c0 .3.2.65.76.54 4.38-1.46 7.54-5.58 7.54-10.45C23.1 5.33 18.27.5 12 .5Z"/></svg>
           GitHub
         </a>
-        <a href="https://t.me/sectlauncher" class="flex-1 px-3 py-2 rounded-lg bg-neutral-800/50 text-center hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2">
+        <a href={TELEGRAM_URL} class="flex-1 px-3 py-2 rounded-lg bg-neutral-800/50 text-center hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.820 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
           Telegram
         </a>
