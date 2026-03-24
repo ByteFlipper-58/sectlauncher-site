@@ -50,6 +50,7 @@ export default defineConfig({
         // item.url — абсолютный URL
         const url = new URL(item.url);
         const path = url.pathname;
+        const origin = url.origin;
         const now = new Date().toISOString();
 
         /** @type {import('sitemap').EnumChangefreq | undefined} */
@@ -76,19 +77,29 @@ export default defineConfig({
         /** hreflang alternates (best-effort по зеркалам ru/en) */
         /** @type {Array<{ url: string; lang: string }>} */
         const links = [];
+        /**
+         * @param {'ru' | 'en'} target
+         */
+        const toLocalized = (target) => {
+          if (path === '/') return `${origin}/${target}/`;
+          if (path.startsWith('/ru/')) return `${origin}/${target}/${path.slice(4)}`;
+          if (path.startsWith('/en/')) return `${origin}/${target}/${path.slice(4)}`;
+          return `${origin}/${target}${path.startsWith('/') ? '' : '/'}${path}`;
+        };
+
         if (path.startsWith('/ru/')) {
-          links.push({ url: item.url, lang: 'ru' });
-          links.push({ url: item.url.replace('/ru/', '/en/'), lang: 'en' });
-          links.push({ url: item.url, lang: 'x-default' });
+          links.push({ url: toLocalized('ru'), lang: 'ru' });
+          links.push({ url: toLocalized('en'), lang: 'en' });
+          links.push({ url: toLocalized('ru'), lang: 'x-default' });
         } else if (path.startsWith('/en/')) {
-          links.push({ url: item.url.replace('/en/', '/ru/'), lang: 'ru' });
-          links.push({ url: item.url, lang: 'en' });
-          links.push({ url: item.url.replace('/en/', '/ru/'), lang: 'x-default' });
+          links.push({ url: toLocalized('ru'), lang: 'ru' });
+          links.push({ url: toLocalized('en'), lang: 'en' });
+          links.push({ url: toLocalized('ru'), lang: 'x-default' });
         } else if (path === '/') {
           // Для корневой страницы добавляем ссылки на локализованные версии
-          links.push({ url: item.url.replace('/', '/ru/'), lang: 'ru' });
-          links.push({ url: item.url.replace('/', '/en/'), lang: 'en' });
-          links.push({ url: item.url.replace('/', '/ru/'), lang: 'x-default' });
+          links.push({ url: toLocalized('ru'), lang: 'ru' });
+          links.push({ url: toLocalized('en'), lang: 'en' });
+          links.push({ url: toLocalized('ru'), lang: 'x-default' });
         }
 
         // В продакшн не включаем приватные и отложенные посты в sitemap: фильтруем по эвристикам путей

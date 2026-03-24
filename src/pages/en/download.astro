@@ -2,20 +2,16 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
-import latest from "../../../public/latest.json";
 
-const isDev = import.meta.env.DEV;
-const { version, platforms } = latest;
-const FALLBACK_URL = 'https://github.com/ByteFlipper-58/sectlauncher/releases/latest';
+const FALLBACK_URL = 'https://github.com/ByteFlipper-58/SectLauncher/releases/latest';
 
-const winUrl = platforms['windows-x86_64']?.url || FALLBACK_URL;
-const winNsisUrl = platforms['windows-x86_64-nsis']?.url || FALLBACK_URL;
-const macSiliconUrl = platforms['darwin-aarch64-app']?.url || platforms['darwin-aarch64']?.url || FALLBACK_URL;
-const macIntelUrl = platforms['darwin-x86_64-app']?.url || platforms['darwin-x86_64']?.url || FALLBACK_URL;
-const macTarUrl = platforms['darwin-aarch64']?.url || FALLBACK_URL;
-const appImgUrl = platforms['linux-x86_64-appimage']?.url || platforms['linux-x86_64']?.url || FALLBACK_URL;
-const debUrl = platforms['linux-x86_64-deb']?.url || FALLBACK_URL;
-const rpmUrl = platforms['linux-x86_64-rpm']?.url || FALLBACK_URL;
+const winUrl = FALLBACK_URL;
+const macSiliconUrl = FALLBACK_URL;
+const macIntelUrl = FALLBACK_URL;
+const macTarUrl = FALLBACK_URL;
+const appImgUrl = FALLBACK_URL;
+const debUrl = FALLBACK_URL;
+const rpmUrl = FALLBACK_URL;
 ---
 
 <BaseLayout title="Download — SectLauncher" description="Download SectLauncher for Windows, macOS, and Linux.">
@@ -33,7 +29,7 @@ const rpmUrl = platforms['linux-x86_64-rpm']?.url || FALLBACK_URL;
     <div class="mx-auto max-w-5xl px-4 pt-20 pb-12 text-center relative">
       <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-6">
         <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
-        <span class="text-emerald-400 text-xs font-semibold uppercase tracking-widest" id="version-display">v{version}</span>
+        <span class="text-emerald-400 text-xs font-semibold uppercase tracking-widest" id="version-display">Loading...</span>
       </div>
       <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">Download <span class="text-emerald-500">SectLauncher</span></h1>
       <p class="text-neutral-400 text-lg max-w-xl mx-auto">Choose a build for your OS and start playing in minutes.</p>
@@ -128,75 +124,51 @@ const rpmUrl = platforms['linux-x86_64-rpm']?.url || FALLBACK_URL;
   <Fragment slot="footer"><Footer /></Fragment>
 </BaseLayout>
 
-<script define:vars={{ isDev }}>
-  const JSON_URL = isDev 
-    ? '/latest.json' 
-    : 'https://github.com/ByteFlipper-58/sectlauncher/releases/latest/download/latest.json';
+<script is:inline>
+  (function() {
+    var API_URL = 'https://api.github.com/repos/ByteFlipper-58/SectLauncher/releases/latest';
+    var FALLBACK_URL = 'https://github.com/ByteFlipper-58/SectLauncher/releases/latest';
 
-  const FALLBACK_URL = 'https://github.com/ByteFlipper-58/sectlauncher/releases/latest';
+    var versionEl = document.getElementById('version-display');
+    var btnWin = document.getElementById('btn-win');
+    var btnMac = document.getElementById('btn-mac');
+    var btnMacIntel = document.getElementById('btn-mac-intel');
+    var btnMacTar = document.getElementById('btn-mac-tar');
+    var btnLinAppImg = document.getElementById('btn-linux-appimage');
+    var btnLinDeb = document.getElementById('btn-linux-deb');
+    var btnLinRpm = document.getElementById('btn-linux-rpm');
 
-  const versionEl = document.getElementById('version-display');
-  const btnWin = document.getElementById('btn-win');
-  const btnWinNsis = document.getElementById('btn-win-nsis');
-  const btnMac = document.getElementById('btn-mac');
-  const btnMacIntel = document.getElementById('btn-mac-intel');
-  const btnMacTar = document.getElementById('btn-mac-tar');
-  const btnLinAppImg = document.getElementById('btn-linux-appimage');
-  const btnLinDeb = document.getElementById('btn-linux-deb');
-  const btnLinRpm = document.getElementById('btn-linux-rpm');
-
-  function enableBtn(btn, url) {
-    if (!btn) return;
-    btn.href = url;
-    btn.classList.remove('opacity-50', 'cursor-not-allowed');
-  }
-
-  async function fetchVersion() {
-    try {
-      const res = await fetch(JSON_URL);
-      if (!res.ok) throw new Error('Failed to fetch');
-      const data = await res.json();
-      
-      versionEl.textContent = `v${data.version}`;
-
-      const winUrl = data.platforms?.['windows-x86_64']?.url || FALLBACK_URL;
-      const winNsisUrl = data.platforms?.['windows-x86_64-nsis']?.url || FALLBACK_URL;
-      enableBtn(btnWin, winUrl);
-      enableBtn(btnWinNsis, winNsisUrl);
-      
-      const macSiliconUrl = data.platforms?.['darwin-aarch64-app']?.url || data.platforms?.['darwin-aarch64']?.url || FALLBACK_URL;
-      const macIntelUrl = data.platforms?.['darwin-x86_64-app']?.url || data.platforms?.['darwin-x86_64']?.url || FALLBACK_URL;
-      const macTarUrl = data.platforms?.['darwin-aarch64']?.url || FALLBACK_URL;
-      enableBtn(btnMac, macSiliconUrl);
-      enableBtn(btnMacIntel, macIntelUrl);
-      enableBtn(btnMacTar, macTarUrl);
-
-      const appImgUrl = data.platforms?.['linux-x86_64-appimage']?.url || data.platforms?.['linux-x86_64']?.url || FALLBACK_URL;
-      const debUrl = data.platforms?.['linux-x86_64-deb']?.url || FALLBACK_URL;
-      const rpmUrl = data.platforms?.['linux-x86_64-rpm']?.url || FALLBACK_URL;
-      enableBtn(btnLinAppImg, appImgUrl);
-      enableBtn(btnLinDeb, debUrl);
-      enableBtn(btnLinRpm, rpmUrl);
-
-      ['windows', 'mac', 'linux'].forEach(os => {
-        document.querySelector(`[data-dropdown-btn="${os}"]`)?.classList.remove('opacity-50', 'cursor-not-allowed');
-      });
-
-    } catch (err) {
-      console.error(err);
-      versionEl.textContent = 'Version unknown';
-      enableBtn(btnWin, FALLBACK_URL);
-      enableBtn(btnWinNsis, FALLBACK_URL);
-      enableBtn(btnMac, FALLBACK_URL);
-      enableBtn(btnMacIntel, FALLBACK_URL);
-      enableBtn(btnMacTar, FALLBACK_URL);
-      enableBtn(btnLinAppImg, FALLBACK_URL);
-      enableBtn(btnLinDeb, FALLBACK_URL);
-      enableBtn(btnLinRpm, FALLBACK_URL);
+    function setLink(btn, url) {
+      if (!btn || !url) return;
+      btn.href = url;
     }
-  }
 
-  fetchVersion();
+    function findAsset(assets, pattern) {
+      for (var i = 0; i < assets.length; i++) {
+        if (pattern.test(assets[i].name)) return assets[i].browser_download_url;
+      }
+      return null;
+    }
+
+    fetch(API_URL)
+      .then(function(res) { if (!res.ok) throw new Error('fetch failed'); return res.json(); })
+      .then(function(release) {
+        var version = (release.tag_name || '').replace(/^v/, '');
+        if (versionEl) versionEl.textContent = 'v' + version;
+
+        var assets = release.assets || [];
+        setLink(btnWin, findAsset(assets, /x64-setup\.exe$/) || FALLBACK_URL);
+        setLink(btnMac, findAsset(assets, /universal\.app\.tar\.gz$/) || FALLBACK_URL);
+        setLink(btnMacIntel, findAsset(assets, /universal\.app\.tar\.gz$/) || FALLBACK_URL);
+        setLink(btnMacTar, findAsset(assets, /universal\.app\.tar\.gz$/) || FALLBACK_URL);
+        setLink(btnLinAppImg, findAsset(assets, /amd64\.AppImage$/) || FALLBACK_URL);
+        setLink(btnLinDeb, findAsset(assets, /amd64\.deb$/) || FALLBACK_URL);
+        setLink(btnLinRpm, findAsset(assets, /x86_64\.rpm$/) || FALLBACK_URL);
+      })
+      .catch(function() {
+        if (versionEl) versionEl.textContent = 'Latest';
+      });
+  })();
 </script>
 
 <script is:inline>

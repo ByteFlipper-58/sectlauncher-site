@@ -5,7 +5,7 @@
     "ignore": ["**/.*", "**/node_modules/**"],
     "cleanUrls": true,
     "redirects": [
-      { "source": "/", "destination": "/ru/", "type": 302 }
+      { "source": "/", "destination": "/ru/", "type": 301 }
     ],
     "headers": [
       
